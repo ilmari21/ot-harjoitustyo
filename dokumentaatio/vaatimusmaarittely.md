@@ -15,10 +15,11 @@ Sovelluksessa on vain yhdenlaisia käyttäjiä; *lentäjiä*. Mahdollisuus on my
 - Käyttäjä voi luoda käyttäjätunnuksen
   - Tunnukseen on lisättävä salasana, joka ei saa olla sama kuin käyttäjätunnus, ja tulee noudattaa minimi- ja maksimipituutta
   - Tunnuksen avulla voi kirjautua järjestelmään
+  - Luotuaan tunnuksen käyttäjä voi kirjautua sisään, kunhan tunnus ja salasana täsmäävät
 
 ### Pääsivu
 
-- Luotuaan tunnuksen käyttäjä voi kirjautua sisään, jonka jälkeen hän voi:
+- Kun tunnus on olemassa, ja käyttäjä on kirjautunut sisään, hän voi:
   - Lisätä uusia lentoja
   - Nähdä lisäämänsä lennot ja niiden tiedot; käyttäjä voi nähdä vain omat lentonsa
 
