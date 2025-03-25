@@ -5,3 +5,4 @@ Tavoitteeni on luoda **virtuaalinen lokikirja**, johon *k채ytt채j채* voi lis채t�
 ## Linkit
 
 - [Laskarit](./laskarit)
+- [Vaatimusm채채rittely](.dokumentaatio/vaatimusmaarittely.md)
