@@ -8,13 +8,25 @@ Sovelluksen on tarkoitus mallintaa ilmailussa käytettävää **lokikirjaa**, jo
 
 Sovelluksessa on vain yhdenlaisia käyttäjiä; *lentäjiä*. Mahdollisuus on myös lisätä uusi rooli, *kouluttaja*, joka voisi lisätä tietoa lentäjien lentämiin lentoihin, jos kyseessä on koulutuslento.
 
-## Suunnitellut toiminnallisuudet
+## Suunnitellut perusversion toiminnallisuudet
+
+### Kirjautumissivu
 
 - Käyttäjä voi luoda käyttäjätunnuksen
-  - Tunnukseen on lisättävä salasana, joka ei saa olla sama kuin käyttäjätunnus
-- Tunnuksen avulla voi kirjautua järjestelmään
+  - Tunnukseen on lisättävä salasana, joka ei saa olla sama kuin käyttäjätunnus, ja tulee noudattaa minimi- ja maksimipituutta
+  - Tunnuksen avulla voi kirjautua järjestelmään
 
-- Kirjauduttuaan sisään, käyttäjä voi:
-  - Nähdä lisäämänsä lennot ja niiden tiedot
+### Pääsivu
+
+- Luotuaan tunnuksen käyttäjä voi kirjautua sisään, jonka jälkeen hän voi:
   - Lisätä uusia lentoja
-  - Nähdä tilastoja lennoista
+  - Nähdä lisäämänsä lennot ja niiden tiedot; käyttäjä voi nähdä vain omat lentonsa
+
+## Mahdolliset laajemmat toiminnallisuudet
+
+- Mahdollisuus nähdä tilastoja
+  - Käyttäjäkohtaiset tilastot omista lennoista, kuten kokonaislentotunnit
+  - Tilastoja eri lentopaikoista, konetyypeistä ja yksittäisistä koneista
+ 
+- Hakuominaisuus, omalla sivullaan
+  - Haku lentopaikan, konetyypin tai tietyn koneen perusteella
