@@ -1,10 +1,10 @@
 from tkinter import ttk, constants
 
 class LoginView:
-    def __init__(self, root, on_login, on_register):
+    def __init__(self, root, param_login, param_register):
         self._root = root
-        self._on_login = on_login
-        self._on_register = on_register
+        self._var_login = param_login
+        self._var_register = param_register
         self._frame = None
         self._initialize()
         self.pack()
@@ -24,7 +24,7 @@ class LoginView:
         self.password_label = ttk.Label(master=self._frame, text="Password")
         self.password_entry = ttk.Entry(master=self._frame, show="*")
 
-        self.register_button = ttk.Button(master=self._frame, text="New user", command=self._on_register)
+        self.register_button = ttk.Button(master=self._frame, text="New user", command=self._var_register)
         self.login_button = ttk.Button(master=self._frame, text="Login", command=self.login)
 
         self.username_label.grid(row=0, column=0, padx=5, pady=5)
@@ -37,4 +37,4 @@ class LoginView:
     def login(self):
         username = self.username_entry.get()
         password = self.password_entry.get()
-        self._on_login(username, password)
+        self._var_login(username, password)

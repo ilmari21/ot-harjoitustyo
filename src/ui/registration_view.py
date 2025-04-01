@@ -1,9 +1,9 @@
 from tkinter import ttk, constants
 
 class RegistrationView:
-    def __init__(self, root, on_register, go_back):
+    def __init__(self, root, param_register, go_back):
         self._root = root
-        self._on_register = on_register
+        self._var_register = param_register
         self._go_back = go_back
         self._initialize()
         self.pack()
@@ -36,4 +36,4 @@ class RegistrationView:
     def register(self):
         username = self.username_entry.get()
         password = self.password_entry.get()
-        self._on_register(username, password)
+        self._var_register(username, password)
