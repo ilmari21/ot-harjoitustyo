@@ -2,3 +2,4 @@
 
  - Luotu LoginView, RegisterView ja UI-luokat
  - Käyttäjä voi rekisteröityä ja kirjautua sisään
+ - Muutettu sovelluksen rakennetta
