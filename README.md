@@ -4,7 +4,6 @@ Tavoitteeni on luoda **virtuaalinen lokikirja**, johon *käyttäjä* voi lisät�
 
 ## Linkit
 
-- [Laskarit](./laskarit)
 - [Vaatimusmäärittely](./dokumentaatio/vaatimusmaarittely.md)
 - [Työaikakirjanpito](./dokumentaatio/tuntikirjanpito.md)
 
