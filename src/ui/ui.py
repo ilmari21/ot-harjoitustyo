@@ -1,6 +1,5 @@
-from tkinter import Tk
-from login_view import LoginView
-from registration_view import RegistrationView
+from ui.login_view import LoginView
+from ui.registration_view import RegistrationView
 
 class UI:
     def __init__(self, root):
@@ -53,12 +52,3 @@ class UI:
         for i in self._users:
             print(i)
         self._show_login()
-
-
-window = Tk()
-window.title("Virtual logbook")
-
-ui = UI(window)
-ui.start()
-
-window.mainloop()
