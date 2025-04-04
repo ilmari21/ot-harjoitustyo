@@ -2,11 +2,13 @@ import unittest
 from tkinter import Tk
 from ui.login_view import LoginView
 
+
 class TestLoginView(unittest.TestCase):
     def setUp(self):
-        self._root = Tk()        
+        self._root = Tk()
         self._login_tested = False
-        self._login_view = LoginView(self._root, self._login_for_testing, self._register_for_testing)
+        self._login_view = LoginView(
+            self._root, self._login_for_testing, self._register_for_testing)
 
     def _login_for_testing(self, username, password):
         self._login_tested = True
