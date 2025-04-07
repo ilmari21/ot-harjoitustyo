@@ -1,6 +1,7 @@
 from entities.user import User
 import db
 
+
 class UserRepository:
     def __init__(self):
         self._connection = db.get_db_connection()
@@ -13,7 +14,7 @@ class UserRepository:
         )
         self._connection.commit()
         return user
-    
+
     def find_user(self, username):
         cursor = self._connection.cursor()
         cursor.execute(

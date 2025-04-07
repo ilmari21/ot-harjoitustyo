@@ -2,9 +2,11 @@ import sqlite3
 
 con = sqlite3.connect("database.db")
 
+
 def init_db():
     create_tables(con)
-    
+
+
 def create_tables(con):
     cursor = get_db_connection()
 
@@ -16,6 +18,7 @@ def create_tables(con):
     )
 
     con.commit()
+
 
 def get_db_connection():
     con.row_factory = sqlite3.Row

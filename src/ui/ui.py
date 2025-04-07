@@ -1,6 +1,7 @@
 from ui.login_view import LoginView
 from ui.registration_view import RegistrationView
 
+
 class UI:
     def __init__(self, root):
         self._root = root

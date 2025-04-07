@@ -1,6 +1,7 @@
 from tkinter import ttk, constants
 from services.logbook_service import LogbookService
 
+
 class RegistrationView:
     def __init__(self, root, param_login):
         self._root = root

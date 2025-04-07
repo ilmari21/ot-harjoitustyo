@@ -2,6 +2,7 @@ from tkinter import Tk
 from ui.ui import UI
 from db import init_db
 
+
 def main():
     window = Tk()
     window.title("Virtual logbook")

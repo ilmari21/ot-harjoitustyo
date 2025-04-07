@@ -1,5 +1,6 @@
 from tkinter import ttk, constants
 
+
 class LoginView:
     def __init__(self, root, param_register, param_main):
         self._root = root
