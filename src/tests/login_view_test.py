@@ -2,7 +2,6 @@ import unittest
 from tkinter import Tk
 from ui.login_view import LoginView
 
-
 class TestLoginView(unittest.TestCase):
     def setUp(self):
         self._root = Tk()

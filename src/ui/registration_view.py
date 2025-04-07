@@ -1,11 +1,11 @@
 from tkinter import ttk, constants
-
+from services.logbook_service import LogbookService
 
 class RegistrationView:
-    def __init__(self, root, param_register, go_back):
+    def __init__(self, root, param_login):
         self._root = root
-        self._var_register = param_register
-        self._go_back = go_back
+        self._var_login = param_login
+        self._logbook_service = LogbookService()
         self._initialize()
         self.pack()
 
@@ -27,9 +27,9 @@ class RegistrationView:
         self.password_entry = ttk.Entry(master=self._frame, show="*")
 
         self.return_button = ttk.Button(
-            master=self._frame, text="Return", command=self._go_back)
+            master=self._frame, text="Return", command=self._var_login)
         self.register_button = ttk.Button(
-            master=self._frame, text="Register", command=self.register)
+            master=self._frame, text="Register", command=self._handle_registration)
 
         self.username_label.grid(row=0, column=0, padx=5, pady=5)
         self.username_entry.grid(row=0, column=1, padx=5, pady=5)
@@ -38,7 +38,19 @@ class RegistrationView:
         self.return_button.grid(row=2, column=0, padx=5, pady=5)
         self.register_button.grid(row=2, column=1, padx=5, pady=5)
 
-    def register(self):
+    def _handle_registration(self):
         username = self.username_entry.get()
         password = self.password_entry.get()
-        self._var_register(username, password)
+
+        if username == password:
+            print("error: username and password are same")
+            return
+        if len(username) < 5:
+            print("error: username too short")
+            return
+        if len(password) < 5:
+            print("error: password too short")
+            return
+
+        self._logbook_service.register_user(username, password)
+        self._var_login()

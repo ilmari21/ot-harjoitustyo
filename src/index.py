@@ -1,6 +1,6 @@
 from tkinter import Tk
 from ui.ui import UI
-
+from db import init_db
 
 def main():
     window = Tk()
@@ -8,6 +8,8 @@ def main():
 
     ui = UI(window)
     ui.start()
+
+    # init_db()
 
     window.mainloop()
 
