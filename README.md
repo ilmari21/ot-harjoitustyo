@@ -6,4 +6,4 @@ Tavoitteeni on luoda **virtuaalinen lokikirja**, johon *käyttäjä* voi lisät�
 
 - [Vaatimusmäärittely](./dokumentaatio/vaatimusmaarittely.md)
 - [Työaikakirjanpito](./dokumentaatio/tuntikirjanpito.md)
-
+- [Changelog](./dokumentaatio/changelog.md)
