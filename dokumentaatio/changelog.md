@@ -10,3 +10,4 @@
  - Toteutettu tietokantaan tallentaminen
  - Luotu MainView-luokka pääsivun toteuttamiseksi
  - Lisätty toiminnallisuus pääsivulle lentojen lisäämiseksi tietokantaan
+ - Yksikkötestaus UserRepository-luokan käyttäjän lisäämiseen
