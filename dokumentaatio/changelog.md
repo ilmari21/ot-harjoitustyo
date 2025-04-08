@@ -3,3 +3,9 @@
  - Luotu LoginView, RegisterView ja UI-luokat
  - Käyttäjä voi rekisteröityä ja kirjautua sisään
  - Muutettu sovelluksen rakennetta
+
+## Viikko 4
+
+ - Sovelluksen rakenne järjestetty uudelleen
+ - Toteutettu tietokantaan tallentaminen
+ - Luotu MainView-luokka pääsivun toteuttamiseksi
