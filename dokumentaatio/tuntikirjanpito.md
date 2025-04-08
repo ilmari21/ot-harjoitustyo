@@ -8,4 +8,5 @@
 |               | 1h            | Poetry invoke-tehtävien lisääminen, dokumenttien päivitystä |
 |               | 3h            | Sovelluksen rakenteen parantamista, yksikkötestauksen tekemistä |
 | 6.4           | 2h            | Sovelluksen rakenteen uudelleenjärjestelyä |
-| 7.4           | 2h            | Tietokantaan tallentamisen toteuttamista |
+| 7.4           | 3h            | Tietokantaan tallentamisen toteuttamista |
+|               | 1h            | Pääsivun toteuttamista |
