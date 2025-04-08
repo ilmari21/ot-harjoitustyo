@@ -2,7 +2,7 @@
 
 Tavoitteeni on luoda **virtuaalinen lokikirja**, johon *käyttäjä* voi lisätä lentämänsä *lennot*.
 
-Sovellukseen voi kirjautua luotuaan käyttäjätunnuksen, jonka jälkeen voi lisätä lentoja syöttämällä nelimerkkistä ICAO-tunnuksia noudattavat lähtö- ja saapumiskentät. Tässä kohtaa sovellus ei tarkista muuta kuin sen, että merkkejä on 4. Suomen lentokenttien ICAO-koodeja löytää kuitenkin mm. [täältä](https://fi.wikipedia.org/wiki/Suomen_lentoasemat_ja_-paikat)
+Sovellukseen voi kirjautua luotuaan käyttäjätunnuksen, jonka jälkeen voi lisätä lentoja syöttämällä nelimerkkistä ICAO-tunnuksia noudattavat lähtö- ja saapumiskentät. Tässä kohtaa sovellus ei tarkista muuta kuin sen, että merkkejä on 4. Suomen lentokenttien ICAO-koodeja löytää kuitenkin mm. [täältä](https://fi.wikipedia.org/wiki/Suomen_lentoasemat_ja_-paikat).
 
 ## Linkit
 
@@ -13,19 +13,19 @@ Sovellukseen voi kirjautua luotuaan käyttäjätunnuksen, jonka jälkeen voi lis
 
 ## Sovelluksen käytön aloitus
 
-1. Asenna poetry
+1. Asenna poetry:
 
 ```
 poetry install
 ```
 
-2. Alusta tietokanta
+2. Alusta tietokanta:
 
 ```
 poetry run invoke init-db
 ```
 
-3. Sovelluksen käynnistäminen
+3. Sovelluksen käynnistäminen:
 
 ```
 poetry run invoke start
@@ -33,19 +33,19 @@ poetry run invoke start
 
 ## Sovelluksen testaaminen
 
-Staattisen analyysin koodista voi luoda komennolla
+Staattisen analyysin koodista voi luoda komennolla:
 
 ```
 poetry run invoke lint
 ```
 
-Sovellusta voi testata suorittamalla komento
+Sovellusta voi testata suorittamalla komento:
 
 ```
 poetry run invoke test
 ```
 
-ja kattavuusraportin voi luoda komennolla
+ja kattavuusraportin voi luoda komennolla:
 
 ```
 poetry run coverage-report
