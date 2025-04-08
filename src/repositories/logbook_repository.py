@@ -14,3 +14,8 @@ class LogbookRepository:
         )
         self._connection.commit()
         return flight
+
+    def clear(self):
+        cursor = self._connection.cursor()
+        cursor.execute("DELETE FROM flights")
+        self._connection.commit()
