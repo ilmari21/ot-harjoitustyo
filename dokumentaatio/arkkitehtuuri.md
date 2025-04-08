@@ -1,3 +1,3 @@
-### Arkkitehtuuri
+# Arkkitehtuuri
 
 ## Sovelluksen rakenne
