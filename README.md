@@ -9,6 +9,7 @@ Sovellukseen voi kirjautua luotuaan käyttäjätunnuksen, jonka jälkeen voi lis
 - [Vaatimusmäärittely](./dokumentaatio/vaatimusmaarittely.md)
 - [Työaikakirjanpito](./dokumentaatio/tuntikirjanpito.md)
 - [Changelog](./dokumentaatio/changelog.md)
+- [Arkkitehtuuri](./dokumentaatio/arkkitehtuuri.md)
 
 ## Sovelluksen käytön aloitus
 
