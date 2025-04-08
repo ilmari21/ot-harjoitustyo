@@ -7,6 +7,7 @@ class RegistrationView:
         self._root = root
         self._var_login = param_login
         self._logbook_service = LogbookService()
+        self._frame = None
         self._initialize()
         self.pack()
 
@@ -43,14 +44,14 @@ class RegistrationView:
         username = self.username_entry.get()
         password = self.password_entry.get()
 
-        if username == password:
-            print("error: username and password are same")
-            return
         if len(username) < 5:
             print("error: username too short")
             return
         if len(password) < 5:
             print("error: password too short")
+            return
+        if username == password:
+            print("error: username and password are same")
             return
 
         self._logbook_service.register_user(username, password)

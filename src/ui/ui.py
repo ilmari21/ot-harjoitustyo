@@ -1,5 +1,6 @@
 from ui.login_view import LoginView
 from ui.registration_view import RegistrationView
+from ui.main_view import MainView
 
 
 class UI:
@@ -26,4 +27,5 @@ class UI:
     def _show_main(self):
         if self._current_view:
             self._current_view.destroy()
-        self._current_view = None  # WIP
+        self._current_view = MainView(
+            self._root, self._show_login)

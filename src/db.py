@@ -3,7 +3,18 @@ import sqlite3
 con = sqlite3.connect("database.db")
 
 
+def get_db_connection():
+    con.row_factory = sqlite3.Row
+    return con
+
+
 def init_db():
+    cursor = get_db_connection()
+
+    cursor.execute(
+        """DROP TABLE IF EXISTS users;"""
+    )
+
     create_tables(con)
 
 
@@ -19,7 +30,5 @@ def create_tables(con):
 
     con.commit()
 
-
-def get_db_connection():
-    con.row_factory = sqlite3.Row
-    return con
+if __name__ == "__main__":
+    init_db()

@@ -1,4 +1,5 @@
 from tkinter import ttk, constants
+from services.logbook_service import LogbookService
 
 
 class LoginView:
@@ -6,6 +7,7 @@ class LoginView:
         self._root = root
         self._var_register = param_register
         self._var_main = param_main
+        self._logbook_service = LogbookService()
         self._frame = None
         self._initialize()
         self.pack()
@@ -38,13 +40,10 @@ class LoginView:
         self.login_button.grid(row=2, column=1, padx=5, pady=5)
 
     def _handle_login(self):
-        # username = self.username_entry.get()
-        # password = self.password_entry.get()
-        # if username in self._var_register._users and self._var_register._users[username] == password:
-        #     self._current_user = username
-        #     print("login succesful")
-        #     self._var_main()
-        # else:
-        #     print("login failed")
+        username = self.username_entry.get()
+        password = self.password_entry.get()
 
-        self._var_main()
+        if self._logbook_service.login(username, password):
+            self._var_main()
+        else:
+            self.password_entry.delete(0, constants.END)
