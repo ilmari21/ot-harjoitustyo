@@ -23,3 +23,8 @@ class UserRepository:
         )
         row = cursor.fetchone()
         return User(row["username"], row["password"]) if row else None
+
+    def clear(self):
+        cursor = self._connection.cursor()
+        cursor.execute("DELETE FROM users")
+        self._connection.commit()
