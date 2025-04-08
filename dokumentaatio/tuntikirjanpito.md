@@ -10,3 +10,4 @@
 | 6.4           | 2h            | Sovelluksen rakenteen uudelleenjärjestelyä |
 | 7.4           | 3h            | Tietokantaan tallentamisen toteuttamista |
 |               | 1h            | Pääsivun toteuttamista |
+| 8.4           | 2h            | Pääsivun toiminnallisuuden toteuttamista |
