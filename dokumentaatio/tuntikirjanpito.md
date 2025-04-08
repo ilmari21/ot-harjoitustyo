@@ -11,3 +11,6 @@
 | 7.4           | 3h            | Tietokantaan tallentamisen toteuttamista |
 |               | 1h            | Pääsivun toteuttamista |
 | 8.4           | 2h            | Pääsivun toiminnallisuuden toteuttamista |
+|               | 2h            | Yksikkötestauksien toteuttamista |
+| yhteensä      | 20h           |
+
