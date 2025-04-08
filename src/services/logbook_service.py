@@ -17,7 +17,7 @@ class LogbookService():
 
         user = self._user_repository.create(User(username, password))
         return user
-    
+
     def login(self, username, password):
         login_user = self._user_repository.find_user(username)
 
@@ -27,10 +27,11 @@ class LogbookService():
         else:
             print("Invalid username or password")
             return False
-        
+
     def add_flight(self, departure, arrival):
         if not self._user:
             print("No user logged in")
             return None
-        flight = self._logbook_repository.create(Flight(self._user.username, departure, arrival))
+        flight = self._logbook_repository.create(
+            Flight(self._user.username, departure, arrival))
         return flight

@@ -41,5 +41,6 @@ def create_tables(con):
 
     con.commit()
 
+
 if __name__ == "__main__":
     init_db()
