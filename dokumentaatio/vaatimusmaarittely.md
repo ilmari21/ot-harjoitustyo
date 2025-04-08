@@ -12,19 +12,19 @@ Sovelluksessa on vain yhdenlaisia käyttäjiä; *lentäjiä*. Mahdollista on my�
 
 ### Kirjautumissivu (etusivu)
 
-- Jos tunnus on olemassa käyttäjä voi kirjautua sisään, kunhan tunnus ja salasana täsmäävät
-- Jos tunnusta ei ole, voi käyttäjä siirtyä rekisteröitymissivulle luomaan tunnuksen
+- Jos tunnus on olemassa käyttäjä voi kirjautua sisään, kunhan tunnus ja salasana täsmäävät **"tehty"**
+- Jos tunnusta ei ole, voi käyttäjä siirtyä rekisteröitymissivulle luomaan tunnuksen **"tehty"**
  
 ### Rekisteröitymissivu
 
 - Käyttäjä voi luoda käyttäjätunnuksen
-  - Tunnukseen on lisättävä salasana, joka ei saa olla sama kuin käyttäjätunnus, ja tulee noudattaa minimi- ja maksimipituutta
-  - Tunnuksen avulla voi kirjautua järjestelmään
+  - Tunnukseen on lisättävä salasana, joka ei saa olla sama kuin käyttäjätunnus, ja tulee noudattaa minimi- ja maksimipituutta **"tehty"**
+  - Tunnuksen avulla voi kirjautua järjestelmään **"tehty"**
 
 ### Pääsivu
 
 - Kun käyttäjä on kirjautunut sisään, siirtyy hän pääsivulle, jossa hän voi
-  - Lisätä uusia lentoja
+  - Lisätä uusia lentoja **"tehty"**
   - Nähdä lisäämänsä lennot ja niiden tiedot; käyttäjä voi nähdä vain omat lentonsa
 
 ## Mahdolliset laajemmat toiminnallisuudet
