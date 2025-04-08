@@ -1,13 +1,12 @@
 from tkinter import ttk, constants
-from services.logbook_service import LogbookService
 
 
 class LoginView:
-    def __init__(self, root, param_register, param_main):
+    def __init__(self, root, param_register, param_main, logbook_service):
         self._root = root
         self._var_register = param_register
         self._var_main = param_main
-        self._logbook_service = LogbookService()
+        self._logbook_service = logbook_service
         self._frame = None
         self._initialize()
         self.pack()

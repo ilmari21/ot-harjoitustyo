@@ -14,6 +14,9 @@ def init_db():
     cursor.execute(
         """DROP TABLE IF EXISTS users;"""
     )
+    cursor.execute(
+        """DROP TABLE IF EXISTS flights;"""
+    )
 
     create_tables(con)
 
@@ -25,6 +28,14 @@ def create_tables(con):
         """CREATE TABLE users (
             username TEXT PRIMARY KEY,
             password TEXT
+        );"""
+    )
+
+    cursor.execute(
+        """CREATE TABLE flights (
+            pilot TEXT,
+            departure TEXT,
+            arrival TEXT
         );"""
     )
 
