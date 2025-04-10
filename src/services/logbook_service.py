@@ -1,3 +1,4 @@
+from tkinter import messagebox
 from entities.user import User
 from entities.logbook import Flight
 from repositories.user_repository import UserRepository
@@ -12,7 +13,7 @@ class LogbookService():
 
     def register_user(self, username, password):
         if self._user_repository.find_user(username):
-            print("Username already exists")
+            messagebox.showinfo("Error", "Username already exists")
             return
 
         user = self._user_repository.create(User(username, password))
@@ -25,12 +26,12 @@ class LogbookService():
             self._user = login_user
             return True
         else:
-            print("Invalid username or password")
+            messagebox.showinfo("Error", "Invalid username or password")
             return False
 
     def add_flight(self, departure, arrival):
         if not self._user:
-            print("No user logged in")
+            messagebox.showinfo("Error", "No user logged in")
             return None
         flight = self._logbook_repository.create(
             Flight(self._user.username, departure, arrival))

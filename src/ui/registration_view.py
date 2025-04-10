@@ -1,4 +1,4 @@
-from tkinter import ttk, constants
+from tkinter import ttk, constants, messagebox
 
 
 class RegistrationView:
@@ -44,14 +44,17 @@ class RegistrationView:
         password = self.password_entry.get()
 
         if len(username) < 5:
-            print("error: username too short")
+            messagebox.showinfo("Error", "Username is too short")
             return
         if len(password) < 5:
-            print("error: password too short")
+            messagebox.showinfo("Error", "Password is too short")
             return
         if username == password:
-            print("error: username and password are same")
+            messagebox.showinfo("Error", "Username and password are same")
             return
 
-        self._logbook_service.register_user(username, password)
-        self._var_login()
+        add_user = self._logbook_service.register_user(username, password)
+
+        if add_user != None:
+            messagebox.showinfo("Success", "User created!")
+            self._var_login()

@@ -1,4 +1,4 @@
-from tkinter import ttk, constants
+from tkinter import ttk, constants, messagebox
 
 
 class MainView:
@@ -45,13 +45,13 @@ class MainView:
         arrival = self.arrival_entry.get()
 
         if len(departure) != 4:
-            print("error: ICAO code is exactly 4 letters")
+            messagebox.showinfo("Error", "Enter departure airport ICAO code; it is exactly 4 letters")
             return
         if len(arrival) != 4:
-            print("error: ICAO code is exactly 4 letters")
+            messagebox.showinfo("Error", "Enter arrival airport ICAO code; it is exactly 4 letters")
             return
 
         self._logbook_service.add_flight(departure, arrival)
         self.departure_entry.delete(0, constants.END)
         self.arrival_entry.delete(0, constants.END)
-        print("Flight added!")
+        messagebox.showinfo("Success", "Flight added!")
