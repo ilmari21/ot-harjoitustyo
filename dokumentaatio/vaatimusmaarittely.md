@@ -25,7 +25,7 @@ Sovelluksessa on vain yhdenlaisia käyttäjiä; *lentäjiä*. Mahdollista on my�
 
 - Kun käyttäjä on kirjautunut sisään, siirtyy hän pääsivulle, jossa hän voi
   - Lisätä uusia lentoja **"tehty"**
-  - Nähdä lisäämänsä lennot ja niiden tiedot; käyttäjä voi nähdä vain omat lentonsa
+  - Nähdä lisäämänsä lennot ja niiden tiedot; käyttäjä voi nähdä vain omat lentonsa **"tehty"**
 
 ## Mahdolliset laajemmat toiminnallisuudet
 
