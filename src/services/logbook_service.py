@@ -36,3 +36,8 @@ class LogbookService():
         flight = self._logbook_repository.create(
             Flight(self._user.username, departure, arrival))
         return flight
+
+    def get_flights_by_user(self):
+        if not self._user:
+            return []
+        return self._logbook_repository.find_by_user(self._user.username)

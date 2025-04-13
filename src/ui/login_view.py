@@ -8,11 +8,14 @@ class LoginView:
         self._var_main = param_main
         self._logbook_service = logbook_service
         self._frame = None
+
+        self._root.minsize(400, 300)
+
         self._initialize()
         self.pack()
 
     def pack(self):
-        self._frame.pack(fill=constants.X)
+        self._frame.pack(fill=constants.BOTH, expand=True, padx=20, pady=20)
 
     def destroy(self):
         self._frame.destroy()
@@ -27,16 +30,25 @@ class LoginView:
         self.password_entry = ttk.Entry(master=self._frame, show="*")
 
         self.register_button = ttk.Button(
-            master=self._frame, text="New user", command=self._var_register)
-        self.login_button = ttk.Button(
-            master=self._frame, text="Login", command=self._handle_login)
+            master=self._frame,
+            text="New user",
+            command=self._var_register,
+            width=15
+        )
 
-        self.username_label.grid(row=0, column=0, padx=5, pady=5)
-        self.username_entry.grid(row=0, column=1, padx=5, pady=5)
-        self.password_label.grid(row=1, column=0, padx=5, pady=5)
-        self.password_entry.grid(row=1, column=1, padx=5, pady=5)
-        self.register_button.grid(row=2, column=0, padx=5, pady=5)
-        self.login_button.grid(row=2, column=1, padx=5, pady=5)
+        self.login_button = ttk.Button(
+            master=self._frame,
+            text="Login",
+            command=self._handle_login,
+            width=15
+        )
+
+        self.username_label.grid(row=0, column=0, padx=10, pady=10)
+        self.username_entry.grid(row=0, column=1, padx=10, pady=10)
+        self.password_label.grid(row=1, column=0, padx=10, pady=10)
+        self.password_entry.grid(row=1, column=1, padx=10, pady=10)
+        self.register_button.grid(row=2, column=0, padx=10, pady=20)
+        self.login_button.grid(row=2, column=1, padx=10, pady=20)
 
     def _handle_login(self):
         username = self.username_entry.get()

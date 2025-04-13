@@ -19,3 +19,12 @@ class LogbookRepository:
         cursor = self._connection.cursor()
         cursor.execute("DELETE FROM flights")
         self._connection.commit()
+
+    def find_by_user(self, username):
+        cursor = self._connection.cursor()
+        cursor.execute(
+            "SELECT * FROM flights WHERE pilot = ?",
+            (username,)
+        )
+        rows = cursor.fetchall()
+        return [Flight(row["pilot"], row["departure"], row["arrival"]) for row in rows]
