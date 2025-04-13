@@ -9,6 +9,7 @@ class MainView:
         self._logbook_service = logbook_service
         self._frame = None
         self._show_flights_frame = None
+        self._add_flight_frame = None
 
         self._root.minsize(400, 300)
 
@@ -23,34 +24,62 @@ class MainView:
 
     def _initialize(self):
         self._frame = ttk.Frame(master=self._root)
-
         self._show_flights_frame = ttk.Frame(master=self._frame)
+        self._add_flight_frame = ttk.Frame(master=self._frame)
 
-        self.departure_label = ttk.Label(
-            master=self._frame, text="Enter departure")
-        self.departure_entry = ttk.Entry(master=self._frame)
+        self._show_main_view()
 
-        self.arrival_label = ttk.Label(
-            master=self._frame, text="Enter arrival")
-        self.arrival_entry = ttk.Entry(master=self._frame)
+    def _show_main_view(self):
+        if self._add_flight_frame:
+            self._add_flight_frame.grid_remove()
 
-        self.return_button = ttk.Button(
+        self.logout_button = ttk.Button(
             master=self._frame,
             text="Logout",
             command=self._var_login,
             width=15
         )
 
-        self.register_button = ttk.Button(
-            master=self._frame, text="Add flight", command=self._handle_add_flight, width=15)
+        self.show_add_flight_button = ttk.Button(
+            master=self._frame, text="Add flight", command=self._show_add_flight, width=15)
+
+        self.logout_button.grid(row=0, column=0, padx=10, pady=20)
+        self.show_add_flight_button.grid(row=0, column=1, padx=10, pady=20)
+        self._show_flights_frame.grid(
+            row=1, column=0, columnspan=2, padx=10, pady=10)
+        self._update_added_flights_list()
+
+    def _show_add_flight(self):
+        self._show_flights_frame.grid_remove()
+
+        self.logout_button.grid_remove()
+        self.show_add_flight_button.grid_remove()
+
+        self.departure_label = ttk.Label(
+            master=self._add_flight_frame, text="Enter departure")
+        self.departure_entry = ttk.Entry(master=self._add_flight_frame)
+
+        self.arrival_label = ttk.Label(
+            master=self._add_flight_frame, text="Enter arrival")
+        self.arrival_entry = ttk.Entry(master=self._add_flight_frame)
+
+        self.return_button = ttk.Button(
+            master=self._add_flight_frame,
+            text="Return",
+            command=self._show_main_view,
+            width=15
+        )
+
+        self.show_add_flight_button = ttk.Button(
+            master=self._add_flight_frame, text="Add flight", command=self._handle_add_flight, width=15)
 
         self.departure_label.grid(row=0, column=0, padx=10, pady=10)
         self.departure_entry.grid(row=0, column=1, padx=10, pady=10)
         self.arrival_label.grid(row=1, column=0, padx=10, pady=10)
         self.arrival_entry.grid(row=1, column=1, padx=10, pady=10)
         self.return_button.grid(row=2, column=0, padx=10, pady=20)
-        self.register_button.grid(row=2, column=1, padx=10, pady=20)
-        self._show_flights_frame.grid(
+        self.show_add_flight_button.grid(row=2, column=1, padx=10, pady=20)
+        self._add_flight_frame.grid(
             row=3, column=0, columnspan=2, padx=10, pady=10)
         self._update_added_flights_list()
 
@@ -94,4 +123,4 @@ class MainView:
         self.departure_entry.delete(0, constants.END)
         self.arrival_entry.delete(0, constants.END)
         messagebox.showinfo("Success", "Flight added!")
-        self._update_added_flights_list()
+        self._show_main_view()
