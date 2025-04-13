@@ -15,3 +15,4 @@
 ## Viikko 5
 
  - Käyttäjän lisäämät lennot näkyvät pääsivulla
+ - Pääsivulla lennetyt lennot ja lentojen lisääminen jaettu eri näkymiin
