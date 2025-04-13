@@ -50,7 +50,8 @@ class MainView:
         self.arrival_entry.grid(row=1, column=1, padx=10, pady=10)
         self.return_button.grid(row=2, column=0, padx=10, pady=20)
         self.register_button.grid(row=2, column=1, padx=10, pady=20)
-        self._show_flights_frame.grid(row=3, column=0, columnspan=2, padx=10, pady=10)
+        self._show_flights_frame.grid(
+            row=3, column=0, columnspan=2, padx=10, pady=10)
         self._update_added_flights_list()
 
     def _update_added_flights_list(self):
@@ -81,10 +82,12 @@ class MainView:
         arrival = self.arrival_entry.get()
 
         if len(departure) != 4:
-            messagebox.showinfo("Error", "Enter departure airport ICAO code; it is exactly 4 letters")
+            messagebox.showinfo(
+                "Error", "Enter departure airport ICAO code; it is exactly 4 letters")
             return
         if len(arrival) != 4:
-            messagebox.showinfo("Error", "Enter arrival airport ICAO code; it is exactly 4 letters")
+            messagebox.showinfo(
+                "Error", "Enter arrival airport ICAO code; it is exactly 4 letters")
             return
 
         self._logbook_service.add_flight(departure, arrival)
