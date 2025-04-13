@@ -14,5 +14,5 @@
 |               | 2h            | Yksikkötestauksien toteuttamista |
 | 10.4          | 1h            | Käyttöliittymän parantamista |
 | 11.4          | 1h            | Graafisen käyttöliittymän parantamista |
-| yhteensä      | 22h           |
-
+| 13.4          | 1h            | Pääsivun parantamista |
+| yhteensä      | 23h           |
