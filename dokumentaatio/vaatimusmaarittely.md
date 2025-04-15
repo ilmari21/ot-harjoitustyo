@@ -24,13 +24,13 @@ Sovelluksessa on vain yhdenlaisia käyttäjiä; *lentäjiä*. Mahdollista on my�
 ### Pääsivu
 
 - Kun käyttäjä on kirjautunut sisään, siirtyy hän pääsivulle, jossa hän voi
-  - Lisätä uusia lentoja **"tehty" (tosin joitakin ominaisuuksia vielä puuttuu)**
+  - Lisätä uusia lentoja **"tehty" (tosin joitakin ominaisuuksia vielä puuttuu, kuten konetyypin ja rekisteritunnuksen lisääminen)**
   - Nähdä lisäämänsä lennot ja niiden tiedot; käyttäjä voi nähdä vain omat lentonsa **"tehty"**
 
 ## Mahdolliset laajemmat toiminnallisuudet
 
 - Mahdollisuus nähdä tilastoja
-  - Käyttäjäkohtaiset tilastot omista lennoista, kuten kokonaislentotunnit
+  - Käyttäjäkohtaiset tilastot omista lennoista, kuten kokonaislentotunnit **"tehty osittain: lisättyjen lentojen määrä näkyy pääsivulla"**
   - Tilastoja eri lentopaikoista, kuten lentojen ja kävijöiden määrä
   - Tilastoja lentokoneista, kuten lentotunnit, lentojen ja eri lentäjien määrä
  
