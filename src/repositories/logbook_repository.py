@@ -9,7 +9,8 @@ class LogbookRepository:
     def create(self, flight):
         cursor = self._connection.cursor()
         cursor.execute(
-            "INSERT INTO flights (pilot, departure, arrival, dep_time, arr_time) VALUES (?, ?, ?, ?, ?)",
+            """INSERT INTO flights (pilot, departure, arrival, dep_time, arr_time) 
+               VALUES (?, ?, ?, ?, ?)""",
             (flight.pilot, flight.departure, flight.arrival,
              flight.dep_time, flight.arr_time)
         )
@@ -28,4 +29,12 @@ class LogbookRepository:
             (username,)
         )
         rows = cursor.fetchall()
-        return [Flight(row["pilot"], row["departure"], row["arrival"], row["dep_time"], row["arr_time"]) for row in rows]
+        return [
+            Flight(
+                row["pilot"], 
+                row["departure"], 
+                row["arrival"], 
+                row["dep_time"], 
+                row["arr_time"]
+            ) for row in rows
+        ]

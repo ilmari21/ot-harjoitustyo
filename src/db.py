@@ -21,7 +21,7 @@ def init_db():
     create_tables(con)
 
 
-def create_tables(con):
+def create_tables(connection):
     cursor = get_db_connection()
 
     cursor.execute(
@@ -41,7 +41,7 @@ def create_tables(con):
         );"""
     )
 
-    con.commit()
+    connection.commit()
 
 
 if __name__ == "__main__":

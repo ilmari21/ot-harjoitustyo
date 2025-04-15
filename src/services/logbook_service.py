@@ -14,8 +14,7 @@ class LogbookService():
     def register_user(self, username, password):
         if self._user_repository.find_user(username):
             messagebox.showinfo("Error", "Username already exists")
-            return
-
+            return None
         user = self._user_repository.create(User(username, password))
         return user
 
@@ -25,9 +24,8 @@ class LogbookService():
         if login_user and login_user.password == password:
             self._user = login_user
             return True
-        else:
-            messagebox.showinfo("Error", "Invalid username or password")
-            return False
+        messagebox.showinfo("Error", "Invalid username or password")
+        return False
 
     def add_flight(self, departure, arrival, dep_time=None, arr_time=None):
         if not self._user:
