@@ -17,5 +17,5 @@
 | 13.4          | 1h            | Pääsivun parantamista |
 | 14.4          | 2h            | Lentoaikojen syöttämisen testaamista |
 |               | 2h            | Lentoaikojen syöttämisen toteuttamista |
-| 15.4          | 1h            | Yksikkötestauksen tekemistä |
-| yhteensä      | 28h           |
+| 15.4          | 2h            | Yksikkötestauksen tekemistä |
+| yhteensä      | 29h           |
