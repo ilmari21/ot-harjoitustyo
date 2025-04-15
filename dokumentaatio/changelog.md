@@ -16,3 +16,4 @@
 
  - Käyttäjän lisäämät lennot näkyvät pääsivulla
  - Pääsivulla lennetyt lennot ja lentojen lisääminen jaettu eri näkymiin
+ - Käyttäjä voi lisätä lähtö- ja saapumisajat lentoihin
