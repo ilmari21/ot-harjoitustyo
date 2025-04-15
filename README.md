@@ -10,7 +10,6 @@ Sovellukseen voi kirjautua luotuaan käyttäjätunnuksen, jonka jälkeen voi lis
 - [Työaikakirjanpito](./dokumentaatio/tuntikirjanpito.md)
 - [Changelog](./dokumentaatio/changelog.md)
 - [Arkkitehtuuri](./dokumentaatio/arkkitehtuuri.md)
-- [Arkkitehtuuri](./dokumentaatio/arkkitehtuuri.md)
 - [Release](https://github.com/ilmari21/ot-harjoitustyo/releases/tag/viikko5)
 
 ## Sovelluksen käytön aloitus
