@@ -11,7 +11,7 @@ Sovellukseen voi kirjautua luotuaan käyttäjätunnuksen, jonka jälkeen voi lis
 - [Changelog](./dokumentaatio/changelog.md)
 - [Arkkitehtuuri](./dokumentaatio/arkkitehtuuri.md)
 - [Arkkitehtuuri](./dokumentaatio/arkkitehtuuri.md)
-- [Release](./releases/tag/viikko5)
+- [Release](/releases/tag/viikko5)
 
 ## Sovelluksen käytön aloitus
 
