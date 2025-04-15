@@ -10,6 +10,8 @@ Sovellukseen voi kirjautua luotuaan käyttäjätunnuksen, jonka jälkeen voi lis
 - [Työaikakirjanpito](./dokumentaatio/tuntikirjanpito.md)
 - [Changelog](./dokumentaatio/changelog.md)
 - [Arkkitehtuuri](./dokumentaatio/arkkitehtuuri.md)
+- [Arkkitehtuuri](./dokumentaatio/arkkitehtuuri.md)
+- [Release](./releases/tag/viikko5)
 
 ## Sovelluksen käytön aloitus
 
@@ -18,6 +20,11 @@ Sovellukseen voi kirjautua luotuaan käyttäjätunnuksen, jonka jälkeen voi lis
 ```
 poetry install
 ```
+tämä saattaa johtaa virheilmoitukseen "The current project could not be installed...", alustamisen pitäisi silti kuitenkin onnistua. Voit myös käyttää komentoa
+```
+poetry install --no-root
+```
+jolloin virheilmoitusta ei pitäisi tulla.
 
 2. Alusta tietokanta:
 
