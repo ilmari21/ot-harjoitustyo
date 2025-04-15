@@ -10,9 +10,9 @@ class TestUserRepository(unittest.TestCase):
 
     def test_user_registration(self):
         test_user = User("teuvo", "testi")
-        created_user = self._user_repository.create(test_user)
-        self.assertEqual(test_user.username, created_user.username)
-        self.assertEqual(test_user.password, created_user.password)
+        create_user = self._user_repository.create(test_user)
+        self.assertEqual(test_user.username, create_user.username)
+        self.assertEqual(test_user.password, create_user.password)
 
     def test_find_user(self):
         test_user = User("teuvo", "testi")
