@@ -3,6 +3,7 @@ from services.logbook_service import LogbookService
 from repositories.user_repository import UserRepository
 from repositories.logbook_repository import LogbookRepository
 
+
 class TestLogbookService(unittest.TestCase):
     def setUp(self):
         self._logbook_service = LogbookService()
@@ -16,9 +17,10 @@ class TestLogbookService(unittest.TestCase):
     def test_user_registration(self):
         test_username = "teuvo"
         test_password = "testi"
-        
-        created_user = self._logbook_service.register_user(test_username, test_password)
-        
+
+        created_user = self._logbook_service.register_user(
+            test_username, test_password)
+
         self.assertIsNotNone(created_user)
         self.assertEqual(created_user.username, test_username)
         self.assertEqual(created_user.password, test_password)
@@ -34,7 +36,8 @@ class TestLogbookService(unittest.TestCase):
 
         self._logbook_service.register_user(test_username, test_password)
 
-        create_user = self._logbook_service.register_user(test_username, "teppo")
+        create_user = self._logbook_service.register_user(
+            test_username, "teppo")
 
         self.assertIsNone(create_user)
 

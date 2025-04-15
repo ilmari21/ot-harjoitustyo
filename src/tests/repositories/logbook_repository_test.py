@@ -19,7 +19,8 @@ class TestLogbookRepository(unittest.TestCase):
     def test_find_flights(self):
         test_flight = Flight("teuvo", "EFHK", "EFTP", "12:00", "13:30")
         self._logbook_repository.create(test_flight)
-        flight_search = self._logbook_repository.find_by_user(test_flight.pilot)
+        flight_search = self._logbook_repository.find_by_user(
+            test_flight.pilot)
         self.assertEqual(len(flight_search), 1)
         self.assertEqual(flight_search[0].pilot, test_flight.pilot)
         self.assertEqual(flight_search[0].departure, test_flight.departure)
@@ -35,5 +36,6 @@ class TestLogbookRepository(unittest.TestCase):
         test_flight = Flight("teuvo", "EFHK", "EFTP", "12:00", "13:30")
         self._logbook_repository.create(test_flight)
         self._logbook_repository.clear()
-        flight_search = self._logbook_repository.find_by_user(test_flight.pilot)
+        flight_search = self._logbook_repository.find_by_user(
+            test_flight.pilot)
         self.assertEqual(len(flight_search), 0)
