@@ -29,12 +29,12 @@ class LogbookService():
             messagebox.showinfo("Error", "Invalid username or password")
             return False
 
-    def add_flight(self, departure, arrival):
+    def add_flight(self, departure, arrival, dep_time=None, arr_time=None):
         if not self._user:
             messagebox.showinfo("Error", "No user logged in")
             return None
         flight = self._logbook_repository.create(
-            Flight(self._user.username, departure, arrival))
+            Flight(self._user.username, departure, arrival, dep_time, arr_time))
         return flight
 
     def get_flights_by_user(self):

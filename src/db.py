@@ -35,7 +35,9 @@ def create_tables(con):
         """CREATE TABLE flights (
             pilot TEXT,
             departure TEXT,
-            arrival TEXT
+            arrival TEXT,
+            dep_time TEXT,
+            arr_time TEXT
         );"""
     )
 
