@@ -1,6 +1,6 @@
 ## Viikko 3
 
- - Luotu LoginView, RegisterView ja UI-luokat
+ - Luotu LoginView, RegisrationView ja UI-luokat
  - Käyttäjä voi rekisteröityä ja kirjautua sisään
  - Muutettu sovelluksen rakennetta
 
