@@ -15,5 +15,6 @@
 | 10.4          | 1h            | Käyttöliittymän parantamista |
 | 11.4          | 1h            | Graafisen käyttöliittymän parantamista |
 | 13.4          | 1h            | Pääsivun parantamista |
-| 14.4          | 2h            | Aikojen syöttämisen testaamista |
+| 14.4          | 2h            | Lentoaikojen syöttämisen testaamista |
+|               | 2h            | Lentoaikojen syöttämisen toteuttamista |
 | yhteensä      | 25h           |
