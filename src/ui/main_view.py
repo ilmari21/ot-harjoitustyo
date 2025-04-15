@@ -76,7 +76,7 @@ class MainView:
         self.arr_time_label = ttk.Label(
             master=self._add_flight_frame, text="Arrival time (HH:MM)")
         self.arr_time_entry = ttk.Entry(master=self._add_flight_frame)
-        self.arr_time_entry.insert(0, "00:00")        
+        self.arr_time_entry.insert(0, "00:00")
 
         self.return_button = ttk.Button(
             master=self._add_flight_frame,
@@ -163,7 +163,8 @@ class MainView:
                 "Error", "Enter arrival time in HH:MM format")
             return
 
-        self._logbook_service.add_flight(departure, arrival, dep_time, arr_time)
+        self._logbook_service.add_flight(
+            departure, arrival, dep_time, arr_time)
         self.departure_entry.delete(0, constants.END)
         self.arrival_entry.delete(0, constants.END)
         self.dep_time_entry.delete(0, constants.END)
