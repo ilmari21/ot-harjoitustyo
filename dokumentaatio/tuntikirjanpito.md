@@ -20,4 +20,5 @@
 | 15.4          | 2h            | Koodin laadun parannuksia, dokumenttien päivitys |
 |               | 2h            | Yksikkötestauksen toteutus |
 |               | 1h            | Dokumenttien päivitys |
-| yhteensä      | 33h           |
+| 26.4          | 2h            | Docstringien tekemistä, pieniä parannuksia |
+| yhteensä      | 35h           |
