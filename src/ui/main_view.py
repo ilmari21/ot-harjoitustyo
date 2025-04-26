@@ -3,7 +3,11 @@ import re
 
 
 class MainView:
+    """Class responsible for displaying the main view of the app."""
+
     def __init__(self, root, param_login, current_user, logbook_service):
+        """Constructor of the class; creates the main view."""
+
         self._root = root
 
         self._var_login = param_login
@@ -22,12 +26,15 @@ class MainView:
         self.pack()
 
     def pack(self):
+        """Displays the view."""
         self._frame.pack(fill=constants.BOTH, expand=True, padx=20, pady=20)
 
     def destroy(self):
+        """Destroys the view."""
         self._frame.destroy()
 
     def _initialize(self):
+        """Initializes the main view UI elements."""
         self._frame = ttk.Frame(master=self._root)
         self._show_flights_frame = ttk.Frame(master=self._frame)
         self._add_flight_frame = ttk.Frame(master=self._frame)
@@ -35,6 +42,7 @@ class MainView:
         self._show_main_view()
 
     def _show_main_view(self):
+        """Displays the logbook view where the added flights are listed."""
         if self._add_flight_frame:
             self._add_flight_frame.grid_remove()
 
@@ -55,6 +63,7 @@ class MainView:
         self._update_added_flights_list()
 
     def _show_add_flight(self):
+        """Displays the flight adding view where the a new flight can be added."""
         self._show_flights_frame.grid_remove()
 
         self.logout_button.grid_remove()
@@ -107,6 +116,7 @@ class MainView:
         self._update_added_flights_list()
 
     def _update_added_flights_list(self):
+        """Updates the list of added flights."""
         for widget in self._show_flights_frame.winfo_children():
             widget.destroy()
 
@@ -131,6 +141,7 @@ class MainView:
         ).grid(row=len(flights) + 1, column=0, columnspan=2, pady=5)
 
     def _handle_add_flight(self):
+        """Method responsible for the addition of a new flight."""
         departure = self.departure_entry.get()
         arrival = self.arrival_entry.get()
         dep_time = self.dep_time_entry.get()

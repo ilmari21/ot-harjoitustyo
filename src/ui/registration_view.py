@@ -2,6 +2,8 @@ from tkinter import ttk, constants, messagebox
 
 
 class RegistrationView:
+    """Class responsible for displaying the user registration view of the app."""
+
     def __init__(self, root, param_login, logbook_service):
         self._root = root
         self._var_login = param_login
@@ -14,12 +16,15 @@ class RegistrationView:
         self.pack()
 
     def pack(self):
+        """Displays the view."""
         self._frame.pack(fill=constants.BOTH, expand=True, padx=20, pady=20)
 
     def destroy(self):
+        """Destroys the view."""
         self._frame.destroy()
 
     def _initialize(self):
+        """Initializes the user registration view UI elements."""
         self._frame = ttk.Frame(master=self._root)
 
         self.username_label = ttk.Label(
@@ -52,6 +57,7 @@ class RegistrationView:
         self.register_button.grid(row=2, column=1, padx=10, pady=20)
 
     def _handle_registration(self):
+        """Method responsible for the registraion of a new user."""
         username = self.username_entry.get()
         password = self.password_entry.get()
 

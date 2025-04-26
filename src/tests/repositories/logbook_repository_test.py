@@ -1,6 +1,6 @@
 import unittest
 from repositories.logbook_repository import LogbookRepository
-from entities.logbook import Flight
+from entities.flight import Flight
 
 
 class TestLogbookRepository(unittest.TestCase):

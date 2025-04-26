@@ -2,7 +2,11 @@ from tkinter import ttk, constants
 
 
 class LoginView:
+    """Class responsible for displaying the login view of the app."""
+
     def __init__(self, root, param_register, param_main, logbook_service):
+        """Constructor of the class; creates the login view."""
+
         self._root = root
         self._var_register = param_register
         self._var_main = param_main
@@ -15,12 +19,15 @@ class LoginView:
         self.pack()
 
     def pack(self):
+        """Displays the view."""
         self._frame.pack(fill=constants.BOTH, expand=True, padx=20, pady=20)
 
     def destroy(self):
+        """Destroys the view."""
         self._frame.destroy()
 
     def _initialize(self):
+        """Initializes the login view UI elements."""
         self._frame = ttk.Frame(master=self._root)
 
         self.username_label = ttk.Label(master=self._frame, text="Username")
@@ -51,6 +58,7 @@ class LoginView:
         self.login_button.grid(row=2, column=1, padx=10, pady=20)
 
     def _handle_login(self):
+        """Method responsible for handling the login attempt."""
         username = self.username_entry.get()
         password = self.password_entry.get()
 

@@ -1,6 +1,6 @@
 from tkinter import messagebox
 from entities.user import User
-from entities.logbook import Flight
+from entities.flight import Flight
 from repositories.user_repository import UserRepository
 from repositories.logbook_repository import LogbookRepository
 
