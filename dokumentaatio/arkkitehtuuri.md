@@ -42,7 +42,7 @@ Tämä sekvenssikaavio kuvaa lentojen lisäämistä, ja sen alta löytyy tarkemp
     participant MainView
     participant LogbookService
     participant LogbookRepository
-    participant logbook
+    participant flight
 
     User->>MainView: Click "Add flight"
     activate MainView
@@ -52,7 +52,7 @@ Tämä sekvenssikaavio kuvaa lentojen lisäämistä, ja sen alta löytyy tarkemp
     User->>MainView: Click "Add flight"
     MainView->>LogbookService: add_flight(departure, arrival, dep_time, arr_time)
     activate LogbookService
-    LogbookService->>logbook: Flight(pilot, departure, arrival, dep_time, arr_time)
+    LogbookService->>flight: Flight(pilot, departure, arrival, dep_time, arr_time)
     LogbookService->>LogbookRepository: create(flight)
     activate LogbookRepository
     LogbookRepository-->>LogbookService: flight
