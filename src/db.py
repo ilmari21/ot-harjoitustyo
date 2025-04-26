@@ -18,18 +18,20 @@ def init_db():
         """DROP TABLE IF EXISTS flights;"""
     )
 
-    create_tables(con)
+    create_tables(cursor)
+
+    cursor.close()
 
 
-def create_tables(con):
-    con.execute(
+def create_tables(cursor):
+    cursor.execute(
         """CREATE TABLE users (
             username TEXT PRIMARY KEY,
             password TEXT
         );"""
     )
 
-    con.execute(
+    cursor.execute(
         """CREATE TABLE flights (
             pilot TEXT,
             departure TEXT,
@@ -39,7 +41,7 @@ def create_tables(con):
         );"""
     )
 
-    con.commit()
+    cursor.connection.commit()
 
 
 if __name__ == "__main__":
