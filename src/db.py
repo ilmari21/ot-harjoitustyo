@@ -21,17 +21,15 @@ def init_db():
     create_tables(con)
 
 
-def create_tables(connection):
-    cursor = get_db_connection()
-
-    cursor.execute(
+def create_tables(con):
+    con.execute(
         """CREATE TABLE users (
             username TEXT PRIMARY KEY,
             password TEXT
         );"""
     )
 
-    cursor.execute(
+    con.execute(
         """CREATE TABLE flights (
             pilot TEXT,
             departure TEXT,
@@ -41,7 +39,7 @@ def create_tables(connection):
         );"""
     )
 
-    connection.commit()
+    con.commit()
 
 
 if __name__ == "__main__":
