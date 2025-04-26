@@ -5,6 +5,14 @@ class RegistrationView:
     """Class responsible for displaying the user registration view of the app."""
 
     def __init__(self, root, param_login, logbook_service):
+        """Constructor of the class; creates the user registration view.
+
+        Args:
+            root: Tkinter root window for displaying.
+            param_login: Used for changing to login view.
+            logbook_service: Used to call the logbook_service.
+        """
+
         self._root = root
         self._var_login = param_login
         self._logbook_service = logbook_service

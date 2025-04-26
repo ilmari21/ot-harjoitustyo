@@ -6,7 +6,14 @@ class MainView:
     """Class responsible for displaying the main view of the app."""
 
     def __init__(self, root, param_login, current_user, logbook_service):
-        """Constructor of the class; creates the main view."""
+        """Constructor of the class; creates the main view.
+
+        Args:
+            root: Tkinter root window for displaying.
+            param_login: Used for changing to login view.
+            current_user: The current user.
+            logbook_service: Used to call the logbook_service.
+        """
 
         self._root = root
 
