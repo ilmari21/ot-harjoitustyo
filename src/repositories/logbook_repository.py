@@ -22,9 +22,9 @@ class LogbookRepository:
 
         cursor = self._connection.cursor()
         cursor.execute(
-            """INSERT INTO flights (pilot, departure, arrival, dep_time, arr_time)
-               VALUES (?, ?, ?, ?, ?)""",
-            (flight.pilot, flight.departure, flight.arrival,
+            """INSERT INTO flights (pilot, aircraft_type, aircraft_reg, departure, arrival, dep_time, arr_time)
+               VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            (flight.pilot, flight.aircraft_type, flight.aircraft_reg, flight.departure, flight.arrival,
              flight.dep_time, flight.arr_time)
         )
         self._connection.commit()
@@ -56,6 +56,8 @@ class LogbookRepository:
         return [
             Flight(
                 row["pilot"],
+                row["aircraft_type"],
+                row["aircraft_reg"],
                 row["departure"],
                 row["arrival"],
                 row["dep_time"],

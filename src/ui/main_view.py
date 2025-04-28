@@ -77,12 +77,20 @@ class MainView:
         self.logout_button.grid_remove()
         self.show_add_flight_button.grid_remove()
 
+        self.aircraft_type_label = ttk.Label(
+            master=self._add_flight_frame, text="Aircraft type")
+        self.aircraft_type_entry = ttk.Entry(master=self._add_flight_frame)
+
+        self.aircraft_reg_label = ttk.Label(
+            master=self._add_flight_frame, text="Aircraft registration")
+        self.aircraft_reg_entry = ttk.Entry(master=self._add_flight_frame)
+
         self.departure_label = ttk.Label(
-            master=self._add_flight_frame, text="Enter departure")
+            master=self._add_flight_frame, text="Departure")
         self.departure_entry = ttk.Entry(master=self._add_flight_frame)
 
         self.arrival_label = ttk.Label(
-            master=self._add_flight_frame, text="Enter arrival")
+            master=self._add_flight_frame, text="Arrival")
         self.arrival_entry = ttk.Entry(master=self._add_flight_frame)
 
         self.dep_time_label = ttk.Label(
@@ -109,18 +117,22 @@ class MainView:
             width=15
         )
 
-        self.departure_label.grid(row=0, column=0, padx=10, pady=10)
-        self.departure_entry.grid(row=0, column=1, padx=10, pady=10)
-        self.arrival_label.grid(row=1, column=0, padx=10, pady=10)
-        self.arrival_entry.grid(row=1, column=1, padx=10, pady=10)
-        self.dep_time_label.grid(row=2, column=0, padx=10, pady=10)
-        self.dep_time_entry.grid(row=2, column=1, padx=10, pady=10)
-        self.arr_time_label.grid(row=3, column=0, padx=10, pady=10)
-        self.arr_time_entry.grid(row=3, column=1, padx=10, pady=10)
-        self.return_button.grid(row=4, column=0, padx=10, pady=20)
-        self.add_flight_button.grid(row=4, column=1, padx=10, pady=20)
+        self.aircraft_type_label.grid(row=0, column=0, padx=10, pady=10)
+        self.aircraft_type_entry.grid(row=0, column=1, padx=10, pady=10)
+        self.aircraft_reg_label.grid(row=1, column=0, padx=10, pady=10)
+        self.aircraft_reg_entry.grid(row=1, column=1, padx=10, pady=10)
+        self.departure_label.grid(row=2, column=0, padx=10, pady=10)
+        self.departure_entry.grid(row=2, column=1, padx=10, pady=10)
+        self.arrival_label.grid(row=3, column=0, padx=10, pady=10)
+        self.arrival_entry.grid(row=3, column=1, padx=10, pady=10)
+        self.dep_time_label.grid(row=4, column=0, padx=10, pady=10)
+        self.dep_time_entry.grid(row=4, column=1, padx=10, pady=10)
+        self.arr_time_label.grid(row=5, column=0, padx=10, pady=10)
+        self.arr_time_entry.grid(row=5, column=1, padx=10, pady=10)
+        self.return_button.grid(row=6, column=0, padx=10, pady=20)
+        self.add_flight_button.grid(row=6, column=1, padx=10, pady=20)
         self._add_flight_frame.grid(
-            row=5, column=0, columnspan=2, padx=10, pady=10)
+            row=7, column=0, columnspan=2, padx=10, pady=10)
         self._update_added_flights_list()
 
     def _update_added_flights_list(self):
@@ -139,7 +151,7 @@ class MainView:
             flight_duration = f" ({flight.dep_time} - {flight.arr_time})" if flight.dep_time and flight.arr_time else ""
             ttk.Label(
                 master=self._show_flights_frame,
-                text=f"{flight.departure} → {flight.arrival}{flight_duration}"
+                text=f"{flight.aircraft_type} {flight.aircraft_reg} {flight.departure} → {flight.arrival}{flight_duration}"
             ).grid(row=i, column=0, columnspan=2, pady=2)
 
         ttk.Label(
@@ -150,10 +162,22 @@ class MainView:
 
     def _handle_add_flight(self):
         """Method responsible for the addition of a new flight."""
+        aircraft_type = self.aircraft_type_entry.get()
+        aircraft_reg = self.aircraft_reg_entry.get()
         departure = self.departure_entry.get()
         arrival = self.arrival_entry.get()
         dep_time = self.dep_time_entry.get()
         arr_time = self.arr_time_entry.get()
+        
+        if len(aircraft_type) != 4:
+            messagebox.showinfo(
+                "Error", "Enter aircraft type ICAO designator; it is exactly 4 letters")
+            return
+        
+        if not aircraft_reg:
+            messagebox.showinfo(
+                "Error", "Enter aircraft registration")
+            return
 
         if len(departure) != 4:
             messagebox.showinfo(
@@ -184,7 +208,9 @@ class MainView:
 
         try:
             self._logbook_service.add_flight(
-                departure, arrival, dep_time, arr_time)
+                aircraft_type, aircraft_reg, departure, arrival, dep_time, arr_time)
+            self.aircraft_type_entry.delete(0, constants.END)
+            self.aircraft_reg_entry.delete(0, constants.END)
             self.departure_entry.delete(0, constants.END)
             self.arrival_entry.delete(0, constants.END)
             self.dep_time_entry.delete(0, constants.END)

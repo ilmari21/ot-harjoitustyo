@@ -58,10 +58,12 @@ class LogbookService():
             return True
         raise WrongLoginDetails("Invalid username or password")
 
-    def add_flight(self, departure, arrival, dep_time=None, arr_time=None):
+    def add_flight(self, aircraft_type, aircraft_reg, departure, arrival, dep_time=None, arr_time=None):
         """Creates a new logbook entry (flight).
 
         Args:
+            aircraft_type: A string depicting the type of aircraft.
+            aircraft_reg: A string depicting the registration of aircraft.
             departure: A string depicting the departure airport of the flight.
             arrival: A string depicting the arrival airport of the flight.
             dep_time: A string depicting the departure time of the flight.
@@ -74,7 +76,7 @@ class LogbookService():
         if not self._user:
             raise NotLoggedIn("No user logged in")
         flight = self._logbook_repository.create(
-            Flight(self._user.username, departure, arrival, dep_time, arr_time))
+            Flight(self._user.username, aircraft_type, aircraft_reg, departure, arrival, dep_time, arr_time))
         return flight
 
     def get_flights_by_user(self):

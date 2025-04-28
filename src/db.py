@@ -34,6 +34,8 @@ def create_tables(cursor, con):
     cursor.execute(
         """CREATE TABLE flights (
             pilot TEXT,
+            aircraft_type TEXT,
+            aircraft_reg TEXT,
             departure TEXT,
             arrival TEXT,
             dep_time TEXT,
