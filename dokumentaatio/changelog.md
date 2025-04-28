@@ -18,3 +18,7 @@
  - Pääsivulla lennetyt lennot ja lentojen lisääminen jaettu eri näkymiin
  - Käyttäjä voi lisätä lähtö- ja saapumisajat lentoihin
  - Lisätty yksikkötestaukset LogbookRepository- ja LogbookService-luokille
+
+## Viikko 6
+
+ - Käyttäjä voi lisätä koneen tyypin ja tunnuksen lentoihin
