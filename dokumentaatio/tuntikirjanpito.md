@@ -21,4 +21,6 @@
 |               | 2h            | Yksikkötestauksen toteutus |
 |               | 1h            | Dokumenttien päivitys |
 | 26.4          | 2h            | Docstringien tekemistä, pieniä parannuksia |
-| yhteensä      | 35h           |
+| 28.4          | 1h            | Käyttöliittymän elementtien siirtäminen |
+|               | 2h            | Lisää syötteitä lentoja lisätessä |
+| yhteensä      | 38h           |
