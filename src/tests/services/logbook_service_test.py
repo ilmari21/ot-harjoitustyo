@@ -2,6 +2,7 @@ import unittest
 from services.logbook_service import LogbookService
 from repositories.user_repository import UserRepository
 from repositories.logbook_repository import LogbookRepository
+from services.logbook_service import UsernameAlreadyInUse, WrongLoginDetails
 
 
 class TestLogbookService(unittest.TestCase):
@@ -36,10 +37,8 @@ class TestLogbookService(unittest.TestCase):
 
         self._logbook_service.register_user(test_username, test_password)
 
-        create_user = self._logbook_service.register_user(
-            test_username, "teppo")
-
-        self.assertIsNone(create_user)
+        with self.assertRaises(UsernameAlreadyInUse):
+            self._logbook_service.register_user(test_username, "teppo")
 
         user_search = self._user_repository.find_user(test_username)
         self.assertIsNotNone(user_search)
@@ -63,7 +62,7 @@ class TestLogbookService(unittest.TestCase):
 
         self._logbook_service.register_user(test_username, test_password)
 
-        test_login = self._logbook_service.login(test_username, "teppo")
+        with self.assertRaises(WrongLoginDetails):
+            self._logbook_service.login(test_username, "teppo")
 
-        self.assertFalse(test_login)
         self.assertIsNone(self._logbook_service._user)
