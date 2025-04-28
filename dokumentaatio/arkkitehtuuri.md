@@ -23,6 +23,8 @@ Sovelluksen oleellisimmat luokat ovat *User* ja *Flight*. *User* kuvaa käyttäj
       }
       class Flight{
           pilot
+          aircraft_type
+          aircraft_reg
           departure
           arrival
           dep_time
@@ -48,11 +50,11 @@ Tämä sekvenssikaavio kuvaa lentojen lisäämistä, ja sen alta löytyy tarkemp
     activate MainView
     MainView->>MainView: show_add_flight()
     
-    User->>MainView: Enter departure, arrival, dep_time, arr_time
+    User->>MainView: Enter aircraft_type, aircraft_reg, departure, arrival, dep_time, arr_time
     User->>MainView: Click "Add flight"
-    MainView->>LogbookService: add_flight(departure, arrival, dep_time, arr_time)
+    MainView->>LogbookService: add_flight(aircraft_type, aircraft_reg, departure, arrival, dep_time, arr_time)
     activate LogbookService
-    LogbookService->>flight: Flight(pilot, departure, arrival, dep_time, arr_time)
+    LogbookService->>flight: Flight(pilot, aircraft_type, aircraft_reg, departure, arrival, dep_time, arr_time)
     LogbookService->>LogbookRepository: create(flight)
     activate LogbookRepository
     LogbookRepository-->>LogbookService: flight
