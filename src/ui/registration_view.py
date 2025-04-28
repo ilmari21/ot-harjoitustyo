@@ -1,4 +1,5 @@
 from tkinter import ttk, constants, messagebox
+from services.logbook_service import UsernameAlreadyInUse
 
 
 class RegistrationView:
@@ -79,8 +80,9 @@ class RegistrationView:
             messagebox.showinfo("Error", "Username and password are same")
             return
 
-        add_user = self._logbook_service.register_user(username, password)
-
-        if add_user != None:
+        try:
+            self._logbook_service.register_user(username, password)
             messagebox.showinfo("Success", "User created!")
             self._var_login()
+        except UsernameAlreadyInUse:
+            messagebox.showinfo("Error", "Username already exists")

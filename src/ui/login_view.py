@@ -1,4 +1,5 @@
-from tkinter import ttk, constants
+from tkinter import ttk, constants, messagebox
+from services.logbook_service import WrongLoginDetails
 
 
 class LoginView:
@@ -69,7 +70,9 @@ class LoginView:
         username = self.username_entry.get()
         password = self.password_entry.get()
 
-        if self._logbook_service.login(username, password):
+        try:
+            self._logbook_service.login(username, password)
             self._var_main()
-        else:
+        except WrongLoginDetails:
             self.password_entry.delete(0, constants.END)
+            messagebox.showinfo("Error", "Invalid username or password")

@@ -1,5 +1,6 @@
 from tkinter import ttk, constants, messagebox
 import re
+from services.logbook_service import NotLoggedIn
 
 
 class MainView:
@@ -181,13 +182,16 @@ class MainView:
                 "Error", "Enter arrival time in HH:MM format")
             return
 
-        self._logbook_service.add_flight(
-            departure, arrival, dep_time, arr_time)
-        self.departure_entry.delete(0, constants.END)
-        self.arrival_entry.delete(0, constants.END)
-        self.dep_time_entry.delete(0, constants.END)
-        self.dep_time_entry.insert(0, "00:00")
-        self.arr_time_entry.delete(0, constants.END)
-        self.arr_time_entry.insert(0, "00:00")
-        messagebox.showinfo("Success", "Flight added!")
-        self._show_main_view()
+        try:
+            self._logbook_service.add_flight(
+                departure, arrival, dep_time, arr_time)
+            self.departure_entry.delete(0, constants.END)
+            self.arrival_entry.delete(0, constants.END)
+            self.dep_time_entry.delete(0, constants.END)
+            self.dep_time_entry.insert(0, "00:00")
+            self.arr_time_entry.delete(0, constants.END)
+            self.arr_time_entry.insert(0, "00:00")
+            messagebox.showinfo("Success", "Flight added!")
+            self._show_main_view()
+        except NotLoggedIn:
+            messagebox.showinfo("Error", "No user logged in")
