@@ -2,7 +2,7 @@
 
 Tavoitteeni on luoda **virtuaalinen lokikirja**, johon *käyttäjä* voi lisätä lentämänsä *lennot*.
 
-Sovellukseen voi kirjautua luotuaan käyttäjätunnuksen, jonka jälkeen voi lisätä lentoja syöttämällä nelimerkkistä ICAO-tunnuksia noudattavat lähtö- ja saapumiskentät. Tässä kohtaa sovellus ei tarkista muuta kuin sen, että merkkejä on 4. Suomen lentokenttien ICAO-koodeja löytää kuitenkin mm. [täältä](https://fi.wikipedia.org/wiki/Suomen_lentoasemat_ja_-paikat). Lisäksi on syötettävä lähtö- ja saapumisaika, muodossa hh:mm, päivämääriä ei vielä tässä vaiheessa käytetä.
+Sovellukseen voi kirjautua luotuaan käyttäjätunnuksen, jonka jälkeen voi lisätä lentoja syöttämällä lentokoneen tyypin, tunnuksen sekä lähtö- ja saapumiskentät. Tässä kohtaa sovellus ei tarkista lentokoneen tyypistä ja lentokentistä muuta kuin sen, että merkkejä on 4, mutta tarkoitus on noudattaa ICAO-standardeja. Suomen lentokenttien ICAO-koodeja löytää kuitenkin mm. [täältä](https://fi.wikipedia.org/wiki/Suomen_lentoasemat_ja_-paikat), ja lentokoneiden ICAO-tyyppitunnuksia [täältä](https://en.wikipedia.org/wiki/List_of_aircraft_type_designators). Lisäksi on syötettävä lähtö- ja saapumisaika, muodossa hh:mm, päivämääriä ei vielä ainakaan tässä vaiheessa käytetä.
 
 ## Linkit
 
