@@ -1,7 +1,8 @@
 class Flight:
     """Flight class."""
 
-    def __init__(self, pilot, aircraft_type, aircraft_reg, departure, arrival, dep_time=None, arr_time=None):
+    def __init__(self, pilot, aircraft_type, aircraft_reg,
+                 departure, arrival, dep_time=None, arr_time=None):
         """Constructor of the class; creates a new Flight-object.
 
         Args:

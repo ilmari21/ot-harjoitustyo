@@ -23,7 +23,7 @@ def init_db():
     cursor.close()
 
 
-def create_tables(cursor, con):
+def create_tables(cursor, connection):
     cursor.execute(
         """CREATE TABLE users (
             username TEXT PRIMARY KEY,
@@ -43,7 +43,7 @@ def create_tables(cursor, con):
         );"""
     )
 
-    con.commit()
+    connection.commit()
 
 
 if __name__ == "__main__":

@@ -168,12 +168,12 @@ class MainView:
         arrival = self.arrival_entry.get()
         dep_time = self.dep_time_entry.get()
         arr_time = self.arr_time_entry.get()
-        
+
         if len(aircraft_type) != 4:
             messagebox.showinfo(
                 "Error", "Enter aircraft type ICAO designator; it is exactly 4 letters")
             return
-        
+
         if not aircraft_reg:
             messagebox.showinfo(
                 "Error", "Enter aircraft registration")

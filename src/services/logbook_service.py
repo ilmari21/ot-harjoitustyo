@@ -7,8 +7,10 @@ from repositories.logbook_repository import LogbookRepository
 class WrongLoginDetails(Exception):
     pass
 
+
 class UsernameAlreadyInUse(Exception):
     pass
+
 
 class NotLoggedIn(Exception):
     pass
@@ -58,7 +60,8 @@ class LogbookService():
             return True
         raise WrongLoginDetails("Invalid username or password")
 
-    def add_flight(self, aircraft_type, aircraft_reg, departure, arrival, dep_time=None, arr_time=None):
+    def add_flight(self, aircraft_type, aircraft_reg,
+                   departure, arrival, dep_time=None, arr_time=None):
         """Creates a new logbook entry (flight).
 
         Args:
@@ -76,12 +79,13 @@ class LogbookService():
         if not self._user:
             raise NotLoggedIn("No user logged in")
         flight = self._logbook_repository.create(
-            Flight(self._user.username, aircraft_type, aircraft_reg, departure, arrival, dep_time, arr_time))
+            Flight(self._user.username, aircraft_type, aircraft_reg,
+                   departure, arrival, dep_time, arr_time))
         return flight
 
     def get_flights_by_user(self):
         """Returns all the flights of the user.
-        
+
         Returns:
             Returns a list of Flight-objects added by the user.
         """
