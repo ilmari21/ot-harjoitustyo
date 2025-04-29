@@ -39,7 +39,8 @@ class TestUserRepository(unittest.TestCase):
         self._connection.row_factory = sqlite3.Row
         init_test_db(self._connection)
         self._user_repository = UserRepository(self._connection)
-        print(f"TestUserRepository initialized with connection: {self._connection}")
+        print(
+            f"TestUserRepository initialized with connection: {self._connection}")
 
     def test_user_registration(self):
         test_user = User("teuvo", "testi")

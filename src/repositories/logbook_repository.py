@@ -1,5 +1,5 @@
-from entities.flight import Flight
 import sqlite3
+from entities.flight import Flight
 
 
 class LogbookRepository:

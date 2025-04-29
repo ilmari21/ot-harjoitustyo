@@ -33,6 +33,7 @@ def init_test_db(connection):
     )
     connection.commit()
 
+
 class TestLogbookService(unittest.TestCase):
     def setUp(self):
         self._connection = sqlite3.connect(':memory:')
@@ -40,7 +41,8 @@ class TestLogbookService(unittest.TestCase):
         init_test_db(self._connection)
         self._user_repository = UserRepository(self._connection)
         self._logbook_repository = LogbookRepository(self._connection)
-        self._logbook_service = LogbookService(self._user_repository, self._logbook_repository)
+        self._logbook_service = LogbookService(
+            self._user_repository, self._logbook_repository)
 
     def test_user_registration(self):
         test_username = "teuvo"
