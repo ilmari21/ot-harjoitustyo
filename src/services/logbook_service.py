@@ -19,12 +19,17 @@ class NotLoggedIn(Exception):
 class LogbookService():
     """Class responsible for the main services of the app."""
 
-    def __init__(self):
-        """Constructor of the class; creates the logbook service."""
+    def __init__(self, user_repository=None, logbook_repository=None):
+        """Constructor of the class; creates the logbook service.
 
+        Args:
+            user_repository: The user repository.
+            logbook_repository: The logbook repository.
+        """
+
+        self._user_repository = user_repository or UserRepository()
+        self._logbook_repository = logbook_repository or LogbookRepository()
         self._user = None
-        self._user_repository = UserRepository()
-        self._logbook_repository = LogbookRepository()
 
     def register_user(self, username, password):
         """Creates a new user, logs in if creation succesful.

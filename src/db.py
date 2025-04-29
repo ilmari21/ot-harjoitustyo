@@ -1,15 +1,14 @@
 import sqlite3
 
-con = sqlite3.connect("database.db")
-
-
 def get_db_connection():
+    con = sqlite3.connect('database.db')
     con.row_factory = sqlite3.Row
     return con
 
 
 def init_db():
-    cursor = get_db_connection()
+    connection = get_db_connection()
+    cursor = connection.cursor()
 
     cursor.execute(
         """DROP TABLE IF EXISTS users;"""
@@ -18,10 +17,10 @@ def init_db():
         """DROP TABLE IF EXISTS flights;"""
     )
 
-    create_tables(cursor, con)
+    create_tables(cursor, connection)
 
     cursor.close()
-
+    connection.close()
 
 def create_tables(cursor, connection):
     cursor.execute(

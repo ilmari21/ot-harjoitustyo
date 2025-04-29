@@ -1,12 +1,43 @@
 import unittest
 from repositories.logbook_repository import LogbookRepository
 from entities.flight import Flight
+import sqlite3
+
+
+def init_test_db(connection):
+    cursor = connection.cursor()
+    cursor.execute(
+        """DROP TABLE IF EXISTS users;"""
+    )
+    cursor.execute(
+        """DROP TABLE IF EXISTS flights;"""
+    )
+    cursor.execute(
+        """CREATE TABLE users (
+            username TEXT PRIMARY KEY,
+            password TEXT
+        );"""
+    )
+    cursor.execute(
+        """CREATE TABLE flights (
+            pilot TEXT,
+            aircraft_type TEXT,
+            aircraft_reg TEXT,
+            departure TEXT,
+            arrival TEXT,
+            dep_time TEXT,
+            arr_time TEXT
+        );"""
+    )
+    connection.commit()
 
 
 class TestLogbookRepository(unittest.TestCase):
     def setUp(self):
-        self._logbook_repository = LogbookRepository()
-        self._logbook_repository.clear()
+        self._connection = sqlite3.connect(':memory:')
+        self._connection.row_factory = sqlite3.Row
+        init_test_db(self._connection)
+        self._logbook_repository = LogbookRepository(self._connection)
 
     def test_flight_creation(self):
         test_flight_info = {

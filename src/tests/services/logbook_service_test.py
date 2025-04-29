@@ -3,17 +3,44 @@ from services.logbook_service import LogbookService
 from repositories.user_repository import UserRepository
 from repositories.logbook_repository import LogbookRepository
 from services.logbook_service import UsernameAlreadyInUse, WrongLoginDetails, NotLoggedIn
+import sqlite3
 
+
+def init_test_db(connection):
+    cursor = connection.cursor()
+    cursor.execute(
+        """DROP TABLE IF EXISTS users;"""
+    )
+    cursor.execute(
+        """DROP TABLE IF EXISTS flights;"""
+    )
+    cursor.execute(
+        """CREATE TABLE users (
+            username TEXT PRIMARY KEY,
+            password TEXT
+        );"""
+    )
+    cursor.execute(
+        """CREATE TABLE flights (
+            pilot TEXT,
+            aircraft_type TEXT,
+            aircraft_reg TEXT,
+            departure TEXT,
+            arrival TEXT,
+            dep_time TEXT,
+            arr_time TEXT
+        );"""
+    )
+    connection.commit()
 
 class TestLogbookService(unittest.TestCase):
     def setUp(self):
-        self._logbook_service = LogbookService()
-        self._user_repository = UserRepository()
-        self._logbook_repository = LogbookRepository()
-        self._logbook_service._user_repository = self._user_repository
-        self._logbook_service._logbook_repository = self._logbook_repository
-        self._user_repository.clear()
-        self._logbook_repository.clear()
+        self._connection = sqlite3.connect(':memory:')
+        self._connection.row_factory = sqlite3.Row
+        init_test_db(self._connection)
+        self._user_repository = UserRepository(self._connection)
+        self._logbook_repository = LogbookRepository(self._connection)
+        self._logbook_service = LogbookService(self._user_repository, self._logbook_repository)
 
     def test_user_registration(self):
         test_username = "teuvo"
