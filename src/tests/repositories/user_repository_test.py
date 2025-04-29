@@ -1,6 +1,7 @@
 import unittest
 from repositories.user_repository import UserRepository
 from entities.user import User
+from services.logbook_service import UsernameAlreadyInUse
 
 
 class TestUserRepository(unittest.TestCase):
@@ -13,6 +14,12 @@ class TestUserRepository(unittest.TestCase):
         create_user = self._user_repository.create(test_user)
         self.assertEqual(test_user.username, create_user.username)
         self.assertEqual(test_user.password, create_user.password)
+
+    def test_user_registration_username_in_use(self):
+        test_user = User("teuvo", "testi")
+        self._user_repository.create(test_user)
+        with self.assertRaises(UsernameAlreadyInUse):
+            self._user_repository.create(test_user)
 
     def test_find_user(self):
         test_user = User("teuvo", "testi")

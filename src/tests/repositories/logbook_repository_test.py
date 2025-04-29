@@ -86,3 +86,20 @@ class TestLogbookRepository(unittest.TestCase):
         flight_search = self._logbook_repository.find_by_user(
             test_flight_info['pilot'])
         self.assertEqual(len(flight_search), 0)
+
+        
+    def test_find_flights_invalid_username(self):
+        test_flight_info = {
+            'pilot': 'teuvo',
+            'aircraft_type': 'C152',
+            'aircraft_reg': 'OH-TKT',
+            'departure': 'EFHK',
+            'arrival': 'EFTP',
+            'dep_time': '12:00',
+            'arr_time': '13:30'
+        }
+
+        test_flight = Flight(test_flight_info)
+        self._logbook_repository.create(test_flight)
+        flight_search = self._logbook_repository.find_by_user('kalevi')
+        self.assertEqual(len(flight_search), 0)
