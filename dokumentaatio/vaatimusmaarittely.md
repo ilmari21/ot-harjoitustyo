@@ -24,7 +24,7 @@ Sovelluksessa on vain yhdenlaisia käyttäjiä; *lentäjiä*. Mahdollista on my�
 ### Pääsivu
 
 - Kun käyttäjä on kirjautunut sisään, siirtyy hän pääsivulle, jossa hän voi
-  - Lisätä uusia lentoja **"tehty" (tosin joitakin ominaisuuksia vielä puuttuu, kuten konetyypin ja rekisteritunnuksen lisääminen)**
+  - Lisätä uusia lentoja **"tehty**
   - Nähdä lisäämänsä lennot ja niiden tiedot; käyttäjä voi nähdä vain omat lentonsa **"tehty"**
 
 ## Mahdolliset laajemmat toiminnallisuudet
