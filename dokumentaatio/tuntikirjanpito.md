@@ -23,7 +23,7 @@
 | 26.4          | 2h            | Docstringien tekemistä, pieniä parannuksia |
 | 28.4          | 1h            | Käyttöliittymän elementtien siirtäminen |
 |               | 2h            | Lisää syötteitä lentoja lisätessä |
-| 29.4          | 1h            | Yksikkötestauksen laajentamista |
+| 29.4          | 2h            | Yksikkötestauksen laajentamista |
 |               | 1h            | Koodin parannuksia |
 |               | 2h            | Yksikkötestauksen tietokantaoperaatioiden korjaamista |
-| yhteensä      | 42h           |
+| yhteensä      | 43h           |
