@@ -2,7 +2,7 @@ import unittest
 from services.logbook_service import LogbookService
 from repositories.user_repository import UserRepository
 from repositories.logbook_repository import LogbookRepository
-from services.logbook_service import UsernameAlreadyInUse, WrongLoginDetails
+from services.logbook_service import UsernameAlreadyInUse, WrongLoginDetails, NotLoggedIn
 
 
 class TestLogbookService(unittest.TestCase):
@@ -71,9 +71,6 @@ class TestLogbookService(unittest.TestCase):
         test_username = "teuvo"
         test_password = "testi"
 
-        self._logbook_service.register_user(test_username, test_password)
-        self._logbook_service.login(test_username, test_password)
-
         test_flight_info = {
             'pilot': 'teuvo',
             'aircraft_type': 'C152',
@@ -83,6 +80,12 @@ class TestLogbookService(unittest.TestCase):
             'dep_time': '12:00',
             'arr_time': '13:30'
         }
+
+        with self.assertRaises(NotLoggedIn):
+            self._logbook_service.add_flight(test_flight_info)
+
+        self._logbook_service.register_user(test_username, test_password)
+        self._logbook_service.login(test_username, test_password)
 
         created_flight = self._logbook_service.add_flight(test_flight_info)
 
@@ -103,6 +106,9 @@ class TestLogbookService(unittest.TestCase):
     def test_get_flights_by_user(self):
         test_username = "teuvo"
         test_password = "testi"
+
+        flight_search_empty = self._logbook_service.get_flights_by_user()
+        self.assertEqual(len(flight_search_empty), 0)
 
         self._logbook_service.register_user(test_username, test_password)
         self._logbook_service.login(test_username, test_password)
