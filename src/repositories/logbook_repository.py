@@ -55,13 +55,13 @@ class LogbookRepository:
         )
         rows = cursor.fetchall()
         return [
-            Flight(
-                row["pilot"],
-                row["aircraft_type"],
-                row["aircraft_reg"],
-                row["departure"],
-                row["arrival"],
-                row["dep_time"],
-                row["arr_time"]
-            ) for row in rows
+            Flight({
+                "pilot": row["pilot"],
+                "aircraft_type": row["aircraft_type"],
+                "aircraft_reg": row["aircraft_reg"],
+                "departure": row["departure"],
+                "arrival": row["arrival"],
+                "dep_time": row["dep_time"],
+                "arr_time": row["arr_time"]
+            }) for row in rows
         ]

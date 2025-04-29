@@ -206,9 +206,18 @@ class MainView:
                 "Error", "Enter arrival time in HH:MM format")
             return
 
+        flight_info = {
+            'pilot': self._current_user,
+            'aircraft_type': aircraft_type,
+            'aircraft_reg': aircraft_reg,
+            'departure': departure,
+            'arrival': arrival,
+            'dep_time': dep_time,
+            'arr_time': arr_time
+        }
+
         try:
-            self._logbook_service.add_flight(
-                aircraft_type, aircraft_reg, departure, arrival, dep_time, arr_time)
+            self._logbook_service.add_flight(flight_info)
             self.aircraft_type_entry.delete(0, constants.END)
             self.aircraft_reg_entry.delete(0, constants.END)
             self.departure_entry.delete(0, constants.END)
