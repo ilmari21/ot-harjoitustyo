@@ -1,4 +1,4 @@
-### Käyttöohje
+# Käyttöohje
 
 Projektin voi ladata [Releases](https://github.com/ilmari21/ot-harjoitustyo/releases)-osiosta klikkaamalla **Source code**.
 
