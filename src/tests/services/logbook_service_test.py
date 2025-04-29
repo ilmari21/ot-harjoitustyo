@@ -1,9 +1,9 @@
 import unittest
+import sqlite3
 from services.logbook_service import LogbookService
 from repositories.user_repository import UserRepository
 from repositories.logbook_repository import LogbookRepository
 from services.logbook_service import UsernameAlreadyInUse, WrongLoginDetails, NotLoggedIn
-import sqlite3
 
 
 def init_test_db(connection):

@@ -1,8 +1,8 @@
 import unittest
+import sqlite3
 from repositories.user_repository import UserRepository
 from entities.user import User
 from services.logbook_service import UsernameAlreadyInUse
-import sqlite3
 
 
 def init_test_db(connection):
@@ -41,6 +41,11 @@ class TestUserRepository(unittest.TestCase):
         self._user_repository = UserRepository(self._connection)
         print(
             f"TestUserRepository initialized with connection: {self._connection}")
+
+    def test_get_db_connection(self):
+        test_connection = UserRepository.get_db_connection()
+        self.assertIsNotNone(test_connection)
+        self.assertIsInstance(test_connection, sqlite3.Connection)
 
     def test_user_registration(self):
         test_user = User("teuvo", "testi")

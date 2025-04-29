@@ -1,7 +1,7 @@
 import unittest
+import sqlite3
 from repositories.logbook_repository import LogbookRepository
 from entities.flight import Flight
-import sqlite3
 
 
 def init_test_db(connection):
@@ -38,6 +38,11 @@ class TestLogbookRepository(unittest.TestCase):
         self._connection.row_factory = sqlite3.Row
         init_test_db(self._connection)
         self._logbook_repository = LogbookRepository(self._connection)
+
+    def test_get_db_connection(self):
+        test_connection = LogbookRepository.get_db_connection()
+        self.assertIsNotNone(test_connection)
+        self.assertIsInstance(test_connection, sqlite3.Connection)
 
     def test_flight_creation(self):
         test_flight_info = {
@@ -95,6 +100,44 @@ class TestLogbookRepository(unittest.TestCase):
                          test_flight_info.get('dep_time'))
         self.assertEqual(flight_search[0].arr_time,
                          test_flight_info.get('arr_time'))
+
+    def test_multiple_flights_creation(self):
+        test_flight1_info = {
+            'pilot': 'teuvo',
+            'aircraft_type': 'C152',
+            'aircraft_reg': 'OH-TKT',
+            'departure': 'EFHK',
+            'arrival': 'EFTP',
+            'dep_time': '12:00',
+            'arr_time': '13:30'
+        }
+        test_flight2_info = {
+            'pilot': 'teuvo',
+            'aircraft_type': 'C152',
+            'aircraft_reg': 'OH-TKT',
+            'departure': 'EFTP',
+            'arrival': 'EFTU',
+            'dep_time': '14:00',
+            'arr_time': '15:30'
+        }
+        test_flight3_info = {
+            'pilot': 'teuvo',
+            'aircraft_type': 'C152',
+            'aircraft_reg': 'OH-TKT',
+            'departure': 'EFTP',
+            'arrival': 'EFHK',
+            'dep_time': '16:00',
+            'arr_time': '17:30'
+        }
+
+        test_flight1 = Flight(test_flight1_info)
+        test_flight2 = Flight(test_flight2_info)
+        test_flight3 = Flight(test_flight3_info)
+        self._logbook_repository.create(test_flight1)
+        self._logbook_repository.create(test_flight2)
+        self._logbook_repository.create(test_flight3)
+        flight_search = self._logbook_repository.find_by_user('teuvo')
+        self.assertEqual(len(flight_search), 3)
 
     def test_find_flights_when_none_added(self):
         flight_search = self._logbook_repository.find_by_user("teuvo")
