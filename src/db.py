@@ -1,14 +1,18 @@
 import sqlite3
 
 
-def get_db_connection():
-    con = sqlite3.connect('database.db')
+def get_db_connection(db_path='database.db'):
+    con = sqlite3.connect(db_path)
     con.row_factory = sqlite3.Row
     return con
 
 
-def init_db():
-    connection = get_db_connection()
+def init_db(connection=None):
+    connection_closed = False
+    if connection is None:
+        connection = get_db_connection()
+        connection_closed = True
+
     cursor = connection.cursor()
 
     cursor.execute(
@@ -21,7 +25,9 @@ def init_db():
     create_tables(cursor, connection)
 
     cursor.close()
-    connection.close()
+
+    if connection_closed:
+        connection.close()
 
 
 def create_tables(cursor, connection):
