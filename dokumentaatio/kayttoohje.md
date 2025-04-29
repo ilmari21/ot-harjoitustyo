@@ -30,18 +30,29 @@ poetry run invoke start
 ## Kirjautumissivu
 
 Kun sovelluksen käynnistää, siirtyy se kirjautumisnäkymään. Sisään voi kirjautua syöttämällä käyttäjätunnuksen ja salasanan, ja painamalla **"Login"**-painiketta.
+
+![](./kuvat/login_view.png)
+
 Mikäli käyttäjätunnusta ei vielä ole, voi siirtyä uuden käyttäjän rekisteröimiseen painamalla **"New user"**-painiketta.
 Mikäli kirjautuminen onnistuu, siirrytään ohjelman pääsivulle.
 
 ## Rekisteröitymissivu
 
 Rekisteröitymissivulla voi luoda uuden käyttäjän, syöttämällä käyttäjätunnuksen sekä salasanan. Sekä käyttäjätunnuksen että salasanan tulee olla vähintään 5 merkkiä pitkät, tämän lisäksi käyttäjätunnuksen tulee olla vapaana.
+
+![](./kuvat/registration_view.png)
+
 Jos nämä ehdot täyttyvät, uusi käyttäjätunnus luodaan ja siirrytään kirjautumissivulle.
 
 ## Pääsivu
 
 Pääsivulla perusnäkymässä on listattu käyttäjän lisäämät lennot, jos niitä on.
-Mikäli haluaa lisätä uuden lennon, tulee painaa **"Add flight"**-painiketta. Tämän jälkeen näkymä vaihtuu, ja käyttäjän tulee syöttää lennon tiedot:
+
+![](./kuvat/logbook_view.png)
+
+Mikäli haluaa lisätä uuden lennon, tulee painaa **"Add flight"**-painiketta. Tämän jälkeen näkymä vaihtuu, ja käyttäjän tulee syöttää lennon tiedot
+
+![](./kuvat/add_flight_view.png)
 
  - **Aircraft type**: lentokoneen tyyppi, pituuden tulee olla 4 merkkiä. Tarkoitus on käyttää [ICAO-tyyppitunnuksia](https://en.wikipedia.org/wiki/List_of_aircraft_type_designators)
  - **Aircraft registration**: lentokoneen tunnus, kuten OH-TKT
