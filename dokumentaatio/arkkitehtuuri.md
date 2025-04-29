@@ -1,5 +1,34 @@
 # Arkkitehtuuri
 
+```mermaid
+ classDiagram
+    class ui {
+        LoginView
+        RegistrationView
+        MainView
+    }
+
+    class services {
+        LogbookService
+    }
+
+    class repositories {
+        UserRepository
+        LogbookRepository
+    }
+
+    class entities {
+        User
+        Flight
+    }
+
+    ui --> services
+    services --> repositories
+    services --> entities
+```
+
+Kaaviossa **ui** vastaa käyttöliittymää ja sen eri näkymiä, **services** sisältää sovelluslogiikan, **repositories** tietokantaoperaatiot jaettuna *käyttäjä-* sekä *lokikirjatoimintoihin* ja **entities** sisältää objektit *User* ja *Flight*, jotka kuvaavat *käyttäjää* ja käyttäjän lentämää *lentoa*.
+
 ## Käyttöliittymä
 
 Sovelluksessa on kolme sivua:
@@ -33,6 +62,43 @@ Sovelluksen oleellisimmat luokat ovat *User* ja *Flight*. *User* kuvaa käyttäj
 ```
 
 ## Päätoiminnallisuudet
+
+### Uuden käyttäjän rekisteröiminen
+
+Tämä sekvenssikaavio kuvaa käyttäjän rekisteröimistä, ja sen alta löytyy tarkempi selitys tapahtumista:
+
+```mermaid
+ sequenceDiagram
+    participant User
+    participant RegistrationView
+    participant LogbookService
+    participant UserRepository
+
+    User->>RegistrationView: Enter username and password
+    activate RegistrationView
+    RegistrationView->>LogbookService: register_user(username, password)
+    activate LogbookService
+    LogbookService->>UserRepository: find_user(username)
+    activate UserRepository
+    UserRepository-->>LogbookService: return user or None
+    deactivate UserRepository
+
+    alt User already exists
+        LogbookService-->>RegistrationView: raise UsernameAlreadyInUse
+        RegistrationView-->>User: Show error message
+    else User does not exist
+        LogbookService->>UserRepository: create(user)
+        activate UserRepository
+        UserRepository-->>LogbookService: return created user
+        deactivate UserRepository
+        LogbookService-->>RegistrationView: return success
+        RegistrationView-->>User: Show success message
+    end
+    deactivate LogbookService
+    deactivate RegistrationView
+```
+
+Rekisteröitymissivulla käyttäjä syöttää käyttäjätunnuksen sekä salaasanan, ja klikkaa **"Register"**-painiketta. Tämä kutsuu `LogbookService`:n metodia `register_user`. Tämän jälkeen `LogbookService` kutsuu `UserRepository`:n metodia `find_user` jonka tarkoitus on varmistaa, ettei kyseinen käyttäjätunnus ole vielä käytössä. Jos käyttäjätunnus on vapaa, `UserRepository`:n metodi `create` luo uuden käyttäjän ja lisää sen tietokantaan.
 
 ### Lentojen lisääminen
 
