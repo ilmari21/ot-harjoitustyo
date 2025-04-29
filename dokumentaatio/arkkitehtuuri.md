@@ -8,7 +8,7 @@ Sovelluksessa on kolme sivua:
  - Rekisteröitymissivu
  - Pääsivu
 
-Kirjautumissivu on etusivu, josta voi siirtyä kirjautumalla pääsivulle, tai jos haluaa luodan uuden käyttäjän, rekisteröitymissivulle. Pääsivulla voi lisätä uusia lentoja.
+Kirjautumissivu on etusivu, josta voi siirtyä kirjautumalla pääsivulle, tai jos haluaa luodan uuden käyttäjän, rekisteröitymissivulle. Pääsivulla on perusnäkymä, johon on listattu käyttäjän lisäämät lennot, sekä näkymä lentojen lisäämistä varten.
 
 ## Sovelluksen logiikka
 
