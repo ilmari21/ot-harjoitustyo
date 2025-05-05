@@ -1,22 +1,10 @@
-import sqlite3
+from connect_db import get_database_connection
 
 
-def get_db_connection(db_path='database.db'):
-    con = sqlite3.connect(db_path)
-    con.row_factory = sqlite3.Row
-    return con
-
-
-def get_db_test_connection():
-    con = sqlite3.connect(':memory:')
-    con.row_factory = sqlite3.Row
-    return con
-
-
-def init_db(connection=None):
+def initialize_database(connection=None):
     connection_closed = False
     if connection is None:
-        connection = get_db_connection()
+        connection = get_database_connection()
         connection_closed = True
 
     cursor = connection.cursor()
@@ -60,4 +48,4 @@ def create_tables(cursor, connection):
 
 
 if __name__ == "__main__":
-    init_db()
+    initialize_database()

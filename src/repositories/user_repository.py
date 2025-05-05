@@ -1,5 +1,10 @@
-import db
+import sqlite3
+from connect_db import get_database_connection
 from entities.user import User
+
+
+class DatabaseNotInitialized(Exception):
+    pass
 
 
 class UserRepository:
@@ -12,7 +17,7 @@ class UserRepository:
             connection: The database connection.
         """
 
-        self._connection = connection or db.get_db_connection()
+        self._connection = connection or get_database_connection()
 
     def create(self, user):
         """Adds a user to the database.
@@ -23,14 +28,16 @@ class UserRepository:
         Returns:
             Returns the user added; a User-object.
         """
-
-        cursor = self._connection.cursor()
-        cursor.execute(
-            "INSERT INTO users (username, password) VALUES (?, ?)",
-            (user.username, user.password)
-        )
-        self._connection.commit()
-        return user
+        try:
+            cursor = self._connection.cursor()
+            cursor.execute(
+                "INSERT INTO users (username, password) VALUES (?, ?)",
+                (user.username, user.password)
+            )
+            self._connection.commit()
+            return user
+        except sqlite3.OperationalError:
+            raise DatabaseNotInitialized("Database has not been initialized")
 
     def find_user(self, username):
         """Finds and returns the user matching the username.
@@ -42,17 +49,23 @@ class UserRepository:
             Returns a User-object matching the username.
         """
 
-        cursor = self._connection.cursor()
-        cursor.execute(
-            "SELECT * from users where username = ?",
-            (username,)
-        )
-        row = cursor.fetchone()
-        return User(row["username"], row["password"]) if row else None
+        try:
+            cursor = self._connection.cursor()
+            cursor.execute(
+                "SELECT * from users where username = ?",
+                (username,)
+            )
+            row = cursor.fetchone()
+            return User(row["username"], row["password"]) if row else None
+        except sqlite3.OperationalError:
+            raise DatabaseNotInitialized("Database has not been initialized")
 
     def clear(self):
         """Deletes all entries from the database."""
 
-        cursor = self._connection.cursor()
-        cursor.execute("DELETE FROM users")
-        self._connection.commit()
+        try:
+            cursor = self._connection.cursor()
+            cursor.execute("DELETE FROM users")
+            self._connection.commit()
+        except sqlite3.OperationalError:
+            raise DatabaseNotInitialized("Database has not been initialized")

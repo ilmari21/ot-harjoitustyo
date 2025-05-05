@@ -1,13 +1,14 @@
 import unittest
-import db
-from repositories.logbook_repository import LogbookRepository
+from init_db import initialize_database
+from connect_db import get_test_database_connection
+from repositories.logbook_repository import LogbookRepository, DatabaseNotInitialized
 from entities.flight import Flight
 
 
 class TestLogbookRepository(unittest.TestCase):
     def setUp(self):
-        self._connection = db.get_db_test_connection()
-        db.init_db(self._connection)
+        self._connection = get_test_database_connection()
+        initialize_database(self._connection)
         self._logbook_repository = LogbookRepository(self._connection)
 
     def test_flight_creation(self):
@@ -142,3 +143,29 @@ class TestLogbookRepository(unittest.TestCase):
         self._logbook_repository.create(test_flight)
         flight_search = self._logbook_repository.find_by_user('kalevi')
         self.assertEqual(len(flight_search), 0)
+
+    def test_flight_creation_database_not_initialized(self):
+        test_repository = LogbookRepository(get_test_database_connection())
+
+        with self.assertRaises(DatabaseNotInitialized):
+            test_repository.create(Flight({
+                'pilot': 'teuvo',
+                'aircraft_type': 'C152',
+                'aircraft_reg': 'OH-TKT',
+                'departure': 'EFHK',
+                'arrival': 'EFTP',
+                'dep_time': '12:00',
+                'arr_time': '13:30'
+            }))
+
+    def test_find_flights_database_not_initialized(self):
+        test_repository = LogbookRepository(get_test_database_connection())
+
+        with self.assertRaises(DatabaseNotInitialized):
+            test_repository.find_by_user('teuvo')
+
+    def test_clear_database_not_initialized(self):
+        test_repository = LogbookRepository(get_test_database_connection())
+
+        with self.assertRaises(DatabaseNotInitialized):
+            test_repository.clear()

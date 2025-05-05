@@ -1,17 +1,18 @@
 import unittest
 import sqlite3
-import db
+from init_db import initialize_database
+from connect_db import get_database_connection
 
 
 class TestDatabaseOperations(unittest.TestCase):
     def test_get_db_connection(self):
-        test_connection = db.get_db_connection(':memory:')
+        test_connection = get_database_connection(':memory:')
         self.assertIsNotNone(test_connection)
         self.assertIsInstance(test_connection, sqlite3.Connection)
 
     def test_init_db(self):
-        test_connection = db.get_db_connection(':memory:')
-        db.init_db(test_connection)
+        test_connection = get_database_connection(':memory:')
+        initialize_database(test_connection)
         cursor = test_connection.cursor()
 
         try:

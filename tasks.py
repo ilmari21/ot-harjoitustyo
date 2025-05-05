@@ -22,7 +22,7 @@ def format(ctx):
 
 @task
 def init_db(ctx):
-    ctx.run("python3 src/db.py", pty=True)
+    ctx.run("python3 src/init_db.py", pty=True)
 
 @task
 def lint(ctx):
