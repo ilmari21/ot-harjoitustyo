@@ -1,4 +1,4 @@
-import sqlite3
+import db
 from entities.user import User
 
 
@@ -12,13 +12,7 @@ class UserRepository:
             connection: The database connection.
         """
 
-        self._connection = connection or self.get_db_connection()
-
-    @staticmethod
-    def get_db_connection():
-        con = sqlite3.connect('database.db')
-        con.row_factory = sqlite3.Row
-        return con
+        self._connection = connection or db.get_db_connection()
 
     def create(self, user):
         """Adds a user to the database.

@@ -1,4 +1,4 @@
-import sqlite3
+import db
 from entities.flight import Flight
 
 
@@ -12,13 +12,7 @@ class LogbookRepository:
             connection: The database connection.
         """
 
-        self._connection = connection or self.get_db_connection()
-
-    @staticmethod
-    def get_db_connection():
-        con = sqlite3.connect('database.db')
-        con.row_factory = sqlite3.Row
-        return con
+        self._connection = connection or db.get_db_connection()
 
     def create(self, flight):
         """Adds a new logbook entry (flight) to the database.

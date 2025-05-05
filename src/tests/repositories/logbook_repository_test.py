@@ -1,5 +1,5 @@
 import unittest
-import sqlite3
+import db
 from repositories.logbook_repository import LogbookRepository
 from entities.flight import Flight
 
@@ -34,15 +34,14 @@ def init_test_db(connection):
 
 class TestLogbookRepository(unittest.TestCase):
     def setUp(self):
-        self._connection = sqlite3.connect(':memory:')
-        self._connection.row_factory = sqlite3.Row
+        self._connection = db.get_db_test_connection()
         init_test_db(self._connection)
         self._logbook_repository = LogbookRepository(self._connection)
 
-    def test_get_db_connection(self):
-        test_connection = LogbookRepository.get_db_connection()
-        self.assertIsNotNone(test_connection)
-        self.assertIsInstance(test_connection, sqlite3.Connection)
+    # def test_get_db_connection(self):
+    #     test_connection = LogbookRepository.get_db_connection()
+    #     self.assertIsNotNone(test_connection)
+    #     self.assertIsInstance(test_connection, sqlite3.Connection)
 
     def test_flight_creation(self):
         test_flight_info = {
