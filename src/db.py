@@ -6,10 +6,12 @@ def get_db_connection(db_path='database.db'):
     con.row_factory = sqlite3.Row
     return con
 
+
 def get_db_test_connection():
     con = sqlite3.connect(':memory:')
     con.row_factory = sqlite3.Row
     return con
+
 
 def init_db(connection=None):
     connection_closed = False
