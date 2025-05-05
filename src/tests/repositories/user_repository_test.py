@@ -37,12 +37,7 @@ class TestUserRepository(unittest.TestCase):
     def setUp(self):
         self._connection = db.get_db_test_connection()
         init_test_db(self._connection)
-        self._logbook_repository = UserRepository(self._connection)
-
-    # def test_get_db_connection(self):
-    #     test_connection = UserRepository.get_db_connection()
-    #     self.assertIsNotNone(test_connection)
-    #     self.assertIsInstance(test_connection, sqlite3.Connection)
+        self._user_repository = UserRepository(self._connection)
 
     def test_user_registration(self):
         test_user = User("teuvo", "testi")

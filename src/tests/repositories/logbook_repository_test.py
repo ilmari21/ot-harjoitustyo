@@ -38,11 +38,6 @@ class TestLogbookRepository(unittest.TestCase):
         init_test_db(self._connection)
         self._logbook_repository = LogbookRepository(self._connection)
 
-    # def test_get_db_connection(self):
-    #     test_connection = LogbookRepository.get_db_connection()
-    #     self.assertIsNotNone(test_connection)
-    #     self.assertIsInstance(test_connection, sqlite3.Connection)
-
     def test_flight_creation(self):
         test_flight_info = {
             'pilot': 'teuvo',
