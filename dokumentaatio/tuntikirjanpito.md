@@ -27,4 +27,6 @@
 |               | 1h            | Koodin parannuksia |
 |               | 2h            | Yksikkötestauksen tietokantaoperaatioiden korjaamista |
 |               | 1h            | Dokumenttien päivitys |
-| yhteensä      | 44h           |
+| 5.5           | 2h            | Tietokantaoperaatioidan parannuksia |
+|               | 1h            | Yksikkötestien parannuksia |
+| yhteensä      | 47h           |
