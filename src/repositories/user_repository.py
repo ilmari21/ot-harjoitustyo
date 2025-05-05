@@ -36,8 +36,9 @@ class UserRepository:
             )
             self._connection.commit()
             return user
-        except sqlite3.OperationalError:
-            raise DatabaseNotInitialized("Database has not been initialized")
+        except sqlite3.OperationalError as error:
+            raise DatabaseNotInitialized(
+                "Database has not been initialized") from error
 
     def find_user(self, username):
         """Finds and returns the user matching the username.
@@ -57,8 +58,9 @@ class UserRepository:
             )
             row = cursor.fetchone()
             return User(row["username"], row["password"]) if row else None
-        except sqlite3.OperationalError:
-            raise DatabaseNotInitialized("Database has not been initialized")
+        except sqlite3.OperationalError as error:
+            raise DatabaseNotInitialized(
+                "Database has not been initialized") from error
 
     def clear(self):
         """Deletes all entries from the database."""
@@ -67,5 +69,6 @@ class UserRepository:
             cursor = self._connection.cursor()
             cursor.execute("DELETE FROM users")
             self._connection.commit()
-        except sqlite3.OperationalError:
-            raise DatabaseNotInitialized("Database has not been initialized")
+        except sqlite3.OperationalError as error:
+            raise DatabaseNotInitialized(
+                "Database has not been initialized") from error

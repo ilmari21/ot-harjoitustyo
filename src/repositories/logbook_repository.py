@@ -36,12 +36,13 @@ class LogbookRepository:
                                         dep_time, arr_time)
                 VALUES (?, ?, ?, ?, ?, ?, ?)""",
                 (flight.pilot, flight.aircraft_type, flight.aircraft_reg,
-                flight.departure, flight.arrival, flight.dep_time, flight.arr_time)
+                 flight.departure, flight.arrival, flight.dep_time, flight.arr_time)
             )
             self._connection.commit()
             return flight
-        except sqlite3.OperationalError:
-            raise DatabaseNotInitialized("Database has not been initialized")
+        except sqlite3.OperationalError as error:
+            raise DatabaseNotInitialized(
+                "Database has not been initialized") from error
 
     def find_by_user(self, username):
         """Finds and returns all the logbook entries of the user.
@@ -71,8 +72,9 @@ class LogbookRepository:
                     "arr_time": row["arr_time"]
                 }) for row in rows
             ]
-        except sqlite3.OperationalError:
-            raise DatabaseNotInitialized("Database has not been initialized")
+        except sqlite3.OperationalError as error:
+            raise DatabaseNotInitialized(
+                "Database has not been initialized") from error
 
     def clear(self):
         """Deletes all entries from the database."""
@@ -81,5 +83,6 @@ class LogbookRepository:
             cursor = self._connection.cursor()
             cursor.execute("DELETE FROM flights")
             self._connection.commit()
-        except sqlite3.OperationalError:
-            raise DatabaseNotInitialized("Database has not been initialized")
+        except sqlite3.OperationalError as error:
+            raise DatabaseNotInitialized(
+                "Database has not been initialized") from error
