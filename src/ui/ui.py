@@ -1,19 +1,18 @@
 from ui.login_view import LoginView
 from ui.registration_view import RegistrationView
 from ui.main_view import MainView
-from services.logbook_service import LogbookService
 
 
 class UI:
     """Class for the user interface of the app."""
 
-    def __init__(self, root):
+    def __init__(self, root, logbook_service):
         """Constructor of the class; creates the UI class."""
 
         self._root = root
         self._current_user = None
         self._current_view = None
-        self._logbook_service = LogbookService()
+        self._logbook_service = logbook_service
 
     def start(self):
         """Method for starting the UI."""

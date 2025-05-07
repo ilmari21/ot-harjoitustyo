@@ -1,5 +1,4 @@
 import sqlite3
-from connect_db import get_database_connection
 from entities.flight import Flight
 
 
@@ -10,14 +9,14 @@ class DatabaseNotInitialized(Exception):
 class LogbookRepository:
     """Class responsible for the database operations of the logbook entries."""
 
-    def __init__(self, connection=None):
+    def __init__(self, connection):
         """Constructor of the class.
 
         Args:
             connection: The database connection.
         """
 
-        self._connection = connection or get_database_connection()
+        self._connection = connection
 
     def create(self, flight):
         """Adds a new logbook entry (flight) to the database.

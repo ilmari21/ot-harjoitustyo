@@ -1,7 +1,5 @@
 from entities.user import User
 from entities.flight import Flight
-from repositories.user_repository import UserRepository
-from repositories.logbook_repository import LogbookRepository
 
 
 class WrongLoginDetails(Exception):
@@ -19,7 +17,7 @@ class NotLoggedIn(Exception):
 class LogbookService():
     """Class responsible for the main services of the app."""
 
-    def __init__(self, user_repository=None, logbook_repository=None):
+    def __init__(self, logbook_repository, user_repository):
         """Constructor of the class; creates the logbook service.
 
         Args:
@@ -27,8 +25,8 @@ class LogbookService():
             logbook_repository: The logbook repository.
         """
 
-        self._user_repository = user_repository or UserRepository()
-        self._logbook_repository = logbook_repository or LogbookRepository()
+        self._logbook_repository = logbook_repository
+        self._user_repository = user_repository
         self._user = None
 
     def register_user(self, username, password):
