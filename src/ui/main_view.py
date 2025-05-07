@@ -141,7 +141,8 @@ class MainView:
         for widget in self._show_flights_frame.winfo_children():
             widget.destroy()
 
-        self.flights_tree = ttk.Treeview(self._show_flights_frame, columns=("Aircraft Type", "Registration", "Departure", "Arrival", "Duration", "Elapsed time"), show='headings')
+        self.flights_tree = ttk.Treeview(self._show_flights_frame, columns=(
+            "Aircraft Type", "Registration", "Departure", "Arrival", "Duration", "Elapsed time"), show='headings')
         self.flights_tree.heading("Aircraft Type", text="Aircraft Type")
         self.flights_tree.heading("Registration", text="Registration")
         self.flights_tree.heading("Departure", text="Departure")
@@ -165,7 +166,8 @@ class MainView:
             flight_duration = f"{flight.dep_time} - {flight.arr_time}" if flight.dep_time and flight.arr_time else "N/A"
             total_time += flight.elapsed_time
             formatted_elapsed_time = f"{int(flight.elapsed_time // 60):02}:{int(flight.elapsed_time % 60):02}"
-            self.flights_tree.insert("", "end", values=(flight.aircraft_type, flight.aircraft_reg, flight.departure, flight.arrival, flight_duration, formatted_elapsed_time))
+            self.flights_tree.insert("", "end", values=(flight.aircraft_type, flight.aircraft_reg,
+                                     flight.departure, flight.arrival, flight_duration, formatted_elapsed_time))
 
         formatted_total_time = f"{int(total_time // 60):02}:{int(total_time % 60):02}"
 
@@ -226,12 +228,13 @@ class MainView:
             messagebox.showinfo(
                 "Error", "Enter arrival time in HH:MM format")
             return
-        
+
         dep_time_datetime = datetime.strptime(dep_time, "%H:%M")
         arr_time_datetime = datetime.strptime(arr_time, "%H:%M")
         if arr_time_datetime < dep_time_datetime:
             arr_time_datetime += timedelta(days=1)
-        elapsed_time = (arr_time_datetime - dep_time_datetime).total_seconds() / 60
+        elapsed_time = (arr_time_datetime -
+                        dep_time_datetime).total_seconds() / 60
 
         flight_info = {
             'pilot': self._current_user,

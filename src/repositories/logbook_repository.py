@@ -36,7 +36,8 @@ class LogbookRepository:
                                         dep_time, arr_time, elapsed_time)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
                 (flight.pilot, flight.aircraft_type, flight.aircraft_reg,
-                 flight.departure, flight.arrival, flight.dep_time, flight.arr_time, flight.elapsed_time)
+                 flight.departure, flight.arrival, flight.dep_time,
+                 flight.arr_time, flight.elapsed_time)
             )
             self._connection.commit()
             return flight
