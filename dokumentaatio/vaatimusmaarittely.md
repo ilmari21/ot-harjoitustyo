@@ -30,7 +30,7 @@ Sovelluksessa on vain yhdenlaisia käyttäjiä; *lentäjiä*. Mahdollista on my�
 ## Mahdolliset laajemmat toiminnallisuudet
 
 - Mahdollisuus nähdä tilastoja
-  - Käyttäjäkohtaiset tilastot omista lennoista, kuten kokonaislentotunnit **"tehty osittain: lisättyjen lentojen määrä näkyy pääsivulla"**
+  - Käyttäjäkohtaiset tilastot omista lennoista, kuten kokonaislentotunnit **"tehty osittain: lisättyjen lentojen määrä sekä kokonaistunnit näkyvät pääsivulla"**
   - Tilastoja eri lentopaikoista, kuten lentojen ja kävijöiden määrä
   - Tilastoja lentokoneista, kuten lentotunnit, lentojen ja eri lentäjien määrä
  
