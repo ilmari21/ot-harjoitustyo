@@ -28,3 +28,4 @@
 ## Viikko 7
 
  - Käyttäjän lisäämät lennot näkyvät taulukkona
+ - Puuttuva tietokanta johtaa virheilmoitukseen
