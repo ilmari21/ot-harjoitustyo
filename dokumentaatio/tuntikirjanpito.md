@@ -29,4 +29,5 @@
 |               | 1h            | Dokumenttien päivitys |
 | 5.5           | 2h            | Tietokantaoperaatioidan parannuksia |
 |               | 1h            | Yksikkötestien parannuksia |
-| yhteensä      | 47h           |
+| 6.5           | 2h            | Käyttöliittymän parannuksia |
+| yhteensä      | 49h           |
