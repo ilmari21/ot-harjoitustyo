@@ -1,5 +1,7 @@
 import unittest
 import sqlite3
+from init_db import initialize_database
+from connect_db import get_test_database_connection
 from services.logbook_service import LogbookService
 from repositories.user_repository import UserRepository
 from repositories.logbook_repository import LogbookRepository
@@ -36,9 +38,8 @@ def init_test_db(connection):
 
 class TestLogbookService(unittest.TestCase):
     def setUp(self):
-        self._connection = sqlite3.connect(':memory:')
-        self._connection.row_factory = sqlite3.Row
-        init_test_db(self._connection)
+        self._connection = get_test_database_connection()
+        initialize_database(self._connection)
         self._user_repository = UserRepository(self._connection)
         self._logbook_repository = LogbookRepository(self._connection)
         self._logbook_service = LogbookService(
@@ -107,7 +108,8 @@ class TestLogbookService(unittest.TestCase):
             'departure': 'EFHK',
             'arrival': 'EFTP',
             'dep_time': '12:00',
-            'arr_time': '13:30'
+            'arr_time': '13:30',
+            'elapsed_time': 90
         }
 
         with self.assertRaises(NotLoggedIn):
@@ -131,6 +133,8 @@ class TestLogbookService(unittest.TestCase):
             'dep_time'), created_flight.dep_time)
         self.assertEqual(test_flight_info.get(
             'arr_time'), created_flight.arr_time)
+        self.assertEqual(test_flight_info.get(
+            'elapsed_time'), created_flight.elapsed_time)
 
     def test_get_flights_by_user(self):
         test_username = "teuvo"
@@ -144,12 +148,14 @@ class TestLogbookService(unittest.TestCase):
 
         test_flight_info = {
             'pilot': test_username,
+            'pilot': 'teuvo',
             'aircraft_type': 'C152',
             'aircraft_reg': 'OH-TKT',
             'departure': 'EFHK',
             'arrival': 'EFTP',
             'dep_time': '12:00',
-            'arr_time': '13:30'
+            'arr_time': '13:30',
+            'elapsed_time': 90
         }
 
         self._logbook_service.add_flight(test_flight_info)
@@ -170,3 +176,5 @@ class TestLogbookService(unittest.TestCase):
                          test_flight_info.get('dep_time'))
         self.assertEqual(flight_search[0].arr_time,
                          test_flight_info.get('arr_time'))
+        self.assertEqual(flight_search[0].elapsed_time,
+                         test_flight_info.get('elapsed_time'))

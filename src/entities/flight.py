@@ -15,3 +15,4 @@ class Flight:
         self.arrival = flight_info.get('arrival')
         self.dep_time = flight_info.get('dep_time')
         self.arr_time = flight_info.get('arr_time')
+        self.elapsed_time = flight_info.get('elapsed_time')

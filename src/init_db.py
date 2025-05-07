@@ -40,7 +40,8 @@ def create_tables(cursor, connection):
             departure TEXT,
             arrival TEXT,
             dep_time TEXT,
-            arr_time TEXT
+            arr_time TEXT,
+            elapsed_time INTEGER
         );"""
     )
 

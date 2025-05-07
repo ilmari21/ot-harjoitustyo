@@ -1,6 +1,7 @@
 from tkinter import ttk, constants, messagebox
 import re
 from services.logbook_service import NotLoggedIn
+from datetime import datetime, timedelta
 
 
 class MainView:
@@ -140,25 +141,45 @@ class MainView:
         for widget in self._show_flights_frame.winfo_children():
             widget.destroy()
 
-        ttk.Label(
-            master=self._show_flights_frame,
-            text="Logbook entries",
-            font=("Segoe UI", 12, "bold")
-        ).grid(row=0, column=0, columnspan=2, pady=5)
+        self.flights_tree = ttk.Treeview(self._show_flights_frame, columns=("Aircraft Type", "Registration", "Departure", "Arrival", "Duration", "Elapsed time"), show='headings')
+        self.flights_tree.heading("Aircraft Type", text="Aircraft Type")
+        self.flights_tree.heading("Registration", text="Registration")
+        self.flights_tree.heading("Departure", text="Departure")
+        self.flights_tree.heading("Arrival", text="Arrival")
+        self.flights_tree.heading("Duration", text="Duration")
+        self.flights_tree.heading("Elapsed time", text="Elapsed time")
+
+        self.flights_tree.column("Aircraft Type", width=100, anchor='center')
+        self.flights_tree.column("Registration", width=100, anchor='center')
+        self.flights_tree.column("Departure", width=100, anchor='center')
+        self.flights_tree.column("Arrival", width=100, anchor='center')
+        self.flights_tree.column("Duration", width=100, anchor='center')
+        self.flights_tree.column("Elapsed time", width=100, anchor='center')
+
+        self.flights_tree.grid(row=0, column=0, columnspan=2, pady=5)
+
+        total_time = 0
 
         flights = self._logbook_service.get_flights_by_user()
-        for i, flight in enumerate(flights, start=1):
-            flight_duration = f" ({flight.dep_time} - {flight.arr_time})" if flight.dep_time and flight.arr_time else ""
-            ttk.Label(
-                master=self._show_flights_frame,
-                text=f"{flight.aircraft_type} {flight.aircraft_reg} {flight.departure} → {flight.arrival}{flight_duration}"
-            ).grid(row=i, column=0, columnspan=2, pady=2)
+        for flight in flights:
+            flight_duration = f"{flight.dep_time} - {flight.arr_time}" if flight.dep_time and flight.arr_time else "N/A"
+            total_time += flight.elapsed_time
+            formatted_elapsed_time = f"{int(flight.elapsed_time // 60):02}:{int(flight.elapsed_time % 60):02}"
+            self.flights_tree.insert("", "end", values=(flight.aircraft_type, flight.aircraft_reg, flight.departure, flight.arrival, flight_duration, formatted_elapsed_time))
+
+        formatted_total_time = f"{int(total_time // 60):02}:{int(total_time % 60):02}"
 
         ttk.Label(
             master=self._show_flights_frame,
-            text=f"Total flights: {len(flights)}",
+            text=f"Total flights: {len(flights)}    Total flight time: {formatted_total_time}",
             font=("Segoe UI", 10)
-        ).grid(row=len(flights) + 1, column=0, columnspan=2, pady=5)
+        ).grid(row=len(flights) + 1, column=0, columnspan=2, padx=10, pady=2)
+
+        # ttk.Label(
+        #     master=self._show_flights_frame,
+        #     text=f"Total flight time: {formatted_total_time}",
+        #     font=("Segoe UI", 10)
+        # ).grid(row=len(flights) + 2, column=0, columnspan=2, padx=10, pady=2)
 
     def _handle_add_flight(self):
         """Method responsible for the addition of a new flight."""
@@ -205,6 +226,12 @@ class MainView:
             messagebox.showinfo(
                 "Error", "Enter arrival time in HH:MM format")
             return
+        
+        dep_time_datetime = datetime.strptime(dep_time, "%H:%M")
+        arr_time_datetime = datetime.strptime(arr_time, "%H:%M")
+        if arr_time_datetime < dep_time_datetime:
+            arr_time_datetime += timedelta(days=1)
+        elapsed_time = (arr_time_datetime - dep_time_datetime).total_seconds() / 60
 
         flight_info = {
             'pilot': self._current_user,
@@ -213,7 +240,8 @@ class MainView:
             'departure': departure,
             'arrival': arrival,
             'dep_time': dep_time,
-            'arr_time': arr_time
+            'arr_time': arr_time,
+            'elapsed_time': elapsed_time
         }
 
         try:

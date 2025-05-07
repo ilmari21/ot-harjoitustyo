@@ -19,7 +19,8 @@ class TestLogbookRepository(unittest.TestCase):
             'departure': 'EFHK',
             'arrival': 'EFTP',
             'dep_time': '12:00',
-            'arr_time': '13:30'
+            'arr_time': '13:30',
+            'elapsed_time': 90
         }
 
         test_flight = Flight(test_flight_info)
@@ -37,6 +38,8 @@ class TestLogbookRepository(unittest.TestCase):
             'dep_time'), created_flight.dep_time)
         self.assertEqual(test_flight_info.get(
             'arr_time'), created_flight.arr_time)
+        self.assertEqual(test_flight_info.get(
+            'elapsed_time'), created_flight.elapsed_time)
 
     def test_find_flights(self):
         test_flight_info = {
@@ -46,7 +49,8 @@ class TestLogbookRepository(unittest.TestCase):
             'departure': 'EFHK',
             'arrival': 'EFTP',
             'dep_time': '12:00',
-            'arr_time': '13:30'
+            'arr_time': '13:30',
+            'elapsed_time': 90
         }
 
         test_flight = Flight(test_flight_info)
@@ -67,6 +71,8 @@ class TestLogbookRepository(unittest.TestCase):
                          test_flight_info.get('dep_time'))
         self.assertEqual(flight_search[0].arr_time,
                          test_flight_info.get('arr_time'))
+        self.assertEqual(flight_search[0].elapsed_time,
+                         test_flight_info.get('elapsed_time'))
 
     def test_multiple_flights_creation(self):
         test_flight1_info = {
@@ -76,7 +82,8 @@ class TestLogbookRepository(unittest.TestCase):
             'departure': 'EFHK',
             'arrival': 'EFTP',
             'dep_time': '12:00',
-            'arr_time': '13:30'
+            'arr_time': '13:30',
+            'elapsed_time': 90
         }
         test_flight2_info = {
             'pilot': 'teuvo',
@@ -85,7 +92,8 @@ class TestLogbookRepository(unittest.TestCase):
             'departure': 'EFTP',
             'arrival': 'EFTU',
             'dep_time': '14:00',
-            'arr_time': '15:30'
+            'arr_time': '15:30',
+            'elapsed_time': 90
         }
         test_flight3_info = {
             'pilot': 'teuvo',
@@ -94,7 +102,8 @@ class TestLogbookRepository(unittest.TestCase):
             'departure': 'EFTP',
             'arrival': 'EFHK',
             'dep_time': '16:00',
-            'arr_time': '17:30'
+            'arr_time': '17:30',
+            'elapsed_time': 90
         }
 
         test_flight1 = Flight(test_flight1_info)
@@ -118,7 +127,8 @@ class TestLogbookRepository(unittest.TestCase):
             'departure': 'EFHK',
             'arrival': 'EFTP',
             'dep_time': '12:00',
-            'arr_time': '13:30'
+            'arr_time': '13:30',
+            'elapsed_time': 90
         }
 
         test_flight = Flight(test_flight_info)
@@ -136,7 +146,8 @@ class TestLogbookRepository(unittest.TestCase):
             'departure': 'EFHK',
             'arrival': 'EFTP',
             'dep_time': '12:00',
-            'arr_time': '13:30'
+            'arr_time': '13:30',
+            'elapsed_time': 90
         }
 
         test_flight = Flight(test_flight_info)
@@ -155,7 +166,8 @@ class TestLogbookRepository(unittest.TestCase):
                 'departure': 'EFHK',
                 'arrival': 'EFTP',
                 'dep_time': '12:00',
-                'arr_time': '13:30'
+                'arr_time': '13:30',
+                'elapsed_time': 90
             }))
 
     def test_find_flights_database_not_initialized(self):

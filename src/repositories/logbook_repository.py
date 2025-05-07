@@ -33,10 +33,10 @@ class LogbookRepository:
             cursor = self._connection.cursor()
             cursor.execute(
                 """INSERT INTO flights (pilot, aircraft_type, aircraft_reg, departure, arrival,
-                                        dep_time, arr_time)
-                VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                                        dep_time, arr_time, elapsed_time)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
                 (flight.pilot, flight.aircraft_type, flight.aircraft_reg,
-                 flight.departure, flight.arrival, flight.dep_time, flight.arr_time)
+                 flight.departure, flight.arrival, flight.dep_time, flight.arr_time, flight.elapsed_time)
             )
             self._connection.commit()
             return flight
@@ -69,7 +69,8 @@ class LogbookRepository:
                     "departure": row["departure"],
                     "arrival": row["arrival"],
                     "dep_time": row["dep_time"],
-                    "arr_time": row["arr_time"]
+                    "arr_time": row["arr_time"],
+                    "elapsed_time": row["elapsed_time"]
                 }) for row in rows
             ]
         except sqlite3.OperationalError as error:
