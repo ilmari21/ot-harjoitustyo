@@ -30,4 +30,6 @@
 | 5.5           | 2h            | Tietokantaoperaatioidan parannuksia |
 |               | 1h            | Yksikkötestien parannuksia |
 | 6.5           | 2h            | Käyttöliittymän parannuksia |
-| yhteensä      | 49h           |
+| 7.5           | 1h            | Parannuksia projektin alustukseen ja riippuvuuksien injektointiin |
+|               | 1h            | Puuttuvan tietokannan poikkeuskäsittelyn toteutus |
+| yhteensä      | 51h           |
