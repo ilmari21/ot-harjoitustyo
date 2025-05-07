@@ -24,3 +24,7 @@
  - Käyttäjä voi lisätä koneen tyypin ja tunnuksen lentoihin
  - Siirretty käyttöliittymän elementit pois sovelluslogiikasta
  - Yksikkötestauksen tietokantaoperaatiot eivät enää vaikuta varsinaiseen tietokantaan, suoritetaan 'in-memory' tietokannassa
+
+## Viikko 7
+
+ - Käyttäjän lisäämät lennot näkyvät taulukkona
