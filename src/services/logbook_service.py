@@ -1,3 +1,4 @@
+from sqlite3 import OperationalError
 from entities.user import User
 from entities.flight import Flight
 
@@ -11,6 +12,10 @@ class UsernameAlreadyInUse(Exception):
 
 
 class NotLoggedIn(Exception):
+    pass
+
+
+class DatabaseNotInitialized(Exception):
     pass
 
 
@@ -40,10 +45,14 @@ class LogbookService():
             Returns created User-object.
         """
 
-        if self._user_repository.find_user(username):
-            raise UsernameAlreadyInUse("Username already exists")
-        user = self._user_repository.create(User(username, password))
-        return user
+        try:
+            if self._user_repository.find_user(username):
+                raise UsernameAlreadyInUse("Username already exists")
+            user = self._user_repository.create(User(username, password))
+            return user
+        except OperationalError as error:
+            raise DatabaseNotInitialized(
+                "Database has not been initialized") from error
 
     def login(self, username, password):
         """Logs in the user.
@@ -56,12 +65,15 @@ class LogbookService():
             Returns True if login succesful, otherwise False.
         """
 
-        login_user = self._user_repository.find_user(username)
-
-        if login_user and login_user.password == password:
-            self._user = login_user
-            return True
-        raise WrongLoginDetails("Invalid username or password")
+        try:
+            login_user = self._user_repository.find_user(username)
+            if login_user and login_user.password == password:
+                self._user = login_user
+                return True
+            raise WrongLoginDetails("Invalid username or password")
+        except OperationalError as error:
+            raise DatabaseNotInitialized(
+                "Database has not been initialized") from error
 
     def add_flight(self, flight_info):
         """Creates a new logbook entry (flight).
@@ -73,11 +85,15 @@ class LogbookService():
             Returns created Flight-object, if succesful.
         """
 
-        if not self._user:
-            raise NotLoggedIn("No user logged in")
-        flight = self._logbook_repository.create(
-            Flight(flight_info))
-        return flight
+        try:
+            if not self._user:
+                raise NotLoggedIn("No user logged in")
+            flight = self._logbook_repository.create(
+                Flight(flight_info))
+            return flight
+        except OperationalError as error:
+            raise DatabaseNotInitialized(
+                "Database has not been initialized") from error
 
     def get_flights_by_user(self):
         """Returns all the flights of the user.
@@ -86,6 +102,10 @@ class LogbookService():
             Returns a list of Flight-objects added by the user.
         """
 
-        if not self._user:
-            return []
-        return self._logbook_repository.find_by_user(self._user.username)
+        try:
+            if not self._user:
+                return []
+            return self._logbook_repository.find_by_user(self._user.username)
+        except OperationalError as error:
+            raise DatabaseNotInitialized(
+                "Database has not been initialized") from error

@@ -1,5 +1,5 @@
 from tkinter import ttk, constants, messagebox
-from services.logbook_service import UsernameAlreadyInUse
+from services.logbook_service import UsernameAlreadyInUse, DatabaseNotInitialized
 
 
 class RegistrationView:
@@ -86,3 +86,5 @@ class RegistrationView:
             self._var_login()
         except UsernameAlreadyInUse:
             messagebox.showinfo("Error", "Username already exists")
+        except DatabaseNotInitialized:
+            messagebox.showinfo("Error", "Database has not been initialized")

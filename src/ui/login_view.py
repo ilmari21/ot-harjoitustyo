@@ -1,5 +1,5 @@
 from tkinter import ttk, constants, messagebox
-from services.logbook_service import WrongLoginDetails
+from services.logbook_service import WrongLoginDetails, DatabaseNotInitialized
 
 
 class LoginView:
@@ -76,3 +76,5 @@ class LoginView:
         except WrongLoginDetails:
             self.password_entry.delete(0, constants.END)
             messagebox.showinfo("Error", "Invalid username or password")
+        except DatabaseNotInitialized:
+            messagebox.showinfo("Error", "Database has not been initialized")

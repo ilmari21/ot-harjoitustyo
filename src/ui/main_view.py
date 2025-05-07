@@ -1,6 +1,6 @@
 from tkinter import ttk, constants, messagebox
 import re
-from services.logbook_service import NotLoggedIn
+from services.logbook_service import NotLoggedIn, DatabaseNotInitialized
 from datetime import datetime, timedelta
 
 
@@ -261,3 +261,5 @@ class MainView:
             self._show_main_view()
         except NotLoggedIn:
             messagebox.showinfo("Error", "No user logged in")
+        except DatabaseNotInitialized:
+            messagebox.showinfo("Error", "Database has not been initialized")

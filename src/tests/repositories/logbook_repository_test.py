@@ -1,7 +1,7 @@
 import unittest
 from init_db import initialize_database
 from connect_db import get_test_database_connection
-from repositories.logbook_repository import LogbookRepository, DatabaseNotInitialized
+from repositories.logbook_repository import LogbookRepository
 from entities.flight import Flight
 
 
@@ -154,30 +154,3 @@ class TestLogbookRepository(unittest.TestCase):
         self._logbook_repository.create(test_flight)
         flight_search = self._logbook_repository.find_by_user('kalevi')
         self.assertEqual(len(flight_search), 0)
-
-    def test_flight_creation_database_not_initialized(self):
-        test_repository = LogbookRepository(get_test_database_connection())
-
-        with self.assertRaises(DatabaseNotInitialized):
-            test_repository.create(Flight({
-                'pilot': 'teuvo',
-                'aircraft_type': 'C152',
-                'aircraft_reg': 'OH-TKT',
-                'departure': 'EFHK',
-                'arrival': 'EFTP',
-                'dep_time': '12:00',
-                'arr_time': '13:30',
-                'elapsed_time': 90
-            }))
-
-    def test_find_flights_database_not_initialized(self):
-        test_repository = LogbookRepository(get_test_database_connection())
-
-        with self.assertRaises(DatabaseNotInitialized):
-            test_repository.find_by_user('teuvo')
-
-    def test_clear_database_not_initialized(self):
-        test_repository = LogbookRepository(get_test_database_connection())
-
-        with self.assertRaises(DatabaseNotInitialized):
-            test_repository.clear()

@@ -1,7 +1,7 @@
 import unittest
 from init_db import initialize_database
 from connect_db import get_test_database_connection
-from repositories.user_repository import UserRepository, DatabaseNotInitialized
+from repositories.user_repository import UserRepository
 from entities.user import User
 
 
@@ -33,21 +33,3 @@ class TestUserRepository(unittest.TestCase):
         self._user_repository.create(test_user)
         self._user_repository.clear()
         self.assertIsNone(self._user_repository.find_user("teuvo"))
-
-    def test_user_registration_database_not_initialized(self):
-        test_repository = UserRepository(get_test_database_connection())
-
-        with self.assertRaises(DatabaseNotInitialized):
-            test_repository.create(User("teuvo", "testi"))
-
-    def test_find_user_database_not_initialized(self):
-        test_repository = UserRepository(get_test_database_connection())
-
-        with self.assertRaises(DatabaseNotInitialized):
-            test_repository.find_user("teuvo")
-
-    def test_clear_database_not_initialized(self):
-        test_repository = UserRepository(get_test_database_connection())
-
-        with self.assertRaises(DatabaseNotInitialized):
-            test_repository.clear()
