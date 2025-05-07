@@ -4,7 +4,8 @@ from connect_db import get_test_database_connection
 from services.logbook_service import LogbookService
 from repositories.logbook_repository import LogbookRepository
 from repositories.user_repository import UserRepository
-from services.logbook_service import UsernameAlreadyInUse, WrongLoginDetails, NotLoggedIn
+from services.logbook_service import UsernameAlreadyInUse, WrongLoginDetails, NotLoggedIn, DatabaseNotInitialized
+from entities.user import User
 
 
 class TestLogbookService(unittest.TestCase):
@@ -83,9 +84,6 @@ class TestLogbookService(unittest.TestCase):
             'elapsed_time': 90
         }
 
-        with self.assertRaises(NotLoggedIn):
-            self._logbook_service.add_flight(test_flight_info)
-
         self._logbook_service.register_user(test_username, test_password)
         self._logbook_service.login(test_username, test_password)
 
@@ -106,6 +104,21 @@ class TestLogbookService(unittest.TestCase):
             'arr_time'), created_flight.arr_time)
         self.assertEqual(test_flight_info.get(
             'elapsed_time'), created_flight.elapsed_time)
+
+    def test_add_flight_not_logged_in(self):
+        test_flight_info = {
+            'pilot': 'teuvo',
+            'aircraft_type': 'C152',
+            'aircraft_reg': 'OH-TKT',
+            'departure': 'EFHK',
+            'arrival': 'EFTP',
+            'dep_time': '12:00',
+            'arr_time': '13:30',
+            'elapsed_time': 90
+        }
+
+        with self.assertRaises(NotLoggedIn):
+            self._logbook_service.add_flight(test_flight_info)
 
     def test_get_flights_by_user(self):
         test_username = "teuvo"
@@ -149,3 +162,68 @@ class TestLogbookService(unittest.TestCase):
                          test_flight_info.get('arr_time'))
         self.assertEqual(flight_search[0].elapsed_time,
                          test_flight_info.get('elapsed_time'))
+
+    def test_user_login_database_not_initialized(self):
+        test_username = "teuvo"
+        test_password = "testi"
+
+        test_connection = get_test_database_connection()
+
+        test_logbook_repository = LogbookRepository(test_connection)
+        test_user_repository = UserRepository(test_connection)
+        test_logbook_service = LogbookService(
+            test_logbook_repository, test_user_repository)
+
+        with self.assertRaises(DatabaseNotInitialized):
+            test_logbook_service.login(test_username, test_password)
+
+    def test_user_registration_database_not_initialized(self):
+        test_username = "teuvo"
+        test_password = "testi"
+
+        test_connection = get_test_database_connection()
+
+        test_logbook_repository = LogbookRepository(test_connection)
+        test_user_repository = UserRepository(test_connection)
+        test_logbook_service = LogbookService(
+            test_logbook_repository, test_user_repository)
+
+        with self.assertRaises(DatabaseNotInitialized):
+            test_logbook_service.register_user(test_username, test_password)
+
+    def test_add_flight_database_not_initialized(self):
+        test_flight_info = {
+            'pilot': 'teuvo',
+            'aircraft_type': 'C152',
+            'aircraft_reg': 'OH-TKT',
+            'departure': 'EFHK',
+            'arrival': 'EFTP',
+            'dep_time': '12:00',
+            'arr_time': '13:30',
+            'elapsed_time': 90
+        }
+
+        test_connection = get_test_database_connection()
+
+        test_logbook_repository = LogbookRepository(test_connection)
+        test_user_repository = UserRepository(test_connection)
+        test_logbook_service = LogbookService(
+            test_logbook_repository, test_user_repository)
+
+        test_logbook_service._user = User("teuvo", "testi")
+
+        with self.assertRaises(DatabaseNotInitialized):
+            test_logbook_service.add_flight(test_flight_info)
+
+    def test_get_flights_by_user_database_not_initialized(self):
+        test_connection = get_test_database_connection()
+
+        test_logbook_repository = LogbookRepository(test_connection)
+        test_user_repository = UserRepository(test_connection)
+        test_logbook_service = LogbookService(
+            test_logbook_repository, test_user_repository)
+
+        test_logbook_service._user = User("teuvo", "testi")
+
+        with self.assertRaises(DatabaseNotInitialized):
+            test_logbook_service.get_flights_by_user()
