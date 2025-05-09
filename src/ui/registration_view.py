@@ -35,6 +35,7 @@ class RegistrationView:
 
     def _initialize(self):
         """Initializes the user registration view UI elements."""
+
         self._frame = ttk.Frame(master=self._root)
 
         self._username_label = ttk.Label(
@@ -68,6 +69,7 @@ class RegistrationView:
 
     def _handle_registration(self):
         """Method responsible for the registraion of a new user."""
+
         username = self._username_entry.get()
         password = self._password_entry.get()
 
@@ -88,7 +90,7 @@ class RegistrationView:
         except UsernameAlreadyInUse:
             messagebox.showerror("Error", "Username already exists")
         except DatabaseNotInitialized:
-            if messagebox.askyesno("Database Not Initialized", "Do you want to initialize the database?"):
+            if messagebox.askyesno("Database Not Initialized", "Do you want to initialize the database?", icon='warning'):
                 initialize_database()
             else:
                 messagebox.showerror(

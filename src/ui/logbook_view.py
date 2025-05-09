@@ -39,6 +39,7 @@ class LogbookView:
 
     def _initialize(self):
         """Initializes the logbook view UI elements."""
+
         self._frame = ttk.Frame(master=self._root)
         self._added_flight_list_frame = ttk.Frame(self._frame)
 
@@ -62,6 +63,7 @@ class LogbookView:
 
     def _update_added_flights(self):
         """Updates the table of added flights."""
+
         for widget in self._added_flight_list_frame.winfo_children():
             widget.destroy()
 
@@ -75,7 +77,7 @@ class LogbookView:
             total_time += flight.elapsed_time
             formatted_elapsed_time = f"{int(flight.elapsed_time // 60):02}:{int(flight.elapsed_time % 60):02}"
             flights_tree.insert("", "end", values=(flight.aircraft_type, flight.aircraft_reg,
-                                                         flight.departure, flight.arrival, flight_duration, formatted_elapsed_time))
+                                                   flight.departure, flight.arrival, flight_duration, formatted_elapsed_time))
 
         formatted_total_time = f"{int(total_time // 60):02}:{int(total_time % 60):02}"
 
@@ -86,28 +88,23 @@ class LogbookView:
         ).grid(row=len(flights) + 1, column=0, columnspan=2, padx=10, pady=2)
 
     def _create_flights_tree(self):
-        """Creates a table of flights
+        """Creates a table of flights.
 
         Returns:
-            Returns a ttk.Treeview-object consisting a table of flights added by user.
+            Returns a ttk.Treeview object consisting of a table of flights added by the user.
         """
 
-        flights_tree = ttk.Treeview(self._added_flight_list_frame, columns=(
-            "Aircraft Type", "Registration", "Departure", "Arrival", "Duration", "Elapsed time"), show='headings')
-        flights_tree.heading("Aircraft Type", text="Aircraft Type")
-        flights_tree.heading("Registration", text="Registration")
-        flights_tree.heading("Departure", text="Departure")
-        flights_tree.heading("Arrival", text="Arrival")
-        flights_tree.heading("Duration", text="Duration")
-        flights_tree.heading("Elapsed time", text="Elapsed time")
+        columns = [
+            "Aircraft Type", "Registration", "Departure", "Arrival", "Duration", "Elapsed time"
+        ]
 
-        flights_tree.column("Aircraft Type", width=100, anchor='center')
-        flights_tree.column("Registration", width=100, anchor='center')
-        flights_tree.column("Departure", width=100, anchor='center')
-        flights_tree.column("Arrival", width=100, anchor='center')
-        flights_tree.column("Duration", width=100, anchor='center')
-        flights_tree.column("Elapsed time", width=100, anchor='center')
+        flights_tree = ttk.Treeview(
+            self._added_flight_list_frame, columns=columns, show='headings')
+
+        for column in columns:
+            flights_tree.heading(column, text=column)
+            flights_tree.column(column, width=100, anchor='center')
 
         flights_tree.grid(row=0, column=0, columnspan=2, pady=5)
 
-        return  flights_tree
+        return flights_tree

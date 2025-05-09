@@ -37,6 +37,7 @@ class LoginView:
 
     def _initialize(self):
         """Initializes the login view UI elements."""
+
         self._frame = ttk.Frame(master=self._root)
 
         self._username_label = ttk.Label(master=self._frame, text="Username")
@@ -68,6 +69,7 @@ class LoginView:
 
     def _handle_login(self):
         """Method responsible for handling the login attempt."""
+
         username = self._username_entry.get()
         password = self._password_entry.get()
 
@@ -78,7 +80,7 @@ class LoginView:
             self._password_entry.delete(0, constants.END)
             messagebox.showerror("Error", "Invalid username or password")
         except DatabaseNotInitialized:
-            if messagebox.askyesno("Database Not Initialized", "Do you want to initialize the database?"):
+            if messagebox.askyesno("Database Not Initialized", "Do you want to initialize the database?", icon='warning'):
                 initialize_database()
             else:
                 messagebox.showerror(

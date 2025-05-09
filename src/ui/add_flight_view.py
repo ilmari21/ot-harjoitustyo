@@ -43,6 +43,7 @@ class AddFlightView:
 
     def _initialize(self):
         """Initializes the flight adding view UI elements."""
+
         self._frame = ttk.Frame(master=self._root)
 
         self._aircraft_type_entry = ttk.Entry(master=self._frame)
@@ -89,6 +90,28 @@ class AddFlightView:
 
     def _handle_add_flight(self):
         """Method responsible for the addition of a new flight."""
+
+        flight_info = self._validate_entries()
+        if not flight_info:
+            return
+
+        try:
+            self._logbook_service.add_flight(flight_info)
+            self._clear_entries()
+            messagebox.showinfo("Success", "Flight added!")
+            self._logbook_view()
+        except NotLoggedIn:
+            messagebox.showerror("Error", "No user logged in")
+        except DatabaseNotInitialized:
+            if messagebox.askyesno("Database Not Initialized", "Do you want to initialize the database?", icon='warning'):
+                initialize_database()
+            else:
+                messagebox.showerror(
+                    "Error", "Database has not been initialized")
+
+    def _validate_entries(self):
+        """Validates the entries."""
+
         aircraft_type = self._aircraft_type_entry.get()
         aircraft_reg = self._aircraft_reg_entry.get()
         departure = self._departure_entry.get()
@@ -146,28 +169,19 @@ class AddFlightView:
             'elapsed_time': elapsed_time
         }
 
-        try:
-            self._logbook_service.add_flight(flight_info)
-            self._aircraft_type_entry.delete(0, constants.END)
-            self._aircraft_reg_entry.delete(0, constants.END)
-            self._departure_entry.delete(0, constants.END)
-            self._arrival_entry.delete(0, constants.END)
-            self._dep_time_entry.delete(0, constants.END)
-            self._dep_time_entry.insert(0, "00:00")
-            self._arr_time_entry.delete(0, constants.END)
-            self._arr_time_entry.insert(0, "00:00")
-            messagebox.showinfo("Success", "Flight added!")
-            self._logbook_view()
-        except NotLoggedIn:
-            messagebox.showerror("Error", "No user logged in")
-        except DatabaseNotInitialized:
-            if messagebox.askyesno("Database Not Initialized", "Do you want to initialize the database?"):
-                initialize_database()
-            else:
-                messagebox.showerror(
-                    "Error", "Database has not been initialized")
+        return flight_info
 
     def _get_elapsed_time(self, dep_time, arr_time):
+        """Calculates the total flight time.
+
+        Args:
+            dep_time: Departure time of the flight.
+            arr_time: Arrival time of the flight.
+
+        Returns:
+            Integer depicting the elapsed flight time in minutes.
+        """
+
         dep_time_datetime = datetime.strptime(dep_time, "%H:%M")
         arr_time_datetime = datetime.strptime(arr_time, "%H:%M")
         if arr_time_datetime < dep_time_datetime:
@@ -175,3 +189,15 @@ class AddFlightView:
         elapsed_time = (arr_time_datetime -
                         dep_time_datetime).total_seconds() / 60
         return elapsed_time
+
+    def _clear_entries(self):
+        """Clears the entries."""
+
+        self._aircraft_type_entry.delete(0, constants.END)
+        self._aircraft_reg_entry.delete(0, constants.END)
+        self._departure_entry.delete(0, constants.END)
+        self._arrival_entry.delete(0, constants.END)
+        self._dep_time_entry.delete(0, constants.END)
+        self._dep_time_entry.insert(0, "00:00")
+        self._arr_time_entry.delete(0, constants.END)
+        self._arr_time_entry.insert(0, "00:00")
