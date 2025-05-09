@@ -31,13 +31,14 @@ Kaaviossa **ui** vastaa käyttöliittymää ja sen eri näkymiä, **services** s
 
 ## Käyttöliittymä
 
-Sovelluksessa on kolme sivua:
+Sovelluksessa on neljä sivua:
 
  - Kirjautumissivu
  - Rekisteröitymissivu
- - Pääsivu
+ - Lokikirjasivu
+ - Lentojen lisäyssivu
 
-Kirjautumissivu on etusivu, josta voi siirtyä kirjautumalla pääsivulle, tai jos haluaa luodan uuden käyttäjän, rekisteröitymissivulle. Pääsivulla on perusnäkymä, johon on listattu käyttäjän lisäämät lennot, sekä näkymä lentojen lisäämistä varten.
+Kirjautumissivu on etusivu, josta voi siirtyä kirjautumalla lokikirjasivulle, tai jos haluaa luodan uuden käyttäjän, rekisteröitymissivulle. Lokikirjasivu on perusnäkymä, johon on listattu käyttäjän lisäämät lennot. Lokikirjasivulta voi siirtyä lentojen lisäysnäkymään, jossa käyttäjä voi lisätä uuden lennon.
 
 ## Sovelluksen logiikka
 
@@ -58,6 +59,7 @@ Sovelluksen oleellisimmat luokat ovat *User* ja *Flight*. *User* kuvaa käyttäj
           arrival
           dep_time
           arr_time
+          elapsed_time
       }
 ```
 
