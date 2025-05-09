@@ -133,12 +133,7 @@ class AddFlightView:
                 "Error", "Enter arrival time in HH:MM format")
             return
 
-        dep_time_datetime = datetime.strptime(dep_time, "%H:%M")
-        arr_time_datetime = datetime.strptime(arr_time, "%H:%M")
-        if arr_time_datetime < dep_time_datetime:
-            arr_time_datetime += timedelta(days=1)
-        elapsed_time = (arr_time_datetime -
-                        dep_time_datetime).total_seconds() / 60
+        elapsed_time = self._get_elapsed_time(dep_time, arr_time)
 
         flight_info = {
             'pilot': self._current_user,
@@ -171,3 +166,12 @@ class AddFlightView:
             else:
                 messagebox.showerror(
                     "Error", "Database has not been initialized")
+
+    def _get_elapsed_time(self, dep_time, arr_time):
+        dep_time_datetime = datetime.strptime(dep_time, "%H:%M")
+        arr_time_datetime = datetime.strptime(arr_time, "%H:%M")
+        if arr_time_datetime < dep_time_datetime:
+            arr_time_datetime += timedelta(days=1)
+        elapsed_time = (arr_time_datetime -
+                        dep_time_datetime).total_seconds() / 60
+        return elapsed_time
