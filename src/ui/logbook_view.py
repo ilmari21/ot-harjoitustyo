@@ -40,10 +40,9 @@ class LogbookView:
         self._frame.destroy()
 
     def _initialize(self):
-        """Displays the logbook view where the added flights are listed."""
+        """Initializes the logbook view UI elements."""
         self._frame = ttk.Frame(master=self._root)
-        self._show_flights_frame = ttk.Frame(master=self._frame)
-        self._add_flight_frame = ttk.Frame(master=self._frame)
+        self._added_flight_list_frame = ttk.Frame(self._frame)
 
         self.logout_button = ttk.Button(
             master=self._frame,
@@ -57,16 +56,18 @@ class LogbookView:
 
         self.logout_button.grid(row=0, column=0, padx=10, pady=20)
         self.show_add_flight_button.grid(row=0, column=1, padx=10, pady=20)
-        self._show_flights_frame.grid(
+        self._frame.grid(
             row=1, column=0, columnspan=2, padx=10, pady=10)
+        self._added_flight_list_frame.grid(
+            row=1, column=0, columnspan=2, pady=5)
         self._update_added_flights_list()
 
     def _update_added_flights_list(self):
         """Updates the list of added flights."""
-        for widget in self._show_flights_frame.winfo_children():
+        for widget in self._added_flight_list_frame.winfo_children():
             widget.destroy()
 
-        self.flights_tree = ttk.Treeview(self._show_flights_frame, columns=(
+        self.flights_tree = ttk.Treeview(self._added_flight_list_frame, columns=(
             "Aircraft Type", "Registration", "Departure", "Arrival", "Duration", "Elapsed time"), show='headings')
         self.flights_tree.heading("Aircraft Type", text="Aircraft Type")
         self.flights_tree.heading("Registration", text="Registration")
@@ -97,7 +98,7 @@ class LogbookView:
         formatted_total_time = f"{int(total_time // 60):02}:{int(total_time % 60):02}"
 
         ttk.Label(
-            master=self._show_flights_frame,
+            master=self._frame,
             text=f"Total flights: {len(flights)}    Total flight time: {formatted_total_time}",
             font=("Segoe UI", 10)
         ).grid(row=len(flights) + 1, column=0, columnspan=2, padx=10, pady=2)

@@ -42,76 +42,59 @@ class AddFlightView:
         self._frame.destroy()
 
     def _initialize(self):
-        """Displays the flight adding view where the a new flight can be added."""
+        """Initializes the flight adding view UI elements."""
         self._frame = ttk.Frame(master=self._root)
-        self._show_flights_frame = ttk.Frame(master=self._frame)
-        self._add_flight_frame = ttk.Frame(master=self._frame)
 
-        self.aircraft_type_label = ttk.Label(
-            master=self._add_flight_frame, text="Aircraft type")
-        self.aircraft_type_entry = ttk.Entry(master=self._add_flight_frame)
+        self._aircraft_type_entry = ttk.Entry(master=self._frame)
+        self._aircraft_reg_entry = ttk.Entry(master=self._frame)
+        self._departure_entry = ttk.Entry(master=self._frame)
+        self._arrival_entry = ttk.Entry(master=self._frame)
+        self._dep_time_entry = ttk.Entry(master=self._frame)
+        self._dep_time_entry.insert(0, "00:00")
+        self._arr_time_entry = ttk.Entry(master=self._frame)
+        self._arr_time_entry.insert(0, "00:00")
 
-        self.aircraft_reg_label = ttk.Label(
-            master=self._add_flight_frame, text="Aircraft registration")
-        self.aircraft_reg_entry = ttk.Entry(master=self._add_flight_frame)
+        labels = [
+            ("Aircraft type", self._aircraft_type_entry),
+            ("Aircraft registration", self._aircraft_reg_entry),
+            ("Departure", self._departure_entry),
+            ("Arrival", self._arrival_entry),
+            ("Departure time (HH:MM)", self._dep_time_entry),
+            ("Arrival time (HH:MM)", self._arr_time_entry)
+        ]
 
-        self.departure_label = ttk.Label(
-            master=self._add_flight_frame, text="Departure")
-        self.departure_entry = ttk.Entry(master=self._add_flight_frame)
-
-        self.arrival_label = ttk.Label(
-            master=self._add_flight_frame, text="Arrival")
-        self.arrival_entry = ttk.Entry(master=self._add_flight_frame)
-
-        self.dep_time_label = ttk.Label(
-            master=self._add_flight_frame, text="Departure time (HH:MM)")
-        self.dep_time_entry = ttk.Entry(master=self._add_flight_frame)
-        self.dep_time_entry.insert(0, "00:00")
-
-        self.arr_time_label = ttk.Label(
-            master=self._add_flight_frame, text="Arrival time (HH:MM)")
-        self.arr_time_entry = ttk.Entry(master=self._add_flight_frame)
-        self.arr_time_entry.insert(0, "00:00")
+        for i, (label_text, entry) in enumerate(labels):
+            label = ttk.Label(master=self._frame, text=label_text)
+            label.grid(row=i, column=0, padx=10, pady=10)
+            entry.grid(row=i, column=1, padx=10, pady=10)
 
         self.return_button = ttk.Button(
-            master=self._add_flight_frame,
+            master=self._frame,
             text="Return",
             command=self._logbook_view,
             width=15
         )
 
         self.add_flight_button = ttk.Button(
-            master=self._add_flight_frame,
+            master=self._frame,
             text="Add flight",
             command=self._handle_add_flight,
             width=15
         )
 
-        self.aircraft_type_label.grid(row=0, column=0, padx=10, pady=10)
-        self.aircraft_type_entry.grid(row=0, column=1, padx=10, pady=10)
-        self.aircraft_reg_label.grid(row=1, column=0, padx=10, pady=10)
-        self.aircraft_reg_entry.grid(row=1, column=1, padx=10, pady=10)
-        self.departure_label.grid(row=2, column=0, padx=10, pady=10)
-        self.departure_entry.grid(row=2, column=1, padx=10, pady=10)
-        self.arrival_label.grid(row=3, column=0, padx=10, pady=10)
-        self.arrival_entry.grid(row=3, column=1, padx=10, pady=10)
-        self.dep_time_label.grid(row=4, column=0, padx=10, pady=10)
-        self.dep_time_entry.grid(row=4, column=1, padx=10, pady=10)
-        self.arr_time_label.grid(row=5, column=0, padx=10, pady=10)
-        self.arr_time_entry.grid(row=5, column=1, padx=10, pady=10)
-        self.return_button.grid(row=6, column=0, padx=10, pady=20)
-        self.add_flight_button.grid(row=6, column=1, padx=10, pady=20)
-        self._add_flight_frame.grid(
-            row=7, column=0, columnspan=2, padx=10, pady=10)
+        self.return_button.grid(row=len(labels), column=0, padx=10, pady=20)
+        self.add_flight_button.grid(
+            row=len(labels), column=1, padx=10, pady=20)
+        self._frame.grid(row=7, column=0, columnspan=2, padx=10, pady=10)
 
     def _handle_add_flight(self):
         """Method responsible for the addition of a new flight."""
-        aircraft_type = self.aircraft_type_entry.get()
-        aircraft_reg = self.aircraft_reg_entry.get()
-        departure = self.departure_entry.get()
-        arrival = self.arrival_entry.get()
-        dep_time = self.dep_time_entry.get()
-        arr_time = self.arr_time_entry.get()
+        aircraft_type = self._aircraft_type_entry.get()
+        aircraft_reg = self._aircraft_reg_entry.get()
+        departure = self._departure_entry.get()
+        arrival = self._arrival_entry.get()
+        dep_time = self._dep_time_entry.get()
+        arr_time = self._arr_time_entry.get()
 
         if len(aircraft_type) != 4:
             messagebox.showerror(
@@ -170,14 +153,14 @@ class AddFlightView:
 
         try:
             self._logbook_service.add_flight(flight_info)
-            self.aircraft_type_entry.delete(0, constants.END)
-            self.aircraft_reg_entry.delete(0, constants.END)
-            self.departure_entry.delete(0, constants.END)
-            self.arrival_entry.delete(0, constants.END)
-            self.dep_time_entry.delete(0, constants.END)
-            self.dep_time_entry.insert(0, "00:00")
-            self.arr_time_entry.delete(0, constants.END)
-            self.arr_time_entry.insert(0, "00:00")
+            self._aircraft_type_entry.delete(0, constants.END)
+            self._aircraft_reg_entry.delete(0, constants.END)
+            self._departure_entry.delete(0, constants.END)
+            self._arrival_entry.delete(0, constants.END)
+            self._dep_time_entry.delete(0, constants.END)
+            self._dep_time_entry.insert(0, "00:00")
+            self._arr_time_entry.delete(0, constants.END)
+            self._arr_time_entry.insert(0, "00:00")
             messagebox.showinfo("Success", "Flight added!")
             self._logbook_view()
         except NotLoggedIn:
