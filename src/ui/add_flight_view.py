@@ -186,4 +186,5 @@ class AddFlightView:
             if messagebox.askyesno("Database Not Initialized", "Do you want to initialize the database?"):
                 initialize_database()
             else:
-                messagebox.showerror("Error", "Database has not been initialized")
+                messagebox.showerror(
+                    "Error", "Database has not been initialized")
