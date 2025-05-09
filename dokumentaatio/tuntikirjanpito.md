@@ -32,4 +32,6 @@
 | 6.5           | 2h            | Käyttöliittymän parannuksia |
 | 7.5           | 1h            | Parannuksia projektin alustukseen ja riippuvuuksien injektointiin |
 |               | 1h            | Puuttuvan tietokannan poikkeuskäsittelyn toteutus |
-| yhteensä      | 51h           |
+| 9.5           | 2h            | Parannuksia käyttöliittymään ja ulkoasuun |
+|               | 1h            | Apumetodien luomista ja parannuksia koodiin |
+| yhteensä      | 54h           |
