@@ -1,11 +1,12 @@
 from tkinter import ttk, constants, messagebox
 from services.logbook_service import UsernameAlreadyInUse, DatabaseNotInitialized
+from init_db import initialize_database
 
 
 class RegistrationView:
     """Class responsible for displaying the user registration view of the app."""
 
-    def __init__(self, root, param_login, logbook_service):
+    def __init__(self, root, login_view, logbook_service):
         """Constructor of the class; creates the user registration view.
 
         Args:
@@ -15,7 +16,7 @@ class RegistrationView:
         """
 
         self._root = root
-        self._var_login = param_login
+        self._login_view = login_view
         self._logbook_service = logbook_service
         self._frame = None
 
@@ -47,7 +48,7 @@ class RegistrationView:
         self.return_button = ttk.Button(
             master=self._frame,
             text="Return",
-            command=self._var_login,
+            command=self._login_view,
             width=15
         )
 
@@ -71,20 +72,23 @@ class RegistrationView:
         password = self.password_entry.get()
 
         if len(username) < 5:
-            messagebox.showinfo("Error", "Username is too short")
+            messagebox.showerror("Error", "Username is too short")
             return
         if len(password) < 5:
-            messagebox.showinfo("Error", "Password is too short")
+            messagebox.showerror("Error", "Password is too short")
             return
         if username == password:
-            messagebox.showinfo("Error", "Username and password are same")
+            messagebox.showerror("Error", "Username and password are same")
             return
 
         try:
             self._logbook_service.register_user(username, password)
             messagebox.showinfo("Success", "User created!")
-            self._var_login()
+            self._login_view()
         except UsernameAlreadyInUse:
-            messagebox.showinfo("Error", "Username already exists")
+            messagebox.showerror("Error", "Username already exists")
         except DatabaseNotInitialized:
-            messagebox.showinfo("Error", "Database has not been initialized")
+            if messagebox.askyesno("Database Not Initialized", "Do you want to initialize the database?"):
+                initialize_database()
+            else:
+                messagebox.showerror("Error", "Database has not been initialized")

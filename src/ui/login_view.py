@@ -1,11 +1,12 @@
 from tkinter import ttk, constants, messagebox
 from services.logbook_service import WrongLoginDetails, DatabaseNotInitialized
+from init_db import initialize_database
 
 
 class LoginView:
     """Class responsible for displaying the login view of the app."""
 
-    def __init__(self, root, param_register, param_main, logbook_service):
+    def __init__(self, root, registration_view, logbook_view, logbook_service):
         """Constructor of the class; creates the login view.
 
         Args:
@@ -16,8 +17,8 @@ class LoginView:
         """
 
         self._root = root
-        self._var_register = param_register
-        self._var_main = param_main
+        self._registration_view = registration_view
+        self._logbook_view = logbook_view
         self._logbook_service = logbook_service
         self._frame = None
 
@@ -47,7 +48,7 @@ class LoginView:
         self.register_button = ttk.Button(
             master=self._frame,
             text="New user",
-            command=self._var_register,
+            command=self._registration_view,
             width=15
         )
 
@@ -72,9 +73,12 @@ class LoginView:
 
         try:
             self._logbook_service.login(username, password)
-            self._var_main()
+            self._logbook_view()
         except WrongLoginDetails:
             self.password_entry.delete(0, constants.END)
-            messagebox.showinfo("Error", "Invalid username or password")
+            messagebox.showerror("Error", "Invalid username or password")
         except DatabaseNotInitialized:
-            messagebox.showinfo("Error", "Database has not been initialized")
+            if messagebox.askyesno("Database Not Initialized", "Do you want to initialize the database?"):
+                initialize_database()
+            else:
+                messagebox.showerror("Error", "Database has not been initialized")
