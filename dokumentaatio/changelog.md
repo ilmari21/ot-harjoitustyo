@@ -29,3 +29,5 @@
 
  - Käyttäjän lisäämät lennot näkyvät taulukkona
  - Puuttuva tietokanta johtaa virheilmoitukseen
+ - MainView jaettu kahteen luokkaan; LogbookView ja AddFlightView
+ - Käyttöliittymään lisätty teema
