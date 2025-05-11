@@ -34,4 +34,6 @@
 |               | 1h            | Puuttuvan tietokannan poikkeuskäsittelyn toteutus |
 | 9.5           | 2h            | Parannuksia käyttöliittymään ja ulkoasuun |
 |               | 2h            | Apumetodien luomista ja parannuksia koodiin |
-| yhteensä      | 55h           |
+| 11.5          | 2h            | Käyttöliittymään kuulumattomat metodien siirtäminen |
+| 11.5          | 1h            | Dokumenttien päivitys
+| yhteensä      | 58h           |
