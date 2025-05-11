@@ -35,5 +35,5 @@
 | 9.5           | 2h            | Parannuksia käyttöliittymään ja ulkoasuun |
 |               | 2h            | Apumetodien luomista ja parannuksia koodiin |
 | 11.5          | 2h            | Käyttöliittymään kuulumattomat metodien siirtäminen |
-| 11.5          | 1h            | Dokumenttien päivitys
-| yhteensä      | 58h           |
+|               | 2h            | Dokumenttien päivitys
+| yhteensä      | 59h           |
