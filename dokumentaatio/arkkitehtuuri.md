@@ -1,11 +1,14 @@
 # Arkkitehtuuri
 
+## Rakenne
+
 ```mermaid
  classDiagram
     class ui {
         LoginView
         RegistrationView
-        MainView
+        LogbookView
+        AddFlightView
     }
 
     class services {
@@ -25,6 +28,7 @@
     ui --> services
     services --> repositories
     services --> entities
+    repositories --> entities
 ```
 
 Kaaviossa **ui** vastaa käyttöliittymää ja sen eri näkymiä, **services** sisältää sovelluslogiikan, **repositories** tietokantaoperaatiot jaettuna *käyttäjä-* sekä *lokikirjatoimintoihin* ja **entities** sisältää objektit *User* ja *Flight*, jotka kuvaavat *käyttäjää* ja käyttäjän lentämää *lentoa*.
@@ -33,16 +37,16 @@ Kaaviossa **ui** vastaa käyttöliittymää ja sen eri näkymiä, **services** s
 
 Sovelluksessa on neljä sivua:
 
- - Kirjautumissivu
+ - Kirjautumissivu (etusivu)
  - Rekisteröitymissivu
- - Lokikirjasivu
+ - Lokikirjasivu (pääsivu)
  - Lentojen lisäyssivu
 
-Kirjautumissivu on etusivu, josta voi siirtyä kirjautumalla lokikirjasivulle, tai jos haluaa luodan uuden käyttäjän, rekisteröitymissivulle. Lokikirjasivu on perusnäkymä, johon on listattu käyttäjän lisäämät lennot. Lokikirjasivulta voi siirtyä lentojen lisäysnäkymään, jossa käyttäjä voi lisätä uuden lennon.
+Kirjautumissivu on etusivu, josta voi siirtyä kirjautumalla lokikirjasivulle, tai jos haluaa luodan uuden käyttäjän, rekisteröitymissivulle. Lokikirjasivu on perusnäkymä, johon on listattu käyttäjän lisäämät lennot. Lokikirjasivulta voi siirtyä lentojen lisäysnäkymään, jossa käyttäjä voi lisätä uuden lennon. Näille jokaiselle on oma luokkansa.
 
-## Sovelluksen logiikka
+## Sovelluslogiikka
 
-Sovelluksen oleellisimmat luokat ovat *User* ja *Flight*. *User* kuvaa käyttäjää, ja *Flight* käyttäjän lentämää lentoa:
+Sovelluksen oleellisimmat luokat ovat [User](https://github.com/ilmari21/ot-harjoitustyo/blob/master/src/entities/user.py) ja [Flight](https://github.com/ilmari21/ot-harjoitustyo/blob/master/src/entities/flight.py). *User* kuvaa käyttäjää, ja *Flight* käyttäjän lentämää lentoa:
 
 ```mermaid
  classDiagram
@@ -63,76 +67,120 @@ Sovelluksen oleellisimmat luokat ovat *User* ja *Flight*. *User* kuvaa käyttäj
       }
 ```
 
+Sovelluslogiikan toiminta toteutuu [LogbookService](https://github.com/ilmari21/ot-harjoitustyo/blob/master/src/services/logbook_service.py)-luokan kautta.
+
 ## Päätoiminnallisuudet
+
+### Sisäänkirjautuminen
+
+Tämä sekvenssikaavio kuvaa sisäänkirjautumista, ja sen alta löytyy tarkempi kuvaus tapahtumista:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant LoginView
+    participant LogbookService
+    participant UserRepository
+    participant LogbookView
+
+    User->>LoginView: Click "Login"
+    activate LoginView
+    LoginView->>LogbookService: login("teuvo", "testi")
+    activate LogbookService
+    LogbookService->>UserRepository: find_user("teuvo")
+    activate UserRepository
+    UserRepository-->>LogbookService: teuvo
+    deactivate UserRepository
+    LogbookService->>LogbookService: _user = teuvo
+    LogbookService-->>LoginView: True
+    deactivate LogbookService
+    LoginView->>LogbookView: _logbook_view()
+    deactivate LoginView
+```
+
+Kirjautumissivulla käyttäjä syöttää käyttäjätunnuksen ja salasanan, jonka jälkeen klikataan "Login"-painiketta. Tämä kutsuu `LogbookService`:n metodia `login`, joka kutsuu `UserRepository`:n metodia `find_user` löytääkseen käyttäjänimen ja sitä vastaavan salasanan. Jos käyttäjä löytyy, ja käyttäjänimi ja salasana täsmäävät, vaihtaa `LogbookService` tämän nykyiseksi käyttäjäksi, ja palauttaa tiedon onnistumisesta `LoginView`:lle. Tämä puolestaan vaihtaa näkymän lokikirjanäkymään.
 
 ### Uuden käyttäjän rekisteröiminen
 
-Tämä sekvenssikaavio kuvaa käyttäjän rekisteröimistä, ja sen alta löytyy tarkempi selitys tapahtumista:
+Tämä sekvenssikaavio kuvaa käyttäjän rekisteröimistä, ja sen alta löytyy tarkempi kuvaus tapahtumista:
 
 ```mermaid
- sequenceDiagram
+sequenceDiagram
     participant User
     participant RegistrationView
     participant LogbookService
     participant UserRepository
+    participant teuvo
+    participant LoginView
 
-    User->>RegistrationView: Enter username and password
+    User->>RegistrationView: Click "Register"
     activate RegistrationView
-    RegistrationView->>LogbookService: register_user(username, password)
+    RegistrationView->>LogbookService: validate_credentials("teuvo", "testi")
     activate LogbookService
-    LogbookService->>UserRepository: find_user(username)
+    LogbookService-->>RegistrationView: (True, "")
+    RegistrationView->>LogbookService: register_user("teuvo", "testi")
+    LogbookService->>UserRepository: find_user("teuvo")
     activate UserRepository
-    UserRepository-->>LogbookService: return user or None
+    UserRepository-->>LogbookService: None
     deactivate UserRepository
-
-    alt User already exists
-        LogbookService-->>RegistrationView: raise UsernameAlreadyInUse
-        RegistrationView-->>User: Show error message
-    else User does not exist
-        LogbookService->>UserRepository: create(user)
-        activate UserRepository
-        UserRepository-->>LogbookService: return created user
-        deactivate UserRepository
-        LogbookService-->>RegistrationView: return success
-        RegistrationView-->>User: Show success message
-    end
+    LogbookService->>User_Object: User(username, password)
+    LogbookService->>UserRepository: create("teuvo")
+    activate UserRepository
+    UserRepository-->>LogbookService: teuvo
+    deactivate UserRepository
+    LogbookService-->>RegistrationView: teuvo
     deactivate LogbookService
+    RegistrationView-->>User: Show success message
+    RegistrationView->>LoginView: _login_view()
     deactivate RegistrationView
 ```
 
-Rekisteröitymissivulla käyttäjä syöttää käyttäjätunnuksen sekä salaasanan, ja klikkaa **"Register"**-painiketta. Tämä kutsuu `LogbookService`:n metodia `register_user`. Tämän jälkeen `LogbookService` kutsuu `UserRepository`:n metodia `find_user` jonka tarkoitus on varmistaa, ettei kyseinen käyttäjätunnus ole vielä käytössä. Jos käyttäjätunnus on vapaa, `UserRepository`:n metodi `create` luo uuden käyttäjän ja lisää sen tietokantaan.
+Rekisteröitymissivulla käyttäjä syöttää käyttäjätunnuksen sekä salaasanan ja klikkaa **"Register"**-painiketta. Tämä kutsuu `LogbookService`:n metodia `validate_credentials`, joka tarkistaa syötteet. Jos tarkistuksen menevät läpi, kutsutaan `LogbookService`:n metodia `register_user`. `LogbookService` kutsuu `UserRepository`:n metodia `find_user` jonka tarkoitus on varmistaa, ettei kyseinen käyttäjätunnus ole vielä käytössä. Jos käyttäjätunnus on vapaa, `UserRepository`:n metodi `create` luo uuden käyttäjän ja lisää sen tietokantaan. Tämän jälkeen tieto palautetaan `LogbookService`:lle ja siitä edelleen `RegistrationView`:lle, joka antaa käyttäjälle ilmoituksen siitä että uusi käyttäjä on luotu onnistuneesti ja siirtyy kirjautumissivulle.
 
 ### Lentojen lisääminen
 
-Tämä sekvenssikaavio kuvaa lentojen lisäämistä, ja sen alta löytyy tarkempi selitys tapahtumista:
+Tämä sekvenssikaavio kuvaa lentojen lisäämistä, ja sen alta löytyy tarkempi kuvaus tapahtumista:
 
 ```mermaid
- sequenceDiagram
+sequenceDiagram
     participant User
-    participant MainView
+    participant LogbookView
+    participant AddFlightView
     participant LogbookService
     participant LogbookRepository
-    participant flight
+    participant Flight
 
-    User->>MainView: Click "Add flight"
-    activate MainView
-    MainView->>MainView: show_add_flight()
+    User->>LogbookView: Click "Add flight"
+    activate LogbookView
+    LogbookView->>AddFlightView: _add_flight_view()
+    deactivate LogbookView
     
-    User->>MainView: Enter aircraft_type, aircraft_reg, departure, arrival, dep_time, arr_time
-    User->>MainView: Click "Add flight"
-    MainView->>LogbookService: add_flight(aircraft_type, aircraft_reg, departure, arrival, dep_time, arr_time)
+    activate AddFlightView
+    User->>AddFlightView: Enter aircraft_type, aircraft_reg, departure, arrival, dep_time, arr_time
+    User->>AddFlightView: Click "Add flight"
+    AddFlightView->>AddFlightView: _validate_entries()
+    AddFlightView->>AddFlightView: _get_entries()
+    AddFlightView->>LogbookService: create_flight_info(current_user, entries)
     activate LogbookService
-    LogbookService->>flight: Flight(pilot, aircraft_type, aircraft_reg, departure, arrival, dep_time, arr_time)
+    LogbookService->>LogbookService: _calculate_elapsed_time(dep_time, arr_time)
+    LogbookService-->>AddFlightView: flight_info
+    AddFlightView->>LogbookService: add_flight(flight_info)
+    LogbookService->>Flight: Flight(flight_info)
     LogbookService->>LogbookRepository: create(flight)
     activate LogbookRepository
     LogbookRepository-->>LogbookService: flight
     deactivate LogbookRepository
-    LogbookService-->>MainView: flight
+    LogbookService-->>AddFlightView: flight
     deactivate LogbookService
-
-    MainView->>MainView: show_main_view()
-    MainView->>MainView: update_added_flights_list()
-    deactivate MainView
+    
+    AddFlightView->>AddFlightView: _clear_entries()
+    AddFlightView->>User: Show success message
+    AddFlightView->>LogbookView: _logbook_view()
+    deactivate AddFlightView
+    
+    activate LogbookView
+    LogbookView->>LogbookView: _update_added_flights()
+    deactivate LogbookView
 ```
 
-Kun pääsivulla painetaan **"Add flight"**-painiketta, kutsutaan MainViewin metodia `show_add_flight` näkymän vaihtamiseksi jotta lento voidaan lisätä. Käyttäjä syöttää lähtö- ja saapumiskentän, sekä lähtö- ja saapumisajat, ja painaa **"Add flight"**-painiketta, joka tarkistettuaan syötteen kutsuu `LogbookService`:n metodia `add_flight`. Tämä puolestaan tarkistaa onko kirjauduttu sisään, eli onko käyttäjä olemassa, ja luo `Flight`-olion käyttämällä aikaisempia syötteitä ja lisäämällä siihen lentäjän, käyttämällä `LogbookRepository`:n `create`-metodia. Tämä palauttaa tiedon LogbookService:lle ja siitä edelleen MainView:lle, joka vaihtaa näkymän takaisin normaaliksi metodilla `show_main_view`, joka vielä päivittää listan käyttäjän lentämistä lennoista metodilla `update_added_flights_list`.
+Kun lokikirjasivulla painetaan **"Add flight"**-painiketta, kutsutaan metodia `show_add_flight` näkymän vaihtamiseksi jotta lento voidaan lisätä. Käyttäjä syöttää lentokoneen tyypin, rekisteritunnuksen, lähtö- ja saapumiskentän, sekä lähtö- ja saapumisajat, ja painaa **"Add flight"**-painiketta, joka tarkistettuaan syötteen kutsuu `LogbookService`:n metodia `create_flight_info`. Tämä metodi lisää annettujen syötteiden lisäksi lentäjän ja lentoajan, ja palauttaa lennon tiedot sanakirjana. Tämän jälkeen sanakirja annetaan `LogbookService`n metodille add_flight, joka puolestaan tarkistaa onko kirjauduttu sisään, eli onko käyttäjä olemassa, ja luo `Flight`-olion. Tämän jälkeen se kutsuu `LogbookRepository`:n `create`-metodia, joka tallettaa lennon tietokantaan. Tämä palauttaa tiedon `LogbookService`:lle ja siitä edelleen `AddFlightView`:lle, joka tyhjentää syötteet, antaa käyttäjälle ilmoituksen siitä että uusi lento on lisätty ja vaihtaa näkymän takaisin lokikirjanäkymään. `LogbookView` vielä päivittää listan käyttäjän lentämistä lennoista metodilla `update_added_flights`.
