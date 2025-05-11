@@ -20,7 +20,7 @@ class LogbookRepository:
             flight: The flight to be added; a Flight-object.
 
         Returns:
-            Returns the flight added; a Flight-object.
+            The flight added; a Flight-object.
         """
 
         cursor = self._connection.cursor()
@@ -42,7 +42,7 @@ class LogbookRepository:
             username: The username of the user, whose flights are being searched for.
 
         Returns:
-            Returns a list of Flight-objects added by the user.
+            A list of Flight-objects added by the user.
         """
 
         cursor = self._connection.cursor()

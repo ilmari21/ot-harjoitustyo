@@ -2,6 +2,12 @@ from connect_db import get_database_connection
 
 
 def initialize_database(connection=None):
+    """ Initializes the database.
+
+    Args:
+        connection: SQLite connection object.
+    """
+
     connection_closed = False
     if connection is None:
         connection = get_database_connection()
@@ -25,6 +31,13 @@ def initialize_database(connection=None):
 
 
 def create_tables(cursor, connection):
+    """Creates the database tables.
+
+    Args:
+        cursor: SQLite cursor object.
+        connection: SQLite connection object.
+    """
+
     cursor.execute(
         """CREATE TABLE users (
             username TEXT PRIMARY KEY,

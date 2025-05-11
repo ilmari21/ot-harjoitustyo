@@ -20,7 +20,7 @@ class UserRepository:
             user: The user to be added; a User-object.
 
         Returns:
-            Returns the user added; a User-object.
+            The user added; a User-object.
         """
 
         cursor = self._connection.cursor()
@@ -38,7 +38,7 @@ class UserRepository:
             username: The username of the user, which is being searched for.
 
         Returns:
-            Returns a User-object matching the username.
+            An User-object matching the username.
         """
 
         cursor = self._connection.cursor()

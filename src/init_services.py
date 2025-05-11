@@ -5,6 +5,12 @@ from repositories.user_repository import UserRepository
 
 
 def initialize_services():
+    """Initializes a LogbookService instance.
+
+    Returns:
+        Initialized LogbookService instance.
+    """
+
     connection = get_database_connection()
     logbook_repository = LogbookRepository(connection)
     user_repository = UserRepository(connection)
