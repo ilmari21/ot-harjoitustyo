@@ -189,7 +189,7 @@ Kun lokikirjasivulla painetaan **"Add flight"**-painiketta, kutsutaan metodia `s
 
 ## Tietojen talletus
 
-Repositoriot [LogbookRepository](https://github.com/ilmari21/ot-harjoitustyo/blob/master/src/repositories/logbook_repository.py) ja [UserRepository](https://github.com/ilmari21/ot-harjoitustyo/blob/master/src/repositories/user_repository.py) tallettavat tiedot sovelluksen [data](https://github.com/ilmari21/ot-harjoitustyo/blob/master/data)-hakemistossa olevaan SQLite-tietokantaan. Tietokannan taulut ovat `flights` ja `users`. `LogbookRepository` vastaa lentojen tietokantaoperaatioista, `UserRepository` puolestaan käyttäjiin liittyvistä tietokantaoperaatioista. Testauksessa käytetään muistissa olevaa tietokantaa.
+`LogbookService` käyttää repositorioita [LogbookRepository](https://github.com/ilmari21/ot-harjoitustyo/blob/master/src/repositories/logbook_repository.py) ja [UserRepository](https://github.com/ilmari21/ot-harjoitustyo/blob/master/src/repositories/user_repository.py), jotka tallettavat tiedot sovelluksen [data](https://github.com/ilmari21/ot-harjoitustyo/blob/master/data)-hakemistossa olevaan SQLite-tietokantaan. Tietokannan taulut ovat `flights` ja `users`. `LogbookRepository` vastaa lentojen tietokantaoperaatioista, `UserRepository` puolestaan käyttäjiin liittyvistä tietokantaoperaatioista. Testauksessa käytetään muistissa olevaa tietokantaa.
 
 ## Huomioitavaa
 
