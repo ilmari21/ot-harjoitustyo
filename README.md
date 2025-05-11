@@ -6,15 +6,16 @@ Sovellukseen voi kirjautua luotuaan käyttäjätunnuksen, jonka jälkeen voi lis
 
 ## Python-versio
 
-Testattu Pythonin versiolla **3.10**.
+Testattu Pythonin versiolla **`3.10`**.
 
 ## Linkit
 
+- [Käyttöohje](./dokumentaatio/kayttoohje.md)
 - [Vaatimusmäärittely](./dokumentaatio/vaatimusmaarittely.md)
-- [Työaikakirjanpito](./dokumentaatio/tuntikirjanpito.md)
 - [Changelog](./dokumentaatio/changelog.md)
 - [Arkkitehtuuri](./dokumentaatio/arkkitehtuuri.md)
-- [Käyttöohje](./dokumentaatio/kayttoohje.md)
+- [Testausdokumentti](./dokumentaatio/testaus.md)
+- [Työaikakirjanpito](./dokumentaatio/tuntikirjanpito.md)
 
 ## Releaset
 
