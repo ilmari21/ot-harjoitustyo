@@ -21,7 +21,6 @@ class LoginView:
         self._logbook_view = logbook_view
         self._logbook_service = logbook_service
         self._frame = None
-
         self._root.minsize(400, 300)
 
         self._initialize()
@@ -40,11 +39,7 @@ class LoginView:
 
         self._frame = ttk.Frame(master=self._root)
 
-        self._username_label = ttk.Label(master=self._frame, text="Username")
-        self._username_entry = ttk.Entry(master=self._frame)
-
-        self._password_label = ttk.Label(master=self._frame, text="Password")
-        self._password_entry = ttk.Entry(master=self._frame, show="*")
+        self._initialize_entry_fields()
 
         register_button = ttk.Button(
             master=self._frame,
@@ -60,12 +55,22 @@ class LoginView:
             width=15
         )
 
+        register_button.grid(row=2, column=0, padx=10, pady=20)
+        login_button.grid(row=2, column=1, padx=10, pady=20)
+
+    def _initialize_entry_fields(self):
+        """Initializes the entry fields."""
+
+        self._username_label = ttk.Label(master=self._frame, text="Username")
+        self._username_entry = ttk.Entry(master=self._frame)
+
+        self._password_label = ttk.Label(master=self._frame, text="Password")
+        self._password_entry = ttk.Entry(master=self._frame, show="*")
+
         self._username_label.grid(row=0, column=0, padx=10, pady=10)
         self._username_entry.grid(row=0, column=1, padx=10, pady=10)
         self._password_label.grid(row=1, column=0, padx=10, pady=10)
         self._password_entry.grid(row=1, column=1, padx=10, pady=10)
-        register_button.grid(row=2, column=0, padx=10, pady=20)
-        login_button.grid(row=2, column=1, padx=10, pady=20)
 
     def _handle_login(self):
         """Method responsible for handling the login attempt."""

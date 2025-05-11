@@ -19,7 +19,6 @@ class RegistrationView:
         self._login_view = login_view
         self._logbook_service = logbook_service
         self._frame = None
-
         self._root.minsize(400, 300)
 
         self._initialize()
@@ -38,13 +37,7 @@ class RegistrationView:
 
         self._frame = ttk.Frame(master=self._root)
 
-        self._username_label = ttk.Label(
-            master=self._frame, text="Enter username")
-        self._username_entry = ttk.Entry(master=self._frame)
-
-        self._password_label = ttk.Label(
-            master=self._frame, text="Enter password")
-        self._password_entry = ttk.Entry(master=self._frame, show="*")
+        self._initialize_entry_fields()
 
         return_button = ttk.Button(
             master=self._frame,
@@ -60,27 +53,35 @@ class RegistrationView:
             width=15
         )
 
+        return_button.grid(row=2, column=0, padx=10, pady=20)
+        register_button.grid(row=2, column=1, padx=10, pady=20)
+
+    def _initialize_entry_fields(self):
+        """Initializes the entry fields."""
+
+        self._username_label = ttk.Label(
+            master=self._frame, text="Enter username")
+        self._username_entry = ttk.Entry(master=self._frame)
+
+        self._password_label = ttk.Label(
+            master=self._frame, text="Enter password")
+        self._password_entry = ttk.Entry(master=self._frame, show="*")
+
         self._username_label.grid(row=0, column=0, padx=10, pady=10)
         self._username_entry.grid(row=0, column=1, padx=10, pady=10)
         self._password_label.grid(row=1, column=0, padx=10, pady=10)
         self._password_entry.grid(row=1, column=1, padx=10, pady=10)
-        return_button.grid(row=2, column=0, padx=10, pady=20)
-        register_button.grid(row=2, column=1, padx=10, pady=20)
 
     def _handle_registration(self):
-        """Method responsible for the registraion of a new user."""
+        """Method responsible for handling the registration of a new user."""
 
         username = self._username_entry.get()
         password = self._password_entry.get()
 
-        if len(username) < 5:
-            messagebox.showerror("Error", "Username is too short")
-            return
-        if len(password) < 5:
-            messagebox.showerror("Error", "Password is too short")
-            return
-        if username == password:
-            messagebox.showerror("Error", "Username and password are same")
+        validated, error_message = self._logbook_service.validate_credentials(
+            username, password)
+        if not validated:
+            messagebox.showwarning("Invalid credentials", error_message)
             return
 
         try:

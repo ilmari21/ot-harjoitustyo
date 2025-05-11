@@ -1,7 +1,5 @@
 from tkinter import ttk, constants, messagebox
-import re
 from services.logbook_service import NotLoggedIn, DatabaseNotInitialized
-from datetime import datetime, timedelta
 from init_db import initialize_database
 
 
@@ -19,15 +17,10 @@ class AddFlightView:
         """
 
         self._root = root
-
         self._logbook_view = logbook_view
         self._current_user = current_user
         self._logbook_service = logbook_service
-
         self._frame = None
-
-        self._time_pattern = re.compile(r'^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$')
-
         self._root.minsize(400, 300)
 
         self._initialize()
@@ -46,14 +39,7 @@ class AddFlightView:
 
         self._frame = ttk.Frame(master=self._root)
 
-        self._aircraft_type_entry = ttk.Entry(master=self._frame)
-        self._aircraft_reg_entry = ttk.Entry(master=self._frame)
-        self._departure_entry = ttk.Entry(master=self._frame)
-        self._arrival_entry = ttk.Entry(master=self._frame)
-        self._dep_time_entry = ttk.Entry(master=self._frame)
-        self._dep_time_entry.insert(0, "00:00")
-        self._arr_time_entry = ttk.Entry(master=self._frame)
-        self._arr_time_entry.insert(0, "00:00")
+        self._initialize_entry_fields()
 
         labels = [
             ("Aircraft type", self._aircraft_type_entry),
@@ -88,14 +74,32 @@ class AddFlightView:
             row=len(labels), column=1, padx=10, pady=20)
         self._frame.grid(row=7, column=0, columnspan=2, padx=10, pady=10)
 
-    def _handle_add_flight(self):
-        """Method responsible for the addition of a new flight."""
+    def _initialize_entry_fields(self):
+        """Initializes the entry fields."""
 
-        flight_info = self._validate_entries()
-        if not flight_info:
+        self._aircraft_type_entry = ttk.Entry(master=self._frame)
+        self._aircraft_reg_entry = ttk.Entry(master=self._frame)
+        self._departure_entry = ttk.Entry(master=self._frame)
+        self._arrival_entry = ttk.Entry(master=self._frame)
+        self._dep_time_entry = ttk.Entry(master=self._frame)
+        self._dep_time_entry.insert(0, "00:00")
+        self._arr_time_entry = ttk.Entry(master=self._frame)
+        self._arr_time_entry.insert(0, "00:00")
+
+    def _handle_add_flight(self):
+        """Method responsible for handling the addition of a new flight."""
+
+        if not self._validate_entries():
             return
 
+        entries = self._get_entries()
+
         try:
+            flight_info = self._logbook_service.create_flight_info(
+                self._current_user,
+                entries
+            )
+
             self._logbook_service.add_flight(flight_info)
             self._clear_entries()
             messagebox.showinfo("Success", "Flight added!")
@@ -110,85 +114,39 @@ class AddFlightView:
                     "Error", "Database has not been initialized")
 
     def _validate_entries(self):
-        """Validates the entries."""
-
-        aircraft_type = self._aircraft_type_entry.get()
-        aircraft_reg = self._aircraft_reg_entry.get()
-        departure = self._departure_entry.get()
-        arrival = self._arrival_entry.get()
-        dep_time = self._dep_time_entry.get()
-        arr_time = self._arr_time_entry.get()
-
-        if len(aircraft_type) != 4:
-            messagebox.showerror(
-                "Error", "Enter aircraft type ICAO designator; it is exactly 4 letters")
-            return
-
-        if not aircraft_reg:
-            messagebox.showerror(
-                "Error", "Enter aircraft registration")
-            return
-
-        if len(departure) != 4:
-            messagebox.showerror(
-                "Error", "Enter departure airport ICAO code; it is exactly 4 letters")
-            return
-        if len(arrival) != 4:
-            messagebox.showerror(
-                "Error", "Enter arrival airport ICAO code; it is exactly 4 letters")
-            return
-
-        if not dep_time:
-            messagebox.showerror(
-                "Error", "Enter departure time")
-            return
-        if not arr_time:
-            messagebox.showerror(
-                "Error", "Enter arrival time")
-            return
-
-        if not self._time_pattern.match(dep_time):
-            messagebox.showerror(
-                "Error", "Enter departure time in HH:MM format")
-            return
-        if not self._time_pattern.match(arr_time):
-            messagebox.showerror(
-                "Error", "Enter arrival time in HH:MM format")
-            return
-
-        elapsed_time = self._get_elapsed_time(dep_time, arr_time)
-
-        flight_info = {
-            'pilot': self._current_user,
-            'aircraft_type': aircraft_type,
-            'aircraft_reg': aircraft_reg,
-            'departure': departure,
-            'arrival': arrival,
-            'dep_time': dep_time,
-            'arr_time': arr_time,
-            'elapsed_time': elapsed_time
-        }
-
-        return flight_info
-
-    def _get_elapsed_time(self, dep_time, arr_time):
-        """Calculates the total flight time.
-
-        Args:
-            dep_time: Departure time of the flight.
-            arr_time: Arrival time of the flight.
+        """Validates the entries.
 
         Returns:
-            Integer depicting the elapsed flight time in minutes.
+            Boolean; True if all the checks are passed, otherwise False.
         """
 
-        dep_time_datetime = datetime.strptime(dep_time, "%H:%M")
-        arr_time_datetime = datetime.strptime(arr_time, "%H:%M")
-        if arr_time_datetime < dep_time_datetime:
-            arr_time_datetime += timedelta(days=1)
-        elapsed_time = (arr_time_datetime -
-                        dep_time_datetime).total_seconds() / 60
-        return elapsed_time
+        entries = self._get_entries()
+
+        validated, error_message = self._logbook_service.validate_flight_data(
+            entries)
+        if not validated:
+            messagebox.showwarning("Invalid input", error_message)
+            return False
+
+        return True
+
+    def _get_entries(self):
+        """Collects the flight data entries.
+
+        Returns:
+            A dictionary containing the flight data entries.
+        """
+
+        entries = {
+            "aircraft_type": self._aircraft_type_entry.get(),
+            "aircraft_reg": self._aircraft_reg_entry.get(),
+            "departure": self._departure_entry.get(),
+            "arrival": self._arrival_entry.get(),
+            "dep_time": self._dep_time_entry.get(),
+            "arr_time": self._arr_time_entry.get()
+        }
+
+        return entries
 
     def _clear_entries(self):
         """Clears the entries."""

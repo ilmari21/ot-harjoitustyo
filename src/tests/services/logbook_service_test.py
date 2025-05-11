@@ -69,6 +69,17 @@ class TestLogbookService(unittest.TestCase):
 
         self.assertIsNone(self._logbook_service._user)
 
+    def test_user_logout(self):
+        test_username = "teuvo"
+        test_password = "testi"
+
+        self._logbook_service.register_user(test_username, test_password)
+
+        self._logbook_service.login(test_username, test_password)
+
+        self._logbook_service.logout()
+        self.assertIsNone(self._logbook_service._user)
+
     def test_add_flight(self):
         test_username = "teuvo"
         test_password = "testi"
@@ -227,3 +238,234 @@ class TestLogbookService(unittest.TestCase):
 
         with self.assertRaises(DatabaseNotInitialized):
             test_logbook_service.get_flights_by_user()
+
+    def test_calculate_elapsed_time(self):
+        test_elapsed_time = self._logbook_service._calculate_elapsed_time(
+            "12:00", "13:30")
+
+        self.assertEqual(test_elapsed_time, 90)
+
+    def test_calculate_elapsed_time_overnight(self):
+        test_elapsed_time = self._logbook_service._calculate_elapsed_time(
+            "23:00", "01:00")
+
+        self.assertEqual(test_elapsed_time, 120)
+
+    def test_validate_flight_data_valid(self):
+        test_entries = {
+            'aircraft_type': 'C152',
+            'aircraft_reg': 'OH-TKT',
+            'departure': 'EFHK',
+            'arrival': 'EFTP',
+            'dep_time': '12:00',
+            'arr_time': '14:00'
+        }
+
+        validated, error_message = self._logbook_service.validate_flight_data(
+            test_entries)
+        self.assertTrue(validated)
+        self.assertEqual(error_message, "")
+
+    def test_validate_flight_data_invalid_aircraft_type(self):
+        test_entries = {
+            'aircraft_type': 'Cessna',
+            'aircraft_reg': 'OH-TKT',
+            'departure': 'EFHK',
+            'arrival': 'EFTP',
+            'dep_time': '12:00',
+            'arr_time': '14:00'
+        }
+
+        validated, error_message = self._logbook_service.validate_flight_data(
+            test_entries)
+        self.assertFalse(validated)
+        self.assertEqual(
+            error_message, "Enter aircraft type ICAO designator; it is exactly 4 letters")
+
+    def test_validate_flight_data_invalid_aircraft_registration(self):
+        test_entries = {
+            'aircraft_type': 'C152',
+            'aircraft_reg': '',
+            'departure': 'EFHK',
+            'arrival': 'EFTP',
+            'dep_time': '12:00',
+            'arr_time': '14:00'
+        }
+
+        validated, error_message = self._logbook_service.validate_flight_data(
+            test_entries)
+        self.assertFalse(validated)
+        self.assertEqual(error_message, "Enter aircraft registration")
+
+    def test_validate_flight_data_invalid_departure(self):
+        test_entries = {
+            'aircraft_type': 'C152',
+            'aircraft_reg': 'OH-TKT',
+            'departure': 'HEL',
+            'arrival': 'EFTP',
+            'dep_time': '12:00',
+            'arr_time': '14:00'
+        }
+
+        validated, error_message = self._logbook_service.validate_flight_data(
+            test_entries)
+        self.assertFalse(validated)
+        self.assertEqual(
+            error_message, "Enter departure airport ICAO code; it is exactly 4 letters")
+
+    def test_validate_flight_data_invalid_arrival(self):
+        test_entries = {
+            'aircraft_type': 'C152',
+            'aircraft_reg': 'OH-TKT',
+            'departure': 'EFHK',
+            'arrival': 'Tampere',
+            'dep_time': '12:00',
+            'arr_time': '14:00'
+        }
+
+        validated, error_message = self._logbook_service.validate_flight_data(
+            test_entries)
+        self.assertFalse(validated)
+        self.assertEqual(
+            error_message, "Enter arrival airport ICAO code; it is exactly 4 letters")
+
+    def test_validate_flight_data_invalid_departure_time(self):
+        test_entries = {
+            'aircraft_type': 'C152',
+            'aircraft_reg': 'OH-TKT',
+            'departure': 'EFHK',
+            'arrival': 'EFTP',
+            'dep_time': '12:60',
+            'arr_time': '14:00'
+        }
+
+        validated, error_message = self._logbook_service.validate_flight_data(
+            test_entries)
+        self.assertFalse(validated)
+        self.assertEqual(error_message, "Enter departure time in HH:MM format")
+
+    def test_validate_flight_data_invalid_arrival_time(self):
+        test_entries = {
+            'aircraft_type': 'C152',
+            'aircraft_reg': 'OH-TKT',
+            'departure': 'EFHK',
+            'arrival': 'EFTP',
+            'dep_time': '12:00',
+            'arr_time': '24:00'
+        }
+
+        validated, error_message = self._logbook_service.validate_flight_data(
+            test_entries)
+        self.assertFalse(validated)
+        self.assertEqual(error_message, "Enter arrival time in HH:MM format")
+
+    def test_create_flight_info(self):
+        test_entries = {
+            'aircraft_type': 'C152',
+            'aircraft_reg': 'OH-TKT',
+            'departure': 'EFHK',
+            'arrival': 'EFTP',
+            'dep_time': '12:00',
+            'arr_time': '14:00'
+        }
+
+        test_pilot = "teuvo"
+        test_flight_info = self._logbook_service.create_flight_info(
+            test_pilot, test_entries)
+
+        self.assertEqual(test_flight_info['pilot'], test_pilot)
+        self.assertEqual(
+            test_flight_info['aircraft_type'], test_entries['aircraft_type'])
+        self.assertEqual(
+            test_flight_info['aircraft_reg'], test_entries['aircraft_reg'])
+        self.assertEqual(
+            test_flight_info['departure'], test_entries['departure'])
+        self.assertEqual(test_flight_info['arrival'], test_entries['arrival'])
+        self.assertEqual(
+            test_flight_info['dep_time'], test_entries['dep_time'])
+        self.assertEqual(
+            test_flight_info['arr_time'], test_entries['arr_time'])
+        self.assertEqual(test_flight_info['elapsed_time'], 120)
+
+    def test_validate_credentials(self):
+        test_username = "teuvo"
+        test_password = "testi"
+
+        validated, error_message = self._logbook_service.validate_credentials(
+            test_username, test_password)
+        self.assertTrue(validated)
+        self.assertEqual(error_message, "")
+
+    def test_validate_credentials_username_too_short(self):
+        test_username = "tepi"
+        test_password = "testi"
+
+        validated, error_message = self._logbook_service.validate_credentials(
+            test_username, test_password)
+        self.assertFalse(validated)
+        self.assertEqual(error_message, "Username is too short")
+
+    def test_validate_credentials_password_too_short(self):
+        test_username = "teuvo"
+        test_password = "tepi"
+
+        validated, error_message = self._logbook_service.validate_credentials(
+            test_username, test_password)
+        self.assertFalse(validated)
+        self.assertEqual(error_message, "Password is too short")
+
+    def test_validate_credentials_same_username_password(self):
+        test_username = "teuvo"
+        test_password = "teuvo"
+
+        validated, error_message = self._logbook_service.validate_credentials(
+            test_username, test_password)
+        self.assertFalse(validated)
+        self.assertEqual(error_message, "Username and password are same")
+
+    def test_format_elapsed_time(self):
+        test_formatted_time = self._logbook_service.format_elapsed_time(0)
+        self.assertEqual(test_formatted_time, "00:00")
+
+        test_formatted_time = self._logbook_service.format_elapsed_time(30)
+        self.assertEqual(test_formatted_time, "00:30")
+
+        test_formatted_time = self._logbook_service.format_elapsed_time(60)
+        self.assertEqual(test_formatted_time, "01:00")
+
+    def test_get_statistics(self):
+        test_username = "teuvo"
+        test_password = "testi"
+        self._logbook_service.register_user(test_username, test_password)
+        self._logbook_service.login(test_username, test_password)
+
+        test_flights = [
+            {
+                'pilot': test_username,
+                'aircraft_type': 'C152',
+                'aircraft_reg': 'OH-ABC',
+                'departure': 'EFHK',
+                'arrival': 'EFTU',
+                'dep_time': '12:00',
+                'arr_time': '13:30',
+                'elapsed_time': 90
+            },
+            {
+                'pilot': test_username,
+                'aircraft_type': 'C172',
+                'aircraft_reg': 'OH-XYZ',
+                'departure': 'EFTU',
+                'arrival': 'EFHK',
+                'dep_time': '14:00',
+                'arr_time': '15:00',
+                'elapsed_time': 60
+            }
+        ]
+
+        for flight in test_flights:
+            self._logbook_service.add_flight(flight)
+
+        stats = self._logbook_service.get_statistics()
+
+        self.assertEqual(stats['total_flights'], 2)
+        self.assertEqual(stats['formatted_total_time'], "02:30")
