@@ -2,6 +2,8 @@
 
 ## Rakenne
 
+Seuraava kaavio kuvaa sovelluksen luokka/pakkausrakennetta:
+
 ```mermaid
  classDiagram
     class ui {
@@ -184,3 +186,11 @@ sequenceDiagram
 ```
 
 Kun lokikirjasivulla painetaan **"Add flight"**-painiketta, kutsutaan metodia `show_add_flight` näkymän vaihtamiseksi jotta lento voidaan lisätä. Käyttäjä syöttää lentokoneen tyypin, rekisteritunnuksen, lähtö- ja saapumiskentän, sekä lähtö- ja saapumisajat, ja painaa **"Add flight"**-painiketta, joka tarkistettuaan syötteen kutsuu `LogbookService`:n metodia `create_flight_info`. Tämä metodi lisää annettujen syötteiden lisäksi lentäjän ja lentoajan, ja palauttaa lennon tiedot sanakirjana. Tämän jälkeen sanakirja annetaan `LogbookService`n metodille add_flight, joka puolestaan tarkistaa onko kirjauduttu sisään, eli onko käyttäjä olemassa, ja luo `Flight`-olion. Tämän jälkeen se kutsuu `LogbookRepository`:n `create`-metodia, joka tallettaa lennon tietokantaan. Tämä palauttaa tiedon `LogbookService`:lle ja siitä edelleen `AddFlightView`:lle, joka tyhjentää syötteet, antaa käyttäjälle ilmoituksen siitä että uusi lento on lisätty ja vaihtaa näkymän takaisin lokikirjanäkymään. `LogbookView` vielä päivittää listan käyttäjän lentämistä lennoista metodilla `update_added_flights`.
+
+## Tietojen talletus
+
+Repositoriot [LogbookRepository](https://github.com/ilmari21/ot-harjoitustyo/blob/master/src/repositories/logbook_repository.py) ja [UserRepository](https://github.com/ilmari21/ot-harjoitustyo/blob/master/src/repositories/user_repository.py) tallettavat tiedot sovelluksen [data](https://github.com/ilmari21/ot-harjoitustyo/blob/master/data)-hakemistossa olevaan SQLite-tietokantaan. Tietokannan taulut ovat `flights` ja `users`. `LogbookRepository` vastaa lentojen tietokantaoperaatioista, `UserRepository` puolestaan käyttäjiin liittyvistä tietokantaoperaatioista. Testauksessa käytetään muistissa olevaa tietokantaa.
+
+## Huomioitavaa
+
+Sovelluksen syötteiden suuren määrän vuoksi oli valittava pitkien metodien ja useiden apumetodien välillä, joka joissakin kohdissa osoittautui ongelmalliseksi koodin siistinä pitämisen kannalta.
