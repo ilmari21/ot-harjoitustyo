@@ -21,6 +21,7 @@ Testattu Pythonin versiolla **`3.10`**.
 
 - [Viikko 5](https://github.com/ilmari21/ot-harjoitustyo/releases/tag/viikko5)
 - [Viikko 6](https://github.com/ilmari21/ot-harjoitustyo/releases/tag/viikko6)
+- [Loppupalautus](https://github.com/ilmari21/ot-harjoitustyo/releases/tag/loppupalautus)
 
 ## Sovelluksen käytön aloitus
 
